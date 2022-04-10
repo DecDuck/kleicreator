@@ -1,0 +1,11 @@
+PrefabFiles = {
+$PREFABS$
+}
+
+STRINGS = GLOBAL.STRINGS
+RECIPETABS = GLOBAL.RECIPETABS
+Recipe = GLOBAL.Recipe
+Ingredient = GLOBAL.Ingredient
+TECH = GLOBAL.TECH
+
+$SPEECH$

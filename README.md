@@ -6,7 +6,7 @@ Hello! If you're someone who wants to try this out for me, thanks! Here's the st
  - I am open to all and any suggestions, but I am mainly looking for thoughts about the interface, things that could be better, things that you liked and want to see more of, etc. (Also new name cause this one kinda sucks)
 
 ### How to run
-In the releases [(here)](https://lab.deepcore.dev/decduck3/kleicreator/-/tags), there should be a .jar download. That should contain everything necessary to run the program right off the bat. Currently, it only supports Windows and Linux, but should run on Mac (haven't tested it).
+In the releases [(here)](https://lab.deepcore.dev/decduck3/kleicreator/-/releases), there should be a .jar download. That should contain everything necessary to run the program right off the bat. Currently, it only supports Windows and Linux, but should run on Mac (haven't tested it).
 
 ### How it works
 Upon starting the program, you should see a dialog that has some buttons that do fairly obvious things like make a new mod, and delete mods, etc.

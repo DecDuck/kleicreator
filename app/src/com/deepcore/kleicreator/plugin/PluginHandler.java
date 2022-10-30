@@ -7,15 +7,18 @@ import com.deepcore.kleicreator.sdk.Plugin;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PluginHandler {
 
-    public static List<Plugin> plugins = new ArrayList<>();
+    public static Map<String,Plugin> plugins = new HashMap<>();
 
     public static void LoadPlugins(){
         plugins.clear();
@@ -37,21 +40,36 @@ public class PluginHandler {
         ClassLoader authorizedLoader = URLClassLoader.newInstance(new URL[] { pluginFile.toURL() });
         String p = ModLoader.fileComponent(pluginFile.getAbsolutePath());
         Plugin plugin = (Plugin) authorizedLoader.loadClass( p.substring(0, p.length()-4)+ ".Plugin").newInstance();
-        plugins.add(plugin);
+        plugins.put(plugin.id(), plugin);
     }
 
     public static void TriggerEvent(String name, Object... args){
-        for(Plugin p : plugins){
+        for(Map.Entry<String, Plugin> m: plugins.entrySet()){
             try {
                 Class[] argList = new Class[args.length];
                 for(int i = 0; i < args.length; i++){
                     argList[i] = args[i].getClass();
                 }
 
-                p.getClass().getMethod("on"+name, argList).invoke(p, args);
+                m.getValue().getClass().getMethod("on"+name, argList).invoke(m.getValue(), args);
             } catch (Exception e) {
                 Logger.Error(ExceptionUtils.getStackTrace(e));
             }
+        }
+    }
+
+    public static <T> T TriggerEventForMod(String modId, String name, Object... args){
+        Plugin p = plugins.get(modId);
+        Class[] argList = new Class[args.length];
+        for(int i = 0; i < args.length; i++){
+            argList[i] = args[i].getClass();
+        }
+
+        try {
+            return (T) p.getClass().getMethod("on"+name, argList).invoke(p, args);
+        } catch (Exception e){
+            Logger.Error(ExceptionUtils.getStackTrace(e));
+            return null;
         }
     }
 }

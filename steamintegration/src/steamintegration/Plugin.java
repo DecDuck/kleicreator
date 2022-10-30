@@ -71,6 +71,11 @@ public class Plugin implements com.deepcore.kleicreator.sdk.Plugin {
         ModEditor.AddTab("Steam Integration", tab);
         tab.add(JHelper.CreateTitleJLabel("Steam Integration"));
         if(GameHandler.GameIntegration){
+            tab.add(new JLabel("Steam Integration enabled"));
+            JButton reloadItemLists = new JButton("Reload item lists");
+            JButton exportAndRun = new JButton("Export and run");
+
+
 
         }else{
             tab.add(new JLabel("Integration not enabled. Change steam path in config and retry."));

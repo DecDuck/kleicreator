@@ -9,11 +9,19 @@ import com.deepcore.kleicreator.logging.Logger;
 import com.deepcore.kleicreator.modloader.Mod;
 import com.deepcore.kleicreator.modloader.resources.Resource;
 import com.deepcore.kleicreator.modloader.resources.ResourceManager;
+import com.deepcore.kleicreator.sdk.Plugin;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Template {
 
     private String template;
     private final Type templateType;
+
+    private String customTemplateId;
+    private static Map<String, String> customTemplateMap = new HashMap<>();
+
     private Item item;
     public Template(String rawTemplate, Type t) {
         this.template = rawTemplate;
@@ -24,6 +32,10 @@ public class Template {
         this.template = rawTemplate;
         this.templateType = t;
         this.item = item;
+    }
+
+    public static void RegisterTemplate(Plugin p, String templateId, String template){
+        customTemplateMap.put(p.id()+":"+templateId, template);
     }
 
     public void Create() {
@@ -78,6 +90,7 @@ public class Template {
     public enum Type {
         Modmain,
         Modinfo,
-        Item
+        Item,
+        Custom
     }
 }

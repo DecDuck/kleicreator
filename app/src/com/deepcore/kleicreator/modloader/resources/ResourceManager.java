@@ -28,19 +28,6 @@ public class ResourceManager {
     public static List<Resource> mapicons = new ArrayList<Resource>();
     public static List<Resource> speeches = new ArrayList<Resource>();
 
-    public static XStream speechXStream;
-
-    public static void CreateSpeechXStream() {
-        speechXStream = new XStream(new DomDriver());
-        speechXStream.alias("type", SpeechFile.SpeechType.class);
-        speechXStream.alias("resource", Resource.class);
-        speechXStream.alias("project", SaveObject.class);
-        speechXStream.alias("item", Item.class);
-        speechXStream.alias("resource", Resource.class);
-
-        Logger.Debug("Created speechXStream with appropriate settings");
-    }
-
     public static void GenerateResourceLists() {
         inventoryimages.clear();
         modicons.clear();

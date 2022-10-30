@@ -1,6 +1,5 @@
 package kleicreator.modloader;
 
-import kleicreator.config.GlobalConfig;
 import kleicreator.frames.ModEditor;
 import kleicreator.items.Item;
 import kleicreator.items.ItemLoader;
@@ -13,6 +12,7 @@ import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.plugin.PluginHandler;
 import kleicreator.recipes.RecipeLoader;
 import kleicreator.savesystem.SaveSystem;
+import kleicreator.sdk.config.Config;
 import kleicreator.sdk.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -237,7 +237,7 @@ public class ModLoader {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                if (GlobalConfig.askSaveOnLeave && getBool("Save?")) {
+                if ((Boolean) Config.GetData("kleicreator.asksaveonleave") && getBool("Save?")) {
                     SaveAll();
                 }
                 modEditorFrame.dispose();

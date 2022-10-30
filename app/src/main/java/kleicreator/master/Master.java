@@ -2,9 +2,8 @@ package kleicreator.master;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import kleicreator.config.Config;
-import kleicreator.config.GlobalConfig;
 import kleicreator.sdk.ArgumentParser;
+import kleicreator.sdk.config.Config;
 import kleicreator.sdk.constants.Constants;
 import kleicreator.export.Exporter;
 import kleicreator.frames.CreateModDialog;
@@ -34,16 +33,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static kleicreator.master.Master.GlobalTheme.*;
+
 public class Master {
     public static ProjectSelectDialog projectSelectDialog;
     public static JFrame projectSelectFrame;
     public static JFrame startupForm;
-
     public static String version = "v0.0.8";
-
     public static int currentlySelectedRow = -1;
-
     public static boolean exit = false;
+
+    public enum GlobalTheme {
+        Light,
+        Dark,
+        Default
+    }
 
     public static void Main(String[] args) {
         ArgumentParser.ParseArguments(args);
@@ -61,21 +65,19 @@ public class Master {
         new File(Constants.FILE_LOCATION + "/mods").mkdir();
         new File(Constants.FILE_LOCATION + "/kleicreator/speech").mkdir();
         new File(Constants.FILE_LOCATION + "/plugins").mkdir();
-        GlobalConfig.CreateStream();
-        new Config().Load(); //Load if config exists
-        new Config().Save(); //Otherwise, save default settings
+        new File(Constants.FILE_LOCATION + "/config").mkdir();
+        Config.AssertDataset("kleicreator");
+        Config.SaveData("kleicreator.theme", Light, false);
+        Config.SaveData("kleicreator.asksaveonleave", true, false);
 
         try {
-            switch (GlobalConfig.theme) {
-                case Light:
-                    UIManager.setLookAndFeel(new FlatLightLaf());
-                    break;
-                case Dark:
-                    UIManager.setLookAndFeel(new FlatDarkLaf());
-                    break;
-                case Default:
-                    UIManager.setLookAndFeel(new NimbusLookAndFeel());
-                    break;
+            Object o = Config.GetData("kleicreator.theme");
+            if (Light.equals(o)) {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } else if (Dark.equals(o)) {
+                UIManager.setLookAndFeel(new FlatDarkLaf());
+            } else if (Default.equals(o)) {
+                UIManager.setLookAndFeel(new NimbusLookAndFeel());
             }
 
             Logger.Debug("Successfully changed look and feel.");
@@ -102,7 +104,7 @@ public class Master {
             projectSelectDialog = new ProjectSelectDialog();
             projectSelectFrame = new JFrame("Select Project");
 
-            if(GlobalConfig.theme == GlobalConfig.Theme.Dark){
+            if(Config.GetData("kleicreator.theme") == GlobalTheme.Dark){
                 projectSelectDialog.getConfigButton().setForeground(new Color(33, 33, 33));
             }
 
@@ -148,11 +150,6 @@ public class Master {
                 }
             });
 
-            if (GlobalConfig.theme == GlobalConfig.Theme.Dark) {
-            } else {
-                projectSelectDialog.getConfigButton().setForeground(Color.BLACK);
-            }
-
             projectSelectDialog.getConfigButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -167,24 +164,23 @@ public class Master {
 
                     JComboBox theme = new JComboBox();
                     panel.add(theme);
-                    for (GlobalConfig.Theme t : GlobalConfig.Theme.values()) {
+                    for (GlobalTheme t : GlobalTheme.values()) {
                         theme.addItem(t.toString());
                     }
-                    theme.setSelectedIndex(GlobalConfig.theme.ordinal());
+                    theme.setSelectedIndex(((GlobalTheme)Config.GetData("kleicreator.theme")).ordinal());
 
                     JCheckBox askSaveOnLeave = new JCheckBox("Ask Save On Leave");
                     panel.add(askSaveOnLeave);
-                    askSaveOnLeave.setSelected(GlobalConfig.askSaveOnLeave);
+                    askSaveOnLeave.setSelected((Boolean) Config.GetData("kleicreator.asksaveonleave"));
 
                     JButton saveButton = new JButton("Save and Restart");
                     saveButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
                     saveButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            GlobalConfig.theme = GlobalConfig.Theme.valueOf(theme.getSelectedItem().toString());
-                            GlobalConfig.askSaveOnLeave = askSaveOnLeave.isSelected();
+                            Config.SaveData("kleicreator.theme", GlobalTheme.valueOf(theme.getSelectedItem().toString()));
+                            Config.SaveData("kleicreator.asksaveonleave",  askSaveOnLeave.isSelected());
                             PluginHandler.TriggerEvent("OnConfigSave", configDialogFrame);
-                            new Config().Save();
                             Starter.startCounter++;
                             exit = true;
                             configDialogFrame.dispose();

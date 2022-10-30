@@ -50,7 +50,6 @@ public class PluginHandler {
             jarEntry = jarFile.getNextEntry();
             if (jarEntry == null)
                 break;
-            Logger.Log(jarEntry.getName());
             if (jarEntry.getName().endsWith(".class")) {
                 String classname = jarEntry.getName().replaceAll("/", "\\.");
                 classname = classname.substring(0, classname.length() - 6);

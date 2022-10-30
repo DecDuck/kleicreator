@@ -5,6 +5,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 
 import static constants.Constants.FILE_LOCATION;
 
@@ -14,8 +15,15 @@ public class Logger {
 
     public static String currentLog = "";
 
+    public static Date startTime;
+
+    public static void Start(){
+        startTime = Calendar.getInstance().getTime();
+    }
+
     public static void Log(String message){
-        String currentMessage = "[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] " + message + "\n";
+        long time = Calendar.getInstance().getTime().getTime() - startTime.getTime();
+        String currentMessage = "[" + String.format("%08d", time) + "] " + message + "\n";
         currentLog = currentLog + currentMessage;
         System.out.print(currentMessage);
         WriteChanges();

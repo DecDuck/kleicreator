@@ -100,9 +100,9 @@ public class RecipeLoader extends ModLoader {
 
         int recipeIndex = modEditor.getModRecipesSelector().getSelectedIndex();
         if(recipeIndex == -1){
-            //We haven't selected anything
-            //Not putting a return, because we might want to do other things later
+            modEditor.getModRecipesEditor().setVisible(false);
         }else{
+            modEditor.getModRecipesEditor().setVisible(true);
             if(Mod.recipes.size()-1 < recipeIndex){
                 Logger.Error("Selection too long");
             }

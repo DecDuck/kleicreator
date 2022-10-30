@@ -1,5 +1,6 @@
 package export.templates;
 
+import export.SpeechExporter;
 import logging.Logger;
 import modloader.Mod;
 import modloader.ModLoader;
@@ -37,7 +38,28 @@ public class Template {
     public void Create(){
         switch(templateType){
             case Modmain:
+                String speechBlock = SpeechExporter.GenerateSpeech();
+                ReplaceAll("$SPEECH$", speechBlock);
 
+                //TODO $PREFABS$
+                break;
+            case Modinfo:
+                ReplaceAll("$MODNAME$", Mod.modName);
+                ReplaceAll("$MODDESCRIPTION$", Mod.modDescription);
+                ReplaceAll("$MODAUTHOR$", Mod.modAuthor);
+                ReplaceAll("$MODVERSION$", Mod.modVersion);
+                Resource modIcon = ResourceManager.resources.get(Mod.modIcon);
+                ReplaceAll("$MODICON$", modIcon.texture.texPath);
+                ReplaceAll("$MODICONXML$", modIcon.texture.xmlPath);
+                break;
+            case Item:
+                ReplaceAll("$ID$", item.itemId);
+                ReplaceAll("$UPPERID$", item.itemId.toUpperCase());
+                ReplaceAll("$NAME$", item.itemName);
+
+                //TODO $ASSETS$
+                //TODO $UPPER$
+                //TODO $FILLER$
                 break;
         }
     }

@@ -2,6 +2,9 @@ package speech;
 
 import logging.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SpeechFile {
 
     public enum SpeechType{
@@ -12,19 +15,10 @@ public class SpeechFile {
     public String resourceName = "";
     public String filePath = "";
 
-    public SpeechType speechType;
+    public Map<String, String> speech = new HashMap<String, String>();
 
-    public CharacterSpeech characterSpeech;
-    public ItemSpeech itemSpeech;
+    public SpeechFile(){
 
-    public SpeechFile(SpeechType s, Object speech){
-        speechType = s;
-        if(s == SpeechType.Character){
-            characterSpeech = (CharacterSpeech) speech;
-        }else if (s == SpeechType.Item){
-            itemSpeech = (ItemSpeech) speech;
-        }
-        Logger.Log("Created speech object with settings:" + s + ";" + speech);
     }
 
 }

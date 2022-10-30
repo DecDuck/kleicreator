@@ -1,14 +1,10 @@
 package modloader.resources;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.Dom4JDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 import constants.Constants;
 import logging.Logger;
-import modloader.ModLoader;
 import modloader.classes.Texture;
-import savesystem.SaveObject;
 import speech.CharacterSpeech;
 import speech.ItemSpeech;
 import speech.SpeechFile;
@@ -75,7 +71,7 @@ public class ResourceManager {
         }
     }
 
-    public static void LoadResource(String animPath){
+    public static void CreateResource(String animPath){
         Resource resource = new Resource();
         resource.isAnim = true;
         resource.isSpeech = false;
@@ -85,7 +81,7 @@ public class ResourceManager {
         resources.add(resource);
     }
 
-    public static void LoadResource(String tex, String xml, TextureLocation texLocation){
+    public static void CreateResource(String tex, String xml, TextureLocation texLocation){
         Resource resource = new Resource();
         resource.isTexture = true;
         resource.isSpeech = false;
@@ -114,7 +110,7 @@ public class ResourceManager {
         Logger.Log("Loaded texture resource");
     }
 
-    public static void LoadResource(SpeechFile.SpeechType speechType, String speechName){
+    public static void CreateResource(SpeechFile.SpeechType speechType, String speechName){
         if(speechXStream == null){
             CreateSpeechXStream();
         }
@@ -122,15 +118,9 @@ public class ResourceManager {
         r.isTexture = false;
         r.isSpeech = true;
         r.isAnim = false;
-        String fileLocation = Constants.FILE_LOCATION + "/speech/" + speechName.toLowerCase() + ".xml";
-        if(speechType == SpeechFile.SpeechType.Character){
-            r.speechFile = new SpeechFile(speechType, new CharacterSpeech());
-            r.speechFile.characterSpeech.speech.put("DESCRIBE.EXAMPLE", "Look! A cool new item!");
-        }else if(speechType == SpeechFile.SpeechType.Item){
-            r.speechFile = new SpeechFile(speechType, new ItemSpeech());
-            r.speechFile.itemSpeech.speech.put("DESCRIBE", "Look! A cool new item!");
-            r.speechFile.itemSpeech.itemName = speechName;
-        }
+        String fileLocation = Constants.FILE_LOCATION + "/speech/" + speechName.toLowerCase() + ".dat";
+        r.speechFile = new SpeechFile();
+        r.speechFile.speech.put("DESCRIBE.EXAMPLE", "Look! A cool new item!");
         r.speechFile.filePath = fileLocation;
         r.speechFile.resourceName = speechName.toLowerCase();
 
@@ -138,7 +128,11 @@ public class ResourceManager {
             new File(fileLocation).createNewFile();
             FileWriter fileWriter = new FileWriter(fileLocation);
             PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.print(speechXStream.toXML(r));
+            String fileContents = "";
+            for(Map.Entry<String, String> e:r.speechFile.speech.entrySet()){
+                fileContents += String.format("%s=%s", e.getKey(), e.getValue());
+            }
+            printWriter.print(fileContents);
             printWriter.close();
         } catch (IOException e) {
             Logger.Error(e.getLocalizedMessage());
@@ -148,22 +142,33 @@ public class ResourceManager {
         Logger.Log("Loaded speech resource");
     }
 
-    public static void LoadResource(Resource r){
+    public static void CreateResource(Resource r){
         Logger.Log("Directing resource");
         if(r.isTexture){
-            LoadResource(r.texture.texPath, r.texture.xmlPath, r.texLocation);
+            CreateResource(r.texture.texPath, r.texture.xmlPath, r.texLocation);
         }else if(r.isSpeech){
-            LoadResource(r.speechFile.speechType, r.speechFile.filePath);
+            CreateResource(SpeechFile.SpeechType.Item, r.speechFile.filePath);
         }
         Logger.Log("Directed");
     }
 
-    public static void ReloadResource(Resource r){
+    public static void ReloadSpeechResource(Resource r){
         try {
             File f = new File(r.speechFile.filePath);
-            String xml = Files.readString(f.toPath());
+            String dat = Files.readString(f.toPath());
+            Resource m = new Resource();
+            m.isSpeech = true;
+            m.speechFile = new SpeechFile();
+            m.speechFile.filePath = r.speechFile.filePath;
+            m.speechFile.resourceName = r.speechFile.resourceName;
+            m.filePath = r.filePath;
 
-            resources.set(resources.indexOf(r), (Resource) speechXStream.fromXML(xml));
+            for(String line:dat.split("\\\n")){
+                String[] parts = line.split("\\=");
+                m.speechFile.speech.put(parts[0], parts[1]);
+            }
+
+            resources.set(resources.indexOf(r), m);
         } catch (FileNotFoundException e) {
             Logger.Error(e.getLocalizedMessage());
         } catch (IOException e) {

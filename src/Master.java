@@ -35,8 +35,9 @@ public class Master {
     public static int currentlySelectedRow = -1;
 
     public static void main(String[] args){
-        Constants.CreateConstants();
+        Logger.Start();
         Logger.Log("Starting up...");
+        Constants.CreateConstants();
 
         new File(FILE_LOCATION + "/").mkdir();
         GlobalConfig.CreateStream();
@@ -69,7 +70,7 @@ public class Master {
         startupForm.setVisible(true);
 
         try {
-            Thread.sleep(2000); //Enjoy that logo and make the user think we're doing something important
+            Thread.sleep(1500); //Enjoy that logo and make the user think we're doing something important
         } catch (InterruptedException e) {
             Logger.Error(e.getLocalizedMessage());
         }

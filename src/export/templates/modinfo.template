@@ -1,6 +1,6 @@
 name = "$MODNAME$"
 description = "$MODDESCRIPTION$"
-author = "$MODAUTHOR$ | made with DGMM"
+author = "$MODAUTHOR$ | made with KleiCreator"
 version = "$MODVERSION$"
 icon = "$MODICON$"
 icon_atlas = "$MODICONXML$"

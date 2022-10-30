@@ -16,8 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import static constants.Constants.FILE_LOCATION;
 
@@ -69,7 +67,7 @@ public class ModLoaderActions extends ModLoader{
                         JOptionPane.showMessageDialog(modEditorFrame, chooser, "Open XML file", JOptionPane.QUESTION_MESSAGE);
                         File xmlFile = chooser.getSelectedFile();
 
-                        ResourceManager.LoadResource(texFile.getAbsolutePath(), xmlFile.getAbsolutePath(), ResourceManager.TextureLocation.values()[(ModLoader.getOption("Texture location", new Object[] {"Inventory Image", "Mod Icon", "Portrait", "Map Icon"}))]);
+                        ResourceManager.CreateResource(texFile.getAbsolutePath(), xmlFile.getAbsolutePath(), ResourceManager.TextureLocation.values()[(ModLoader.getOption("Texture location", new Object[] {"Inventory Image", "Mod Icon", "Portrait", "Map Icon"}))]);
                         Logger.Log("Created resource with settings:\n" +
                                 "   Tex Path: " + texFile.getAbsolutePath() + "\n" +
                                 "   Xml Path: " + xmlFile.getAbsolutePath() + "\n");
@@ -86,7 +84,7 @@ public class ModLoaderActions extends ModLoader{
                         speech.getSpeechCreate().addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                ResourceManager.LoadResource(SpeechFile.SpeechType.values()[speech.getSpeechFileType().getSelectedIndex()], speech.getSpeechNameTextField().getText());
+                                ResourceManager.CreateResource(SpeechFile.SpeechType.values()[speech.getSpeechFileType().getSelectedIndex()], speech.getSpeechNameTextField().getText());
                                 speechConfigFrame.dispose();
                                 Update();
                                 Logger.Log("Created speech resource");
@@ -107,7 +105,7 @@ public class ModLoaderActions extends ModLoader{
                         animChooser.addChoosableFileFilter(anim);
                         JOptionPane.showMessageDialog(modEditorFrame, animChooser, "Open Animation file", JOptionPane.QUESTION_MESSAGE);
                         File animationFile = animChooser.getSelectedFile();
-                        ResourceManager.LoadResource(animationFile.getAbsolutePath());
+                        ResourceManager.CreateResource(animationFile.getAbsolutePath());
                         Logger.Log("Finished importing animation");
                         break;
                 }

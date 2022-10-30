@@ -60,7 +60,7 @@ public class SaveObject implements java.io.Serializable {
 
     public void LoadResourcesList(List<Resource> a){
         for(Resource r: a){
-            ResourceManager.LoadResource(r);
+            ResourceManager.CreateResource(r);
         }
     }
 }

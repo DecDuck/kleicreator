@@ -5,7 +5,6 @@ import frames.ModEditor;
 import items.ItemLoader;
 import logging.Logger;
 import items.Item;
-import items.components.*;
 import modloader.resources.Resource;
 import modloader.resources.ResourceManager;
 import recipes.RecipeLoader;
@@ -19,7 +18,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.*;
 import java.awt.event.*;
 import java.io.*;
-import java.lang.reflect.Field;
 
 public class ModLoader {
     public static JFrame modEditorFrame;
@@ -102,7 +100,7 @@ public class ModLoader {
             if(r.isTexture){
                 resourceModel.addRow(new Object[] { ModLoader.fileComponent(r.texture.texPath), "Texture", r.texture.texPath + ";" + r.texture.xmlPath, r.filePath});
             }else if(r.isSpeech){
-                resourceModel.addRow(new Object[] { r.speechFile.resourceName, "Speech", r.speechFile.filePath, r.speechFile.speechType.name()});
+                resourceModel.addRow(new Object[] { r.speechFile.resourceName, "Speech", r.speechFile.filePath, "Size: " + r.speechFile.speech.size()});
             }else if(r.isAnim){
                 resourceModel.addRow(new Object[] { fileComponent(r.animFilePath), "Animation", r.animFilePath, ""});
             }
@@ -140,24 +138,25 @@ public class ModLoader {
         RecipeLoader.Update();
 
         try {
-            Item item = null;
-            try{
-                item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
-            }catch (IndexOutOfBoundsException e){
-                return;
-            }
+            if(modEditor.getModItemSelect().getSelectedIndex() != -1){
+                modEditor.getModItemConfigPanel().setVisible(true);
+                Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
 
-            if(modEditor.getModItemSelect().getSelectedIndex() < Mod.items.size() + 1){
+                if(modEditor.getModItemSelect().getSelectedIndex() < Mod.items.size() + 1){
 
+                }else{
+                    throw new Exception("Item not selected");
+                }
+
+                ItemLoader.UpdateTrees(item);
+
+                modEditor.getModItemNameTextField().setText(item.itemName);
+                modEditor.getModItemIdTextField().setText(item.itemId);
+                modEditor.getModItemTextureSelect().setSelectedIndex(item.itemTexture);
             }else{
-                throw new Exception("Item not selected");
+                modEditor.getModItemConfigPanel().setVisible(false);
             }
 
-            ItemLoader.UpdateTrees(item);
-
-            modEditor.getModItemNameTextField().setText(item.itemName);
-            modEditor.getModItemIdTextField().setText(item.itemId);
-            modEditor.getModItemTextureSelect().setSelectedIndex(item.itemTexture);
         } catch (Exception e) {
             Logger.Error(e.getLocalizedMessage());
         }
@@ -171,14 +170,8 @@ public class ModLoader {
 
         for(Resource r: ResourceManager.resources){
             if(r.isSpeech){
-                ResourceManager.ReloadResource(r);
-                if(r.speechFile.speechType == SpeechFile.SpeechType.Item)
-                {
-                    speechModel.addRow(new Object[]{r.speechFile.resourceName, r.speechFile.filePath, r.speechFile.speechType, r.speechFile.itemSpeech.speech.size()});
-                }else if(r.speechFile.speechType == SpeechFile.SpeechType.Character){
-                    speechModel.addRow(new Object[]{r.speechFile.resourceName, r.speechFile.filePath, r.speechFile.speechType, r.speechFile.characterSpeech.speech.size()});
-                }
-
+                ResourceManager.ReloadSpeechResource(r);
+                speechModel.addRow(new Object[]{r.speechFile.resourceName, r.speechFile.filePath, "Speech", r.speechFile.speech.size()});
             }
         }
     }

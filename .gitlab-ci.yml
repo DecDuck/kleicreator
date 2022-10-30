@@ -34,5 +34,4 @@ deploy-job:      # This job runs in the deploy stage.
     - cp sdk/build/libs/sdk* ./
   artifacts:
     paths:
-      - app*
-      - sdk*
+      - *.jar

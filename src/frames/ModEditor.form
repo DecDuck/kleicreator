@@ -418,7 +418,7 @@
               </component>
             </children>
           </grid>
-          <grid id="25d81" binding="modExportPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="25d81" binding="modExportPanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Export">
@@ -431,7 +431,7 @@
               <grid id="c8703" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -458,17 +458,6 @@
                   </component>
                 </children>
               </grid>
-              <component id="ab88a" class="javax.swing.JTextPane" default-binding="true">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <editable value="false"/>
-                  <text value="Hey There!&#10;&#10;For newbies, to actually use the mod in Don't Starve Together, you need to export it. This means we take everything you've worked so hard and convert to code, which then the game can run. Before export, however, you might want to Save All. It's just to make sure you don't loose everything!"/>
-                </properties>
-              </component>
             </children>
           </grid>
         </children>

@@ -2,12 +2,11 @@ package modloader;
 
 import export.Exporter;
 import frames.SpeechDialog;
-import logging.Logger;
 import items.Item;
+import logging.Logger;
 import modloader.resources.ResourceManager;
 import recipes.RecipeLoader;
 import resources.ResourceLoader;
-import speech.SpeechFile;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -19,14 +18,14 @@ import java.io.IOException;
 
 import static constants.Constants.FILE_LOCATION;
 
-public class ModLoaderActions extends ModLoader{
-    public static void SetupListeners(){
+public class ModLoaderActions extends ModLoader {
+    public static void SetupListeners() {
         modEditor.getModItemCreate().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mod.items.add(new Item());
                 Update();
-                ModLoader.modEditor.getModItemSelect().setSelectedIndex(Mod.items.size()-1);
+                ModLoader.modEditor.getModItemSelect().setSelectedIndex(Mod.items.size() - 1);
                 Logger.Log("Created Item");
             }
         });
@@ -51,7 +50,7 @@ public class ModLoaderActions extends ModLoader{
         modEditor.getResourcesAdd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switch(ModLoader.getOption("Type of resource", new Object[]{ "Texture", "Speech", })){
+                switch (ModLoader.getOption("Type of resource", new Object[]{"Texture", "Speech",})) {
                     case 0:
                         Logger.Log("Importing texture....");
                         JFileChooser chooser = new JFileChooser();
@@ -68,7 +67,7 @@ public class ModLoaderActions extends ModLoader{
                         JOptionPane.showMessageDialog(modEditorFrame, chooser, "Open XML file", JOptionPane.QUESTION_MESSAGE);
                         File xmlFile = chooser.getSelectedFile();
 
-                        ResourceManager.CreateTexture(texFile.getAbsolutePath(), xmlFile.getAbsolutePath(), ResourceManager.TextureLocation.values()[(ModLoader.getOption("Texture location", new Object[] {"Inventory Image", "Mod Icon", "Portrait", "Map Icon"}))]);
+                        ResourceManager.CreateTexture(texFile.getAbsolutePath(), xmlFile.getAbsolutePath(), ResourceManager.TextureLocation.values()[(ModLoader.getOption("Texture location", new Object[]{"Inventory Image", "Mod Icon", "Portrait", "Map Icon"}))]);
                         Logger.Log("Created new texture");
                         break;
                     case 1:

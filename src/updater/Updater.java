@@ -9,18 +9,17 @@ import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.HttpResponse;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public class Updater {
-    public static boolean CheckForUpdate(String version){
+    public static boolean CheckForUpdate(String version) {
 
         String url = "https://lab.deepcore.dev/api/v4/projects/6/releases";
 
@@ -38,29 +37,23 @@ public class Updater {
             JSONObject recent = obj.getJSONObject(0);
             String recentTag = recent.getString("tag_name").substring(1);
 
-            if(recentTag == version){
+            if (recentTag == version) {
                 return false;
             }
             String[] recentSplit = recentTag.split("\\.");
             String[] currentSplit = version.split("\\.");
-            if(Integer.parseInt(recentSplit[0]) < Integer.parseInt(currentSplit[0])){
+            if (Integer.parseInt(recentSplit[0]) < Integer.parseInt(currentSplit[0])) {
                 return false;
-            }
-            else if(Integer.parseInt(recentSplit[1]) < Integer.parseInt(currentSplit[1])){
+            } else if (Integer.parseInt(recentSplit[1]) < Integer.parseInt(currentSplit[1])) {
                 return false;
-            }
-            else if(Integer.parseInt(recentSplit[2]) < Integer.parseInt(currentSplit[2])){
-                return false;
-            }else{
-                return true;
-            }
+            } else return Integer.parseInt(recentSplit[2]) >= Integer.parseInt(currentSplit[2]);
 
         } catch (IOException | ParseException ex) {
         }
         return false;
     }
 
-    public static void GetLastestRelease(JFrame frame){
+    public static void GetLastestRelease(JFrame frame) {
         String url = "https://lab.deepcore.dev/api/v4/projects/6/releases";
 
         try {
@@ -83,15 +76,15 @@ public class Updater {
             hyperlink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             hyperlink.setFont(new Font("Serif", Font.PLAIN, 20));
 
-            if(JOptionPane.showConfirmDialog(frame, hyperlink, "New version: " + tag, JOptionPane.YES_NO_OPTION) == 0){
-                if(Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)){
+            if (JOptionPane.showConfirmDialog(frame, hyperlink, "New version: " + tag, JOptionPane.YES_NO_OPTION) == 0) {
+                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                     Desktop desktop = Desktop.getDesktop();
                     try {
                         desktop.browse(new URI(downloadURL));
                     } catch (IOException | URISyntaxException m) {
                         Logger.Error(ExceptionUtils.getStackTrace(m));
                     }
-                }else{
+                } else {
                     Runtime runtime = Runtime.getRuntime();
                     try {
                         runtime.exec("xdg-open " + downloadURL);

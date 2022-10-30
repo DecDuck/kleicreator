@@ -4,42 +4,30 @@ import export.AssetExporter;
 import export.PrefabExporter;
 import export.RecipeExporter;
 import export.SpeechExporter;
+import items.Item;
 import logging.Logger;
 import modloader.Mod;
-import modloader.ModLoader;
-import items.Item;
 import modloader.resources.Resource;
 import modloader.resources.ResourceManager;
-import speech.SpeechFile;
-
-import java.io.File;
-import java.util.Iterator;
-import java.util.Set;
 
 public class Template {
 
-    public enum Type{
-        Modmain,
-        Modinfo,
-        Item
-    }
-
     private String template;
-    private Type templateType;
+    private final Type templateType;
     private Item item;
-
-    public Template(String rawTemplate, Type t){
+    public Template(String rawTemplate, Type t) {
         this.template = rawTemplate;
         this.templateType = t;
     }
-    public Template(String rawTemplate, Type t, Item item){
+
+    public Template(String rawTemplate, Type t, Item item) {
         this.template = rawTemplate;
         this.templateType = t;
         this.item = item;
     }
 
-    public void Create(){
-        switch(templateType){
+    public void Create() {
+        switch (templateType) {
             case Modmain:
                 String speechBlock = SpeechExporter.GenerateSpeech();
                 ReplaceAll("$SPEECH$", speechBlock);
@@ -52,11 +40,11 @@ public class Template {
                 ReplaceAll("$MODDESCRIPTION$", Mod.modDescription);
                 ReplaceAll("$MODAUTHOR$", Mod.modAuthor);
                 ReplaceAll("$MODVERSION$", Mod.modVersion);
-                if(Mod.modIcon != -1){
+                if (Mod.modIcon != -1) {
                     Resource modIcon = ResourceManager.resources.get(Mod.modIcon);
                     ReplaceAll("$MODICON$", ""); // To-do
                     ReplaceAll("$MODICONXML$", ""); //To-do
-                }else{
+                } else {
                     ReplaceAll("$MODICON$", "");
                     ReplaceAll("$MODICONXML$", "");
                 }
@@ -68,9 +56,9 @@ public class Template {
                 ReplaceAll("$STACKSIZE$", String.valueOf(item.stackSize));
 
                 Logger.Log("Item texture is " + item.itemTexture);
-                if(item.itemTexture == -1){
+                if (item.itemTexture == -1) {
                     ReplaceAll("$ASSETS$", "");
-                }else{
+                } else {
                     ReplaceAll("$ASSETS$", AssetExporter.ExportAsset(ResourceManager.inventoryimages.get(item.itemTexture).Get()));
                 }
                 //TODO $UPPER$
@@ -79,11 +67,17 @@ public class Template {
         }
     }
 
-    private void ReplaceAll(String a, String b){
+    private void ReplaceAll(String a, String b) {
         template = template.replace(a, b);
     }
 
     public String getTemplate() {
         return template;
+    }
+
+    public enum Type {
+        Modmain,
+        Modinfo,
+        Item
     }
 }

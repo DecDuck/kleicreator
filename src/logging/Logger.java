@@ -1,9 +1,8 @@
 package logging;
-import modloader.ModLoader;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,11 +16,11 @@ public class Logger {
 
     public static Date startTime;
 
-    public static void Start(){
+    public static void Start() {
         startTime = Calendar.getInstance().getTime();
     }
 
-    public static void Log(String message){
+    public static void Log(String message) {
         long time = Calendar.getInstance().getTime().getTime() - startTime.getTime();
         String currentMessage = "[" + String.format("%08d", time) + "] " + message + "\n";
         currentLog = currentLog + currentMessage;
@@ -29,21 +28,21 @@ public class Logger {
         WriteChanges();
     }
 
-    public static void Log(String format, String... parts){
+    public static void Log(String format, String... parts) {
         Log(String.format(format, parts));
     }
 
-    public static void Warn(String warning){
+    public static void Warn(String warning) {
         Log("[WARN] " + warning);
         WriteChanges();
     }
 
-    public static void Error(String error){
+    public static void Error(String error) {
         Log("[ERROR] " + error);
         WriteChanges();
     }
 
-    public static void WriteChanges(){
+    public static void WriteChanges() {
         try {
             File file = new File(logLocation);
             FileWriter fr = new FileWriter(file, false);

@@ -10,20 +10,25 @@ import static constants.Constants.FILE_LOCATION;
 
 public class GlobalConfig {
 
-    public static boolean darkMode = false;
+    public static Theme theme = Theme.Light;
     public static boolean askSaveOnLeave = true;
     public static String modsLocation = "/mods/";
-
     public static XStream stream;
 
-    public static void CreateStream(){
+    public static void CreateStream() {
         stream = new XStream(new DomDriver());
         stream.alias("config", Config.class);
 
-        if(!new File(FILE_LOCATION + "/config.xml").exists()){
+        if (!new File(FILE_LOCATION + "/config.xml").exists()) {
             new Config().Save();
             Logger.Log("Created config file with default settings");
         }
+    }
+
+    public enum Theme {
+        Default,
+        Light,
+        Dark
     }
 
 }

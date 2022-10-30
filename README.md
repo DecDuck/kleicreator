@@ -1,4 +1,4 @@
-![logo](https://lab.deepcore.dev/decduck3/kleicreator/-/raw/master/src/resources/dstguimodcreatorlogo.png)
+![logo](https://lab.deepcore.dev/decduck3/kleicreator/-/raw/master/src/resources/Github.png)
 # KleiCreator
 Hello! If you're someone who wants to try this out for me, thanks! Here's the stuff you need to know:
  - It's written in Java. That means you need Java installed to run the program (Java 16)

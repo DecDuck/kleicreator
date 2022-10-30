@@ -22,6 +22,7 @@
       <root url="jar://$PROJECT_DIR$/src/lib/httpclient5-5.0.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/json-20201115.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/commons-lang3-3.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/weblaf-core-1.2.13.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

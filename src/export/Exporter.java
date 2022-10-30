@@ -18,15 +18,17 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class Exporter {
     private static ExportDialog exportDialog;
     private static JFrame exportWindowFrame;
     private static int points;
 
-    public static void Export(){
-        try{
+    public static void Export() {
+        try {
             InitLoading();
             String modOutput = Constants.FILE_LOCATION + "/exported/" + Mod.escapedModName() + "/";
             new File(modOutput).mkdir();
@@ -52,20 +54,21 @@ public class Exporter {
             Write(Templates.modmain, modOutput + "modmain.lua");
             MoveLoading();
 
-            for(int i = 0; i < Mod.items.size(); i++){
+            for (int i = 0; i < Mod.items.size(); i++) {
                 Templates.itemTemplates.get(i).Create();
                 Write(Templates.itemTemplates.get(i), modOutput + "scripts/prefabs/" + Mod.items.get(i).itemId + ".lua");
                 MoveLoading();
             }
 
             Done(modOutput);
-        }catch(Exception e){
+        } catch (Exception e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
             ModLoader.ShowWarning("There was an error while exporting the mod");
         }
 
     }
-    private static void CreateFolders(String outputLocation){
+
+    private static void CreateFolders(String outputLocation) {
         new File(Constants.FILE_LOCATION + "/exported/").mkdir();
         new File(outputLocation).mkdir();
         new File(outputLocation + "images").mkdir();
@@ -75,10 +78,11 @@ public class Exporter {
         new File(outputLocation + "scripts/prefabs").mkdir();
         new File(outputLocation + "anim").mkdir();
     }
-    private static void CopyResources(String outputLocation){
+
+    private static void CopyResources(String outputLocation) {
         Logger.Log("Starting resource copy");
-        for(Resource r: ResourceManager.resources){
-            if(r.Is(ResourceTexture.class)) {
+        for (Resource r : ResourceManager.resources) {
+            if (r.Is(ResourceTexture.class)) {
                 try {
                     ResourceTexture m = r.Get();
                     Files.copy(Paths.get(m.texPath), Paths.get(outputLocation + m.filePath + ModLoader.fileComponent(m.texPath)), StandardCopyOption.REPLACE_EXISTING);
@@ -87,7 +91,7 @@ public class Exporter {
                     Logger.Error(ExceptionUtils.getStackTrace(e));
                 }
             }
-            if(r.Is(ResourceAnimation.class)){
+            if (r.Is(ResourceAnimation.class)) {
                 try {
                     ResourceAnimation m = r.Get();
                     Files.copy(Paths.get(m.animFilePath), Paths.get(outputLocation + "/anim/" + ModLoader.fileComponent(m.animFilePath)), StandardCopyOption.REPLACE_EXISTING);
@@ -98,7 +102,8 @@ public class Exporter {
         }
         Logger.Log("Finished resource copy");
     }
-    private static void InitLoading(){
+
+    private static void InitLoading() {
         exportDialog = new ExportDialog();
         exportWindowFrame = new JFrame("Exporting...");
         Logger.Log("Exporting...");
@@ -113,7 +118,8 @@ public class Exporter {
         points = 6 + Mod.items.size();
         Logger.Log("Finished Init");
     }
-    private static void Write(Template toWrite, String fileLocation){
+
+    private static void Write(Template toWrite, String fileLocation) {
         Logger.Log("Writing to " + fileLocation);
         try {
             new File(fileLocation).createNewFile();
@@ -125,19 +131,21 @@ public class Exporter {
         }
         Logger.Log("Done");
     }
-    private static void MoveLoading(){
+
+    private static void MoveLoading() {
         int currentValue = exportDialog.getExportProgressBar().getValue();
-        float eachPointValue = 100/points;
+        float eachPointValue = 100 / points;
         try {
             Thread.sleep(900);
         } catch (InterruptedException e) {
-            
+
         }
         exportDialog.getExportProgressBar().setValue(currentValue + (int) eachPointValue);
         exportWindowFrame.pack();
         SwingUtilities.updateComponentTreeUI(exportWindowFrame);
     }
-    private static void Done(String finishedLocation){
+
+    private static void Done(String finishedLocation) {
         JOptionPane.showMessageDialog(ModLoader.modEditorFrame, "Done!");
         exportDialog.getExportProgressBar().setValue(100);
         exportWindowFrame.dispose();

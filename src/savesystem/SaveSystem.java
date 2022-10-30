@@ -17,38 +17,38 @@ public class SaveSystem {
             pwOb.flush();
             pwOb.close();
             fwOb.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
         }
     }
 
-    public static void Save(String filePath){
+    public static void Save(String filePath) {
         Logger.Log("Starting save");
         try {
-        File f = new File(filePath);
-        if(!f.isFile()){
-            f.createNewFile();
-        }
+            File f = new File(filePath);
+            if (!f.isFile()) {
+                f.createNewFile();
+            }
 
-        ClearFile(filePath);
+            ClearFile(filePath);
 
-        XStream xstream = new XStream(new DomDriver());
-        
-        SaveObject toSave = new SaveObject();
+            XStream xstream = new XStream(new DomDriver());
 
-        String xml = xstream.toXML(toSave);
+            SaveObject toSave = new SaveObject();
 
-        FileWriter fileWriter = new FileWriter(filePath);
-        PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.print(xml);
-        printWriter.close();
+            String xml = xstream.toXML(toSave);
+
+            FileWriter fileWriter = new FileWriter(filePath);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            printWriter.print(xml);
+            printWriter.close();
 
         } catch (IOException e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
         }
     }
 
-    public static void Load(String filePath){
+    public static void Load(String filePath) {
         try {
             SaveObject e = null;
             XStream xstream = new XStream(new StaxDriver());
@@ -71,7 +71,7 @@ public class SaveSystem {
         }
     }
 
-    public static SaveObject TempLoad(String filePath){
+    public static SaveObject TempLoad(String filePath) {
         try {
             SaveObject e = null;
             XStream xstream = new XStream(new StaxDriver());

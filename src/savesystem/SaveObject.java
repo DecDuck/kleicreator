@@ -1,7 +1,6 @@
 package savesystem;
 
 import items.Item;
-import logging.Logger;
 import modloader.Mod;
 import modloader.resources.Resource;
 import modloader.resources.ResourceManager;
@@ -21,7 +20,7 @@ public class SaveObject implements java.io.Serializable {
     public List<Resource> resources = new ArrayList<Resource>();
     public List<Recipe> recipes = new ArrayList<Recipe>();
 
-    public SaveObject(){
+    public SaveObject() {
         modName = Mod.modName;
         modAuthor = Mod.modAuthor;
         modDescription = Mod.modDescription;
@@ -34,7 +33,7 @@ public class SaveObject implements java.io.Serializable {
         recipes = Mod.recipes;
     }
 
-    public void LoadBack(){
+    public void LoadBack() {
         Mod.modName = modName;
         Mod.modAuthor = modAuthor;
         Mod.modDescription = modDescription;
@@ -42,11 +41,11 @@ public class SaveObject implements java.io.Serializable {
         Mod.modIcon = modIcon;
 
         Mod.items.clear();
-        for(int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
             Mod.items.add(items.get(i));
         }
         Mod.recipes.clear();
-        for(int i = 0; i < recipes.size(); i++){
+        for (int i = 0; i < recipes.size(); i++) {
             Mod.recipes.add(recipes.get(i));
         }
 
@@ -54,8 +53,8 @@ public class SaveObject implements java.io.Serializable {
         ResourceManager.GenerateResourceLists();
     }
 
-    public void LoadResourcesList(List<Resource> a){
-        for(Resource r: a){
+    public void LoadResourcesList(List<Resource> a) {
+        for (Resource r : a) {
             ResourceManager.LoadResource(r);
         }
     }

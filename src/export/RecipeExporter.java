@@ -9,10 +9,10 @@ import java.util.Map;
 
 public class RecipeExporter {
 
-    public static String GenerateRecipeExport(){
+    public static String GenerateRecipeExport() {
         String output = "";
 
-        for(Recipe r: Mod.recipes){
+        for (Recipe r : Mod.recipes) {
             output += GenerateRecipe(r) + "\n";
         }
 
@@ -21,23 +21,23 @@ public class RecipeExporter {
         return output;
     }
 
-    private static String GenerateRecipe(Recipe r){
+    private static String GenerateRecipe(Recipe r) {
         String ingredients = "";
         String ingredientsTemplate = "Ingredient(\"%s\", %s), ";
         Map<String, Integer> ingredientsMap = new HashMap<String, Integer>();
-        for(String ingr:r.ingredients){
-            if(ingredientsMap.containsKey(ingr)){
-                ingredientsMap.put(ingr, ingredientsMap.get(ingr)+1);
-            }else{
+        for (String ingr : r.ingredients) {
+            if (ingredientsMap.containsKey(ingr)) {
+                ingredientsMap.put(ingr, ingredientsMap.get(ingr) + 1);
+            } else {
                 ingredientsMap.put(ingr, 1);
             }
         }
 
-        for(Map.Entry<String, Integer> pair:ingredientsMap.entrySet()){
+        for (Map.Entry<String, Integer> pair : ingredientsMap.entrySet()) {
             ingredients += String.format(ingredientsTemplate, pair.getKey(), pair.getValue().toString());
         }
 
-        ingredients = ingredients.substring(0, ingredients.length()-2);
+        ingredients = ingredients.substring(0, ingredients.length() - 2);
 
         Logger.Log("Using ingredient string '%s'", ingredients);
 

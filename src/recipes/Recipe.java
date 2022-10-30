@@ -9,6 +9,17 @@ public class Recipe {
     public TECH tech;
     public RECIPETAB tab;
 
+    public Recipe() {
+
+    }
+
+    public Recipe(String result, List<String> ingredients, RECIPETAB tab, TECH tech) {
+        this.result = result;
+        this.ingredients = ingredients;
+        this.tab = tab;
+        this.tech = tech;
+    }
+
     public enum TECH {
         NONE,
         SCIENCE_ONE,
@@ -68,16 +79,5 @@ public class Recipe {
         REFINE,
         MAGIC,
         DRESS
-    }
-
-    public Recipe(){
-
-    }
-
-    public Recipe(String result, List<String> ingredients, RECIPETAB tab, TECH tech) {
-        this.result = result;
-        this.ingredients = ingredients;
-        this.tab = tab;
-        this.tech = tech;
     }
 }

@@ -4,24 +4,20 @@ import export.templates.Template;
 import logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 
 public class TemplateLoader {
 
+    public static final URL ITEM_TEMPLATE_LOCATION = Template.class.getResource("item.template");
+    public static final URL MODMAIN_TEMPLATE_LOCATION = Template.class.getResource("modmain.template");
+    public static final URL MODINFO_TEMPLATE_LOCATION = Template.class.getResource("modinfo.template");
     public static String ITEM_TEMPLATE;
     public static String MODMAIN_TEMPLATE;
     public static String MODINFO_TEMPLATE;
 
-    public static final URL ITEM_TEMPLATE_LOCATION = Template.class.getResource("item.template");
-    public static final URL MODMAIN_TEMPLATE_LOCATION = Template.class.getResource("modmain.template");
-    public static final URL MODINFO_TEMPLATE_LOCATION = Template.class.getResource("modinfo.template");
-
-    public static void LoadTemplates(){
+    public static void LoadTemplates() {
         try {
             ITEM_TEMPLATE = LoadTemplate(ITEM_TEMPLATE_LOCATION);
         } catch (IOException e) {

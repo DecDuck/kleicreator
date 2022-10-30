@@ -20,7 +20,7 @@ Once you've made a mod by filling out the Create Mod box, you are presented with
  - Speech: basically nothing, but shows only speech files (but you have to make them in the resources tab)
  - Export: save all and export (does nothing)
 
-#### Main Config
+#### Config
 Self explanatory. Nothing complicated here.
 #### Items
 This is where it gets a bit tricky. Each item has the following properties: Name, id, texture and components:
@@ -39,10 +39,10 @@ Works similar to items. Create and select the recipe, and double click anything 
  - Tag: A limiting tag, used for character specific crafts. 
 #### Resources
 Has the ability to create/import textures, animations or speech files. 
- - Textures: First select the .text file, then the .xml file
- - Speech: Specific the item name and the defaults for the first entry, also the type of speech (Character is simply useless)
- - Animation: Pick a .zip that has the animation
+ - Textures: First select the .tex file, then the .xml file
+ - Speech: Specify the file name
+ - Animation: Pick a .zip that has the animation. To use with items, the bank and build have to be the item's id
 #### Speech
 Shows only the speech resources, their location and how many entries they have. 
 #### Export
-Does nothing (at the moment)
+Converts the project to a working mod that can be used in game

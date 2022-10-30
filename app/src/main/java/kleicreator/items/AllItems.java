@@ -5,6 +5,7 @@ import java.util.List;
 
 public class AllItems {
 
+    // Maybe load this in from a file or similar?
     public static List<Item> allItems = Arrays.asList(
             new Item("Abigail's Flower", "abigail_flower"),
             new Item("Applied Horticulture", "book_gardening"),

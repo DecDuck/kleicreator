@@ -136,7 +136,7 @@
               </component>
             </children>
           </grid>
-          <grid id="e9185" binding="modItems" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="true" hgap="-1" vgap="-1">
+          <grid id="e9185" binding="modItems" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="20" left="20" bottom="20" right="20"/>
             <constraints>
               <tabbedpane title="Items">

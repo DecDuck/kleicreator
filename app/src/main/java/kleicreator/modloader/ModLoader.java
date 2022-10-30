@@ -1,8 +1,6 @@
 package kleicreator.modloader;
 
 import com.google.gson.Gson;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import kleicreator.frames.MapCreatorDialog;
 import kleicreator.frames.ModEditor;
 import kleicreator.items.Item;
@@ -19,7 +17,6 @@ import kleicreator.savesystem.SaveSystem;
 import kleicreator.sdk.config.Config;
 import kleicreator.sdk.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.reflections.serializers.JsonSerializer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -357,8 +354,8 @@ public class ModLoader {
 
     public static Boolean getBool(String message) {
         Object[] options = {
-                "Yes",
-                "No"
+                "True",
+                "False"
         };
         int n = JOptionPane.showOptionDialog(modEditorFrame, message, message, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         return n == 0;

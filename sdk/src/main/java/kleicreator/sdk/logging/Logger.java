@@ -12,7 +12,7 @@ import java.util.Date;
 public class Logger {
     public enum Level {
         Debug,
-        Log,
+        Info,
         Warn,
         Error
     }
@@ -23,7 +23,7 @@ public class Logger {
 
     public static Date startTime;
 
-    public static Level MinimumLogLevel = Level.Log;
+    public static Level MinimumLogLevel = Level.Info;
 
     public static void Start() {
         startTime = Calendar.getInstance().getTime();
@@ -33,11 +33,11 @@ public class Logger {
     }
 
     public static void Log(String message){
-        Print(Level.Log, message);
+        Print(Level.Info, message);
     }
 
     public static void Log(String format, String... parts){
-        Print(Level.Log, format, parts);
+        Print(Level.Info, format, parts);
     }
 
     public static void Debug(String message){
@@ -50,7 +50,7 @@ public class Logger {
 
     private static void Print(Level level, String message) {
         long time = Calendar.getInstance().getTime().getTime() - startTime.getTime();
-        String currentMessage = "[" + String.format("%08d", time) + "] ["+ getCallerClassName()+"] " + message + "\n";
+        String currentMessage = "[" + String.format("%08d", time) + "] [" + level.toString().toUpperCase() + "] ["+ getCallerClassName()+"] " + message + "\n";
         currentLog = currentLog + currentMessage;
         if(level.ordinal() < MinimumLogLevel.ordinal()){
 

@@ -62,7 +62,7 @@ public class Updater {
         return false;
     }
 
-    public static void GetLastestRelease(JFrame frame) {
+    public static void GetLatestRelease(JFrame frame) {
         String url = "https://api.github.com/repos/deepcoredev/kleicreator/releases";
 
         try {

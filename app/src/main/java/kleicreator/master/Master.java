@@ -241,7 +241,7 @@ public class Master {
             Logger.Debug("Checking for update...");
             if (Updater.CheckForUpdate(version)) {
                 Logger.Log("Found update.");
-                Updater.GetLastestRelease(projectSelectFrame);
+                Updater.GetLatestRelease(projectSelectFrame);
             }
 
             // This is here so we look important

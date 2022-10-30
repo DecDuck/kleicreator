@@ -65,7 +65,7 @@ public class RecipeLoader extends ModLoader {
                         }
                         if (selPath.getPathComponent(1).toString() == "Ingredients" && selected != "Add") {
                             //We're deleting an ingredient
-                            //Maybe add an edit element later
+                            //Maybe add an edit element later (Issue #4)
                             Mod.recipes.get(i).ingredients.remove(Mod.GetItemByName(selected).itemId);
                             Update();
                             return;

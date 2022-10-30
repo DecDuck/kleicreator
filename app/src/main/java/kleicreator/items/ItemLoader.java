@@ -25,6 +25,7 @@ public class ItemLoader extends ModLoader {
     public static TooltipTreeRenderer notAdded = new TooltipTreeRenderer();
     public static TooltipTreeRenderer added = new TooltipTreeRenderer();
 
+    /* I have no idea what the hell any of this does, but it works, so I'm not going near it */
     public static void SetupAddedTree(JTree addedTree) {
         MouseListener ml = new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -88,6 +89,7 @@ public class ItemLoader extends ModLoader {
         addedTree.addMouseListener(ml);
     }
 
+    /* I have no idea what the hell any of this does, but it works, so I'm not going near it */
     public static void SetupNotAddedTree(JTree notAddedTree) {
         MouseListener ml2 = new MouseAdapter() {
             public void mousePressed(MouseEvent e) {

@@ -368,7 +368,7 @@ public class ModEditor {
         modNameTextField = new JTextField();
         mainConfig.add(modNameTextField, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         modItems = new JPanel();
-        modItems.setLayout(new GridLayoutManager(4, 2, new Insets(20, 20, 20, 20), -1, -1, false, true));
+        modItems.setLayout(new GridLayoutManager(4, 2, new Insets(20, 20, 20, 20), -1, -1));
         modConfig.addTab("Items", null, modItems, "Create, delete and modify your modded items");
         modItemConfigPanel = new JPanel();
         modItemConfigPanel.setLayout(new GridLayoutManager(7, 2, new Insets(0, 0, 0, 0), -1, -1));

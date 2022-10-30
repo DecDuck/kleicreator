@@ -17,7 +17,10 @@ public class Item {
     public int itemTexture = -1;
     public int stackSize = 100;
     public static List<Class<? extends ItemComponent>> registeredComponents = new ArrayList<>();
+
+
     static {
+        // This fancy reflection stuff is just for us. Plugins' components are registered when they're loaded in
         Item.registeredComponents.clear();
         Reflections reflections = new Reflections("kleicreator.items.components");
         Set<Class<? extends ItemComponent>> components = reflections.getSubTypesOf(ItemComponent.class);

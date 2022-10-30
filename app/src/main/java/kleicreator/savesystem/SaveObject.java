@@ -18,9 +18,9 @@ public class SaveObject implements java.io.Serializable {
     public int modIcon;
     public Mod.Game game;
 
-    public List<Item> items = new ArrayList<Item>();
-    public List<Resource> resources = new ArrayList<Resource>();
-    public List<Recipe> recipes = new ArrayList<Recipe>();
+    public List<Item> items;
+    public List<Resource> resources;
+    public List<Recipe> recipes;
 
     public SaveObject() {
         modName = Mod.modName;

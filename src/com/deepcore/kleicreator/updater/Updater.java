@@ -46,7 +46,7 @@ public class Updater {
                 return false;
             } else if (Integer.parseInt(recentSplit[1]) < Integer.parseInt(currentSplit[1])) {
                 return false;
-            } else return Integer.parseInt(recentSplit[2]) >= Integer.parseInt(currentSplit[2]);
+            } else return Integer.parseInt(recentSplit[2]) > Integer.parseInt(currentSplit[2]);
 
         } catch (IOException | ParseException ex) {
         }

@@ -1,0 +1,20 @@
+name = "$MODNAME$"
+author = "$MODAUTHOR$ | made with KleiCreator"
+version = "$MODVERSION$"
+icon = "$MODICON$"
+icon_atlas = "$MODICONXML$"
+
+description = [[
+$MODDESCRIPTION$
+]]
+
+forumthread = ""
+
+api_version = 10
+dst_compatible = true
+all_clients_require_mod = true
+
+configuration_options =
+{
+
+}

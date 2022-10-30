@@ -39,7 +39,7 @@ public class Master {
     public static JFrame projectSelectFrame;
     public static JFrame startupForm;
 
-    public static String version = "v0.0.7";
+    public static String version = "v0.0.8";
 
     public static int currentlySelectedRow = -1;
 

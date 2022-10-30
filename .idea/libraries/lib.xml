@@ -1,0 +1,29 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/lib/reactive-streams-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/commons-cli-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/httpcore5-reactive-5.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/httpcore5-testing-5.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/flatlaf-0.46.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/commons-codec-1.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/darcula.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/jna-5.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/slf4j-api-1.7.25.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/httpclient5-win-5.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/httpcore5-h2-5.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/httpclient5-cache-5.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/jna-platform-5.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/rxjava-2.2.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/httpclient5-fluent-5.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/httpcore5-5.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/httpclient5-testing-5.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/xstream-1.4.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/httpclient5-5.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/json-20201115.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/commons-lang3-3.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

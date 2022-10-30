@@ -1,14 +1,6 @@
 package frames;
 
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
-import java.awt.*;
-import java.util.Locale;
 
 public class ProjectSelect {
     private JPanel ProjectSelectPanel;
@@ -17,6 +9,7 @@ public class ProjectSelect {
     private JButton loadMod;
     private JLabel titleLabel;
     private JScrollPane tableScrollPlane;
+    private JButton configButton;
 
     public JPanel getProjectSelectPanel() {
         return ProjectSelectPanel;
@@ -42,4 +35,7 @@ public class ProjectSelect {
         return tableScrollPlane;
     }
 
+    public JButton getConfigButton() {
+        return configButton;
+    }
 }

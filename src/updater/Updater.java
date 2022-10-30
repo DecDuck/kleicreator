@@ -19,9 +19,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class Updater {
-    public static boolean CheckForUpdate(float version){
+    public static boolean CheckForUpdate(String version){
 
-        String url = "https://api.github.com/repos/decduck3/dstguimodcreator/releases";
+        String url = "https://lab.deepcore.dev/api/v4/projects/6/releases";
+
+        version = version.substring(1); // Remove v
 
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -31,11 +33,22 @@ public class Updater {
             HttpResponse result = httpClient.execute(request);
             String json = EntityUtils.toString(((CloseableHttpResponse) result).getEntity(), "UTF-8");
 
-            json = "{ \"releases\": " + json + "}";
+            JSONArray obj = new JSONArray(json);
+            JSONObject recent = obj.getJSONObject(0);
+            String recentTag = recent.getString("tag_name").substring(1);
 
-            JSONObject obj = new JSONObject(json);
-            JSONArray releases = obj.getJSONArray("releases");
-            if(Float.parseFloat(releases.getJSONObject(0).getString("tag_name")) > version){
+            if(recentTag == version){
+                return false;
+            }
+            String[] recentSplit = recentTag.split("\\.");
+            String[] currentSplit = version.split("\\.");
+            if(Integer.parseInt(recentSplit[0]) > Integer.parseInt(currentSplit[0])){
+                return true;
+            }
+            if(Integer.parseInt(recentSplit[1]) > Integer.parseInt(currentSplit[1])){
+                return true;
+            }
+            if(Integer.parseInt(recentSplit[2]) > Integer.parseInt(currentSplit[2])){
                 return true;
             }
 
@@ -45,7 +58,7 @@ public class Updater {
     }
 
     public static void GetLastestRelease(JFrame frame){
-        String url = "https://api.github.com/repos/decduck3/dstguimodcreator/releases";
+        String url = "https://lab.deepcore.dev/api/v4/projects/6/releases";
 
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -55,30 +68,15 @@ public class Updater {
             HttpResponse result = httpClient.execute(request);
             String json = EntityUtils.toString(((CloseableHttpResponse) result).getEntity(), "UTF-8");
 
-            json = "{ \"releases\": " + json + "}";
+            JSONArray obj = new JSONArray(json);
+            JSONObject recent = obj.getJSONObject(0);
 
-            JSONObject obj = new JSONObject(json);
-            JSONArray releases = obj.getJSONArray("releases");
-            String newURL = releases.getJSONObject(0).getString("assets_url");
-            String newVersion = releases.getJSONObject(0).getString("name");
-
-            HttpGet newRequest = new HttpGet(newURL);
-            newRequest.addHeader("content-type", "application/json");
-            newRequest.addHeader("accept", "application/vnd.github.v3+json");
-            result = httpClient.execute(newRequest);
-
-            String newJson = EntityUtils.toString(((CloseableHttpResponse) result).getEntity(), "UTF-8");
-
-            newJson = "{ \"releases\": " + newJson + "}";
-
-            obj = new JSONObject(newJson);
-
-            JSONArray assets = obj.getJSONArray("releases");
-
-            String downloadURL = assets.getJSONObject(0).getString("browser_download_url");
+            String downloadURL = recent.getJSONObject("_links").getString("self");
+            String downloadText = recent.getString("name");
+            String tag = recent.getString("tag_name");
 
             //CREATE POPUP
-            JLabel hyperlink = new JLabel("Download new update");
+            JLabel hyperlink = new JLabel(downloadText);
             hyperlink.setForeground(Color.BLUE.darker());
             hyperlink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             hyperlink.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -86,12 +84,20 @@ public class Updater {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    try {
-                        Desktop.getDesktop().browse(new URI(downloadURL));
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    } catch (URISyntaxException uriSyntaxException) {
-                        uriSyntaxException.printStackTrace();
+                    if(Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)){
+                        Desktop desktop = Desktop.getDesktop();
+                        try {
+                            desktop.browse(new URI(downloadURL));
+                        } catch (IOException | URISyntaxException m) {
+                            Logger.Error(m.getLocalizedMessage());
+                        }
+                    }else{
+                        Runtime runtime = Runtime.getRuntime();
+                        try {
+                            runtime.exec("xdg-open " + downloadURL);
+                        } catch (IOException m) {
+                            Logger.Error(m.getLocalizedMessage());
+                        }
                     }
                 }
 
@@ -106,7 +112,7 @@ public class Updater {
                 }
             });
 
-            JOptionPane.showMessageDialog(frame, hyperlink, "New update: " + newVersion, JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(frame, hyperlink, "New version: " + tag, JOptionPane.INFORMATION_MESSAGE);
 
         } catch (IOException | ParseException ex) {
             ex.printStackTrace();

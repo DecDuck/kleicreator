@@ -1,6 +1,5 @@
 package config;
 
-import com.sun.jna.platform.unix.X11;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import logging.Logger;

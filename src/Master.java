@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -31,7 +32,7 @@ public class Master {
     public static ProjectSelect projectSelect;
     public static JFrame projectSelectFrame;
 
-    public static float version = 0.14f;
+    public static String version = "v0.0.5";
 
     public static int currentlySelectedRow = -1;
 
@@ -50,8 +51,12 @@ public class Master {
             }else{
                 UIManager.setLookAndFeel(new FlatLightLaf());
             }
+            URL fontUrl = new URL("http://www.webpagepublicity.com/" +
+                    "free-fonts/a/Airacobra%20Condensed.ttf");
+
+            setUIFont (Font.createFont(Font.PLAIN, new File(ResourceLoader.class.getResource("font.ttf").getFile())).deriveFont(15f));
             Logger.Log("Changed look and feel");
-        } catch (UnsupportedLookAndFeelException e) {
+        } catch (UnsupportedLookAndFeelException | IOException | FontFormatException e) {
             Logger.Error(e.getLocalizedMessage());
         }
 
@@ -127,6 +132,30 @@ public class Master {
             }
         });
 
+        projectSelect.getConfigButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame configEditorFrame = new JFrame();
+                ConfigEditor configEditor = new ConfigEditor();
+                configEditorFrame.setContentPane(configEditor.getFrame());
+                configEditor.getDarkModeCheckBox().setSelected(GlobalConfig.darkMode);
+                configEditor.getAskSaveOnLeaveCheckBox().setSelected(GlobalConfig.askSaveOnLeave);
+                configEditor.getSave().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        GlobalConfig.darkMode = configEditor.getAskSaveOnLeaveCheckBox().isSelected();
+                        GlobalConfig.askSaveOnLeave = configEditor.getDarkModeCheckBox().isSelected();
+                        new Config().Save();
+                        System.exit(0);
+                    }
+                });
+
+                configEditorFrame.pack();
+                configEditorFrame.setLocationRelativeTo(null);
+                configEditorFrame.setVisible(true);
+            }
+        });
+
         projectSelectFrame.pack();
         startupForm.setVisible(false);
         projectSelectFrame.setLocationRelativeTo(null);
@@ -143,7 +172,7 @@ public class Master {
     }
 
     public static void CreateNewMod(){
-        JFrame newModConfigFrame = new JFrame("Mod Creation");
+        JFrame newModConfigFrame = new JFrame("Create New Mod");
         NewModConfig newModConfig = new NewModConfig();
         newModConfigFrame.setContentPane(newModConfig.getNewModConfigPanel());
         newModConfigFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -157,7 +186,7 @@ public class Master {
                 String author = newModConfig.getModAuthorTextField().getText();
                 projectSelectFrame.setVisible(false);
                 newModConfigFrame.setVisible(false);
-                ModLoader.CreateMod(FILE_LOCATION + GlobalConfig.modsLocation + name.replace(" ", "") + ".demv", author, name);
+                ModLoader.CreateMod(FILE_LOCATION + GlobalConfig.modsLocation + name.replace(" ", "") + ".proj", author, name);
             }
         });
 
@@ -203,7 +232,7 @@ public class Master {
         File [] files = dir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.endsWith(".demv");
+                return name.endsWith(".proj");
             }
         });
         List<String> _directories = new ArrayList<String>();
@@ -213,5 +242,15 @@ public class Master {
         }
 
         return _directories.toArray(new String[0]);
+    }
+
+    public static void setUIFont (Font f){
+        java.util.Enumeration keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get (key);
+            if (value instanceof javax.swing.plaf.FontUIResource)
+                UIManager.put (key, f);
+        }
     }
 }

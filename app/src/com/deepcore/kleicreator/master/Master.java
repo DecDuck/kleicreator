@@ -1,5 +1,6 @@
 package com.deepcore.kleicreator.master;
 
+import com.deepcore.kleicreator.export.Exporter;
 import com.deepcore.kleicreator.frames.ProjectSelectDialog;
 import com.deepcore.kleicreator.plugin.PluginHandler;
 import com.deepcore.kleicreator.sdk.gui.JHelper;
@@ -33,6 +34,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -50,9 +52,11 @@ public class Master {
     public static boolean exit = false;
 
     public static void Main(String[] args) {
+        ArgumentParser.ParseArguments(args);
         Constants.CreateConstants();
         Logger.Start();
         Logger.Log("KleiCreator %s. Credits to DeepCore", version);
+        Logger.Log("Started with args: " + String.join(" ", args));
 
         PluginHandler.LoadPlugins();
         PluginHandler.TriggerEvent("OnLoad");
@@ -88,149 +92,148 @@ public class Master {
             Logger.Error(ExceptionUtils.getStackTrace(e));
         }
 
-        //Create loading form
-        startupForm = new JFrame();
-        startupForm.setContentPane(new Startup().getStartupPanel());
-        startupForm.setUndecorated(true);
-        startupForm.setType(Window.Type.UTILITY);
-        startupForm.pack();
-        startupForm.setLocationRelativeTo(null);
-        startupForm.setVisible(true);
-
-        //If arguments, we assume it's a project file and copy it to project directory
-        if (args.length > 0) {
-            try {
-                Files.copy(Paths.get(args[0]), Paths.get(FILE_LOCATION + "/mods/" + ModLoader.fileComponent(args[0])), StandardCopyOption.REPLACE_EXISTING);
-                Logger.Debug("Copied project from %s to %s", args[0], FILE_LOCATION + "/mods/" + ModLoader.fileComponent(args[0]));
-            } catch (IOException e) {
-                Logger.Error(ExceptionUtils.getStackTrace(e));
+        if(ArgumentParser.doubleArguments.containsKey("--project")){
+            ModLoader.LoadMod(ArgumentParser.doubleArguments.get("--project"));
+            if(ArgumentParser.singleArguments.contains("--export")){
+                Exporter.Export();
             }
-        }
+        }else{
+            //Create loading form
+            startupForm = new JFrame();
+            startupForm.setContentPane(new Startup().getStartupPanel());
+            startupForm.setUndecorated(true);
+            startupForm.setType(Window.Type.UTILITY);
+            startupForm.pack();
+            startupForm.setLocationRelativeTo(null);
+            startupForm.setVisible(true);
 
-        Logger.Debug("Instantiating ProjectSelect and setting up frame...");
-        projectSelectDialog = new ProjectSelectDialog();
-        projectSelectFrame = new JFrame("Select Project");
+            Logger.Debug("Instantiating ProjectSelect and setting up frame...");
+            projectSelectDialog = new ProjectSelectDialog();
+            projectSelectFrame = new JFrame("Select Project");
 
-        ImageIcon img = new ImageIcon(ResourceLoader.class.getResource("dstguimodcreatorlogo.png"));
-        projectSelectFrame.setIconImage(img.getImage());
-        projectSelectFrame.setContentPane(projectSelectDialog.getProjectSelectPanel());
-        projectSelectFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            ImageIcon img = new ImageIcon(ResourceLoader.class.getResource("dstguimodcreatorlogo.png"));
+            projectSelectFrame.setIconImage(img.getImage());
+            projectSelectFrame.setContentPane(projectSelectDialog.getProjectSelectPanel());
+            projectSelectFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        DefaultTableModel model = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                //all cells false
-                return false;
-            }
-        };
-        projectSelectDialog.getProjectsListTable().setModel(model);
-        model.addColumn("Project Name:");
-        model.addColumn("Project Author:");
-        model.addColumn("Project Path:");
-        readMods();
-
-        projectSelectDialog.getNewMod().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CreateNewMod();
-            }
-        });
-
-        projectSelectDialog.getLoadMod().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LoadCurrentMod();
-            }
-        });
-
-        projectSelectDialog.getProjectsListTable().addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int row = projectSelectDialog.getProjectsListTable().rowAtPoint(evt.getPoint());
-                if (row >= 0) {
-                    currentlySelectedRow = row;
+            DefaultTableModel model = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
                 }
-            }
-        });
+            };
+            projectSelectDialog.getProjectsListTable().setModel(model);
+            model.addColumn("Project Name:");
+            model.addColumn("Project Author:");
+            model.addColumn("Project Path:");
+            readMods();
 
-        if (GlobalConfig.theme == GlobalConfig.Theme.Dark) {
-        } else {
-            projectSelectDialog.getConfigButton().setForeground(Color.BLACK);
-        }
-
-        projectSelectDialog.getConfigButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame configDialogFrame = new JFrame();
-                configDialogFrame.setIconImage(img.getImage());
-                JPanel panel = new JPanel();
-                configDialogFrame.setContentPane(panel);
-
-                panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-
-                panel.add(JHelper.CreateTitleJLabel("KleiCreator"));
-
-                JComboBox theme = new JComboBox();
-                panel.add(theme);
-                for (GlobalConfig.Theme t : GlobalConfig.Theme.values()) {
-                    theme.addItem(t.toString());
+            projectSelectDialog.getNewMod().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    CreateNewMod();
                 }
-                theme.setSelectedIndex(GlobalConfig.theme.ordinal());
+            });
 
-                JCheckBox askSaveOnLeave = new JCheckBox("Ask Save On Leave");
-                panel.add(askSaveOnLeave);
-                askSaveOnLeave.setSelected(GlobalConfig.askSaveOnLeave);
+            projectSelectDialog.getLoadMod().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    LoadCurrentMod();
+                }
+            });
 
-                PluginHandler.TriggerEvent("OnConfigSetup", configDialogFrame);
-
-                JButton saveButton = new JButton("Save and Restart");
-                saveButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
-                panel.add(saveButton);
-                saveButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        GlobalConfig.theme = GlobalConfig.Theme.valueOf(theme.getSelectedItem().toString());
-                        GlobalConfig.askSaveOnLeave = askSaveOnLeave.isSelected();
-                        PluginHandler.TriggerEvent("OnConfigSave", configDialogFrame);
-                        new Config().Save();
-                        Starter.startCounter++;
-                        exit = true;
-                        configDialogFrame.dispose();
+            projectSelectDialog.getProjectsListTable().addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    int row = projectSelectDialog.getProjectsListTable().rowAtPoint(evt.getPoint());
+                    if (row >= 0) {
+                        currentlySelectedRow = row;
                     }
-                });
+                }
+            });
 
-                panel.setLayout(new GridLayout(panel.getComponentCount(),1, 7, 7));
-
-                configDialogFrame.pack();
-                configDialogFrame.setLocationRelativeTo(null);
-                configDialogFrame.setVisible(true);
+            if (GlobalConfig.theme == GlobalConfig.Theme.Dark) {
+            } else {
+                projectSelectDialog.getConfigButton().setForeground(Color.BLACK);
             }
-        });
 
-        Logger.Debug("Successfully setup project select.");
+            projectSelectDialog.getConfigButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JFrame configDialogFrame = new JFrame();
+                    configDialogFrame.setIconImage(img.getImage());
+                    JPanel panel = new JPanel();
+                    configDialogFrame.setContentPane(panel);
 
-        Logger.Debug("Checking for update...");
-        if (Updater.CheckForUpdate(version)) {
-            Logger.Log("Found update.");
-            Updater.GetLastestRelease(projectSelectFrame);
+                    panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+
+                    panel.add(JHelper.CreateTitleJLabel("KleiCreator"));
+
+                    JComboBox theme = new JComboBox();
+                    panel.add(theme);
+                    for (GlobalConfig.Theme t : GlobalConfig.Theme.values()) {
+                        theme.addItem(t.toString());
+                    }
+                    theme.setSelectedIndex(GlobalConfig.theme.ordinal());
+
+                    JCheckBox askSaveOnLeave = new JCheckBox("Ask Save On Leave");
+                    panel.add(askSaveOnLeave);
+                    askSaveOnLeave.setSelected(GlobalConfig.askSaveOnLeave);
+
+                    PluginHandler.TriggerEvent("OnConfigSetup", configDialogFrame);
+
+                    JButton saveButton = new JButton("Save and Restart");
+                    saveButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+                    panel.add(saveButton);
+                    saveButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            GlobalConfig.theme = GlobalConfig.Theme.valueOf(theme.getSelectedItem().toString());
+                            GlobalConfig.askSaveOnLeave = askSaveOnLeave.isSelected();
+                            PluginHandler.TriggerEvent("OnConfigSave", configDialogFrame);
+                            new Config().Save();
+                            Starter.startCounter++;
+                            exit = true;
+                            configDialogFrame.dispose();
+                        }
+                    });
+
+                    panel.setLayout(new GridLayout(panel.getComponentCount(),1, 7, 7));
+
+                    configDialogFrame.pack();
+                    configDialogFrame.setLocationRelativeTo(null);
+                    configDialogFrame.setVisible(true);
+                }
+            });
+
+            Logger.Debug("Successfully setup project select.");
+
+            Logger.Debug("Checking for update...");
+            if (Updater.CheckForUpdate(version)) {
+                Logger.Log("Found update.");
+                Updater.GetLastestRelease(projectSelectFrame);
+            }
+
+            // This is here so we look important
+            long time = Calendar.getInstance().getTime().getTime() - Logger.startTime.getTime();
+            if(time < 2000){
+                try {
+                    Thread.sleep(2000-time);
+                } catch (InterruptedException e) {
+
+                }
+            }
+
+            PluginHandler.TriggerEvent("OnStartup");
+
+            projectSelectFrame.pack();
+            startupForm.setVisible(false);
+            projectSelectFrame.setLocationRelativeTo(null);
+            projectSelectFrame.setVisible(true);
+
         }
 
-        // This is here so we look important
-        long time = Calendar.getInstance().getTime().getTime() - Logger.startTime.getTime();
-        if(time < 2000){
-            try {
-                Thread.sleep(2000-time);
-            } catch (InterruptedException e) {
-
-            }
-        }
-
-        PluginHandler.TriggerEvent("OnStartup");
-
-        projectSelectFrame.pack();
-        startupForm.setVisible(false);
-        projectSelectFrame.setLocationRelativeTo(null);
-        projectSelectFrame.setVisible(true);
 
         while (!exit) {
             try {

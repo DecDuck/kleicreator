@@ -136,13 +136,13 @@ public class Exporter {
         int currentValue = exportDialog.getExportProgressBar().getValue();
         float eachPointValue = 100 / points;
         try {
-            Thread.sleep(900);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
 
         }
         exportDialog.getExportProgressBar().setValue(currentValue + (int) eachPointValue);
         exportWindowFrame.pack();
-        SwingUtilities.updateComponentTreeUI(exportWindowFrame);
+        //SwingUtilities.updateComponentTreeUI(exportWindowFrame);
     }
 
     private static void Done(String finishedLocation) {

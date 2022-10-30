@@ -1,5 +1,7 @@
 package com.deepcore.kleicreator.sdk.logging;
 
+import com.deepcore.kleicreator.master.ArgumentParser;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,6 +28,9 @@ public class Logger {
 
     public static void Start() {
         startTime = Calendar.getInstance().getTime();
+        if(ArgumentParser.doubleArguments.containsKey("--log")){
+            MininumLogLevel = Enum.valueOf(Level.class, ArgumentParser.doubleArguments.get("--log"));
+        }
     }
 
     public static void Log(String message){

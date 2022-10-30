@@ -1,12 +1,12 @@
-![logo](https://github.com/decduck3/dstguimodcreator/blob/main/src/resources/dstguimodcreatorlogo.png)
-# DST GUI MOD CREATOR (name in progress)
+![logo](https://lab.deepcore.dev/decduck3/kleicreator/-/raw/master/src/resources/dstguimodcreatorlogo.png)
+# KleiCreator
 Hello! If you're someone who wants to try this out for me, thanks! Here's the stuff you need to know:
  - It's written in Java. That means you need Java installed to run the program (Java 16)
  - It is still in very early stages. I've done a decent amount of work on it so far, but as of the moment, you cannot export and use the tool.
  - I am open to all and any suggestions, but I am mainly looking for thoughts about the interface, things that could be better, things that you liked and want to see more of, etc. (Also new name cause this one kinda sucks)
 
 ### How to run
-In the releases [(here)](https://github.com/decduck3/dstguimodcreator/releases), there should be a .jar download. That should contain everything necessary to run the program right off the bat. Currently, it only supports Windows and Linux, but should run on Mac (haven't tested it).
+In the releases [(here)](https://lab.deepcore.dev/decduck3/kleicreator/-/tags), there should be a .jar download. That should contain everything necessary to run the program right off the bat. Currently, it only supports Windows and Linux, but should run on Mac (haven't tested it).
 
 ### How it works
 Upon starting the program, you should see a dialog that has some buttons that do fairly obvious things like make a new mod, and delete mods, etc.
@@ -15,7 +15,7 @@ Once you've made a mod by filling out the Create Mod box, you are presented with
  - Main Config: has name, description, long description, version, author and icon.
  - Items: creates, deletes and edits items
  - Recipes: creates, deletes and edits recipes (duh)
- - Characters: (grayed out, haven't done anything on those) 
+ - Characters: (grayed out, haven't done anything on that) 
  - Resources: import and manage .tex and .xml files
  - Speech: basically nothing, but shows only speech files (but you have to make them in the resources tab)
  - Export: save all and export (does nothing)

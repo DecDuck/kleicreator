@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class SpeechDialog {
     private JPanel speechConfigPanel;
-    private JButton speechCreate;
     private JTextField speechNameTextField;
     private JLabel speechNameLabel;
 
@@ -16,16 +15,8 @@ public class SpeechDialog {
         return speechConfigPanel;
     }
 
-    public JButton getSpeechCreate() {
-        return speechCreate;
-    }
-
     public JTextField getSpeechNameTextField() {
         return speechNameTextField;
-    }
-
-    public JLabel getSpeechNameLabel() {
-        return speechNameLabel;
     }
 
     {
@@ -44,10 +35,7 @@ public class SpeechDialog {
      */
     private void $$$setupUI$$$() {
         speechConfigPanel = new JPanel();
-        speechConfigPanel.setLayout(new GridLayoutManager(2, 2, new Insets(20, 20, 20, 20), -1, -1));
-        speechCreate = new JButton();
-        speechCreate.setText("Create Speech");
-        speechConfigPanel.add(speechCreate, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        speechConfigPanel.setLayout(new GridLayoutManager(1, 2, new Insets(20, 20, 20, 20), -1, -1));
         speechNameLabel = new JLabel();
         speechNameLabel.setText("File Name:");
         speechConfigPanel.add(speechNameLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -61,4 +49,5 @@ public class SpeechDialog {
     public JComponent $$$getRootComponent$$$() {
         return speechConfigPanel;
     }
+
 }

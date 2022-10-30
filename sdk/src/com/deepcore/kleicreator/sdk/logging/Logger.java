@@ -24,12 +24,12 @@ public class Logger {
 
     public static Date startTime;
 
-    public static Level MininumLogLevel = Level.Log;
+    public static Level MinimumLogLevel = Level.Log;
 
     public static void Start() {
         startTime = Calendar.getInstance().getTime();
         if(ArgumentParser.doubleArguments.containsKey("--log")){
-            MininumLogLevel = Enum.valueOf(Level.class, ArgumentParser.doubleArguments.get("--log"));
+            MinimumLogLevel = Enum.valueOf(Level.class, ArgumentParser.doubleArguments.get("--log"));
         }
     }
 
@@ -53,7 +53,7 @@ public class Logger {
         long time = Calendar.getInstance().getTime().getTime() - startTime.getTime();
         String currentMessage = "[" + String.format("%08d", time) + "] " + message + "\n";
         currentLog = currentLog + currentMessage;
-        if(level.ordinal() < MininumLogLevel.ordinal()){
+        if(level.ordinal() < MinimumLogLevel.ordinal()){
 
         }else{
             System.out.print(currentMessage);

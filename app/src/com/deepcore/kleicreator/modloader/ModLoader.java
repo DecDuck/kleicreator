@@ -25,6 +25,7 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.util.List;
 
 public class ModLoader {
     public static JFrame modEditorFrame;
@@ -155,6 +156,10 @@ public class ModLoader {
 
         modEditorFrame.validate();
         modEditorFrame.setVisible(true);
+    }
+
+    public static Item SelectFromAllItems(){
+        JOptionPane.
     }
 
     public static void ReloadSpeech() {

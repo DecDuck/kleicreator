@@ -59,6 +59,7 @@ public class Master {
         Logger.Log("Started with args: " + String.join(" ", args));
 
         PluginHandler.LoadPlugins();
+        Logger.Debug("Loaded plugins");
         PluginHandler.TriggerEvent("OnLoad");
 
         //Create working directories
@@ -181,11 +182,8 @@ public class Master {
                     panel.add(askSaveOnLeave);
                     askSaveOnLeave.setSelected(GlobalConfig.askSaveOnLeave);
 
-                    PluginHandler.TriggerEvent("OnConfigSetup", configDialogFrame);
-
                     JButton saveButton = new JButton("Save and Restart");
                     saveButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
-                    panel.add(saveButton);
                     saveButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -199,9 +197,14 @@ public class Master {
                         }
                     });
 
+                    PluginHandler.TriggerEvent("OnConfigSetup", configDialogFrame);
+
+                    panel.add(saveButton);
+
                     panel.setLayout(new GridLayout(panel.getComponentCount(),1, 7, 7));
 
                     configDialogFrame.pack();
+
                     configDialogFrame.setLocationRelativeTo(null);
                     configDialogFrame.setVisible(true);
                 }

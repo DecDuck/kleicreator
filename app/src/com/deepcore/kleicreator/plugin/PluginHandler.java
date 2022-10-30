@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class PluginHandler {
 
@@ -27,6 +29,7 @@ public class PluginHandler {
     public static List<EventTrigger> eventTriggers = new ArrayList<>();
 
     public static void LoadPlugins(){
+        eventTriggers.clear();
         try {
             String[] jarFiles = new File(Constants.FILE_LOCATION + "/plugins/").list();
             for(String jarLocation : jarFiles){
@@ -40,12 +43,13 @@ public class PluginHandler {
     public static void LoadPlugin(File pluginFile) throws IOException {
         ClassLoader authorizedLoader = URLClassLoader.newInstance(new URL[] { pluginFile.toPath().toUri().toURL() });
         SaveSystem.xstream.setClassLoader(authorizedLoader);
-        JarInputStream jarFile = new JarInputStream(new FileInputStream(pluginFile.getAbsoluteFile()));
-        JarEntry jarEntry;
+        ZipInputStream jarFile = new ZipInputStream(new FileInputStream(pluginFile.getAbsoluteFile()));
+        ZipEntry jarEntry;
         while (true) {
-            jarEntry = jarFile.getNextJarEntry();
+            jarEntry = jarFile.getNextEntry();
             if (jarEntry == null)
                 break;
+            Logger.Log(jarEntry.getName());
             if (jarEntry.getName().endsWith(".class")) {
                 String classname = jarEntry.getName().replaceAll("/", "\\.");
                 classname = classname.substring(0, classname.length() - 6);
@@ -57,16 +61,16 @@ public class PluginHandler {
                             plugins.put(p.Id(), p);
                             p.OnLoad();
                             Logger.Debug("Loaded %s", p.Id());
-                            return;
+                            continue;
                         }
                         if (EventTrigger.class.isAssignableFrom(myLoadedClass)) {
                             EventTrigger p = (EventTrigger) myLoadedClass.getConstructor().newInstance();
                             eventTriggers.add(p);
-                            return;
+                            continue;
                         }
                         if(ItemComponent.class.isAssignableFrom(myLoadedClass)){
                             Item.registeredComponents.add((Class<? extends ItemComponent>) myLoadedClass);
-                            return;
+                            continue;
                         }
                     } catch (Exception e) {
                         Logger.Error(ExceptionUtils.getStackTrace(e));

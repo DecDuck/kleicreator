@@ -28,7 +28,7 @@ public class Starter {
                 try {
                     Files.delete(Path.of(Constants.FILE_LOCATION + "/config.xml"));
                     Master.Main(args);
-                    return;
+                    main(args);
                 } catch (IOException ex) {
 
                 }
@@ -39,6 +39,7 @@ public class Starter {
                 Files.writeString(Path.of(Constants.FILE_LOCATION + "_crash_" + new Date().getTime() + ".log"), ExceptionUtils.getStackTrace(e));
             } catch (IOException ex) {
                 Logger.Error("We are seriously screwed guys, we can't write to a crash file. We're just gonna give up.");
+                return;
             }
             JOptionPane.showMessageDialog(new JFrame(), "Hey! We hit an error that we couldn't handle. We wrote the error message to ~/.deepcore/, check it out and possibly file a bug report.", "ERROR", JOptionPane.ERROR_MESSAGE);
             System.exit(1);

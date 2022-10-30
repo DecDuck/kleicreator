@@ -22,22 +22,22 @@ public class TreeHelper extends ModLoader {
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(toAdd.getSimpleName());
 
         for (Field f : fields) {
+            String name = f.getName();
+            if(f.isAnnotationPresent(FieldName.class)){
+                name = f.getAnnotation(FieldName.class).name();
+                ItemLoader.annotatedFieldMap.put(f.getAnnotation(FieldName.class).name(), f.getName());
+            }
             if (values != null) {
                 try {
                     DefaultMutableTreeNode tempNode;
-                    if(f.isAnnotationPresent(FieldName.class)){
-                        tempNode = new DefaultMutableTreeNode(f.getAnnotation(FieldName.class).name() + ": " + f.get(values));
-                        ItemLoader.annotatedFieldMap.put(f.getAnnotation(FieldName.class).name(), f.getName());
-                    }else{
-                        tempNode = new DefaultMutableTreeNode(f.getName() + ": " + f.get(values));
-                    }
+                    tempNode = new DefaultMutableTreeNode(name + ": " + f.get(values));
 
                     node.add(tempNode);
                 } catch (IllegalAccessException e) {
                     Logger.Error(ExceptionUtils.getStackTrace(e));
                 }
             } else {
-                DefaultMutableTreeNode tempNode = new DefaultMutableTreeNode(f.getName());
+                DefaultMutableTreeNode tempNode = new DefaultMutableTreeNode(name);
                 node.add(tempNode);
             }
         }

@@ -1,31 +1,42 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="kleicreator:jar">
+  <artifact type="jar" name="kleicreator:jar">
     <output-path>$PROJECT_DIR$/build/artifacts/kleicreator_jar</output-path>
-    <root id="archive" name="kleicreator.jar">
-      <element id="module-output" name="kleicreator" />
+    <root id="archive" name="app.jar">
+      <element id="module-output" name="app" />
+      <element id="module-output" name="sdk" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/darcula.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/asm-3.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/jna-5.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/mail-1.4.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/flatlaf-0.46.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/rxjava-2.2.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/json-20201115.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/activation-1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/asm-tree-3.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/javautil-3.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/xstream-1.4.15.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/commons-cli-1.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpcore5-5.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/slf4j-api-1.6.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/slf4j-api-1.7.25.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/asm-commons-3.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpclient5-5.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/slf4j-jdk14-1.6.4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/commons-codec-1.13.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/commons-lang3-3.11.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/darcula.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/flatlaf-0.46.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpclient5-5.0.3.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpclient5-cache-5.0.3.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpclient5-fluent-5.0.3.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpclient5-testing-5.0.3.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpclient5-win-5.0.3.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpcore5-5.0.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpcore5-h2-5.0.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpcore5-reactive-5.0.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpcore5-testing-5.0.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/jna-5.2.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/jna-platform-5.2.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/json-20201115.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/reactive-streams-1.0.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/reflections-0.10.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/rxjava-2.2.8.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/slf4j-api-1.7.25.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/weblaf-core-1.2.13.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/xstream-1.4.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/javassist-3.28.0-GA.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/commons-logging-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpclient5-win-5.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/reactive-streams-1.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpclient5-cache-5.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpcore5-testing-5.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpclient5-fluent-5.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpcore5-reactive-5.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/app/src/com/deepcore/kleicreator/lib/httpclient5-testing-5.0.3.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

@@ -6,7 +6,6 @@ import com.deepcore.kleicreator.sdk.logging.Logger;
 public class Config {
     public static void SaveValue(String name, Object value){
         com.deepcore.kleicreator.config.Config c = new com.deepcore.kleicreator.config.Config();
-        Logger.Debug("Saving %s as %s", name, value.toString());
         c.Load();
         c.Save(name, value);
         c.Save();

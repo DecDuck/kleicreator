@@ -25,6 +25,7 @@ public class Item {
     public int stackSize = 100;
     public static List<Class<? extends ItemComponent>> registeredComponents = new ArrayList<>();
     static {
+        Item.registeredComponents.clear();
         Reflections reflections = new Reflections("com.deepcore.kleicreator.items.components");
         Set<Class<? extends ItemComponent>> components = reflections.getSubTypesOf(ItemComponent.class);
 

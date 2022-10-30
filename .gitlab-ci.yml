@@ -30,7 +30,9 @@ deploy-job:      # This job runs in the deploy stage.
   script:
     - echo "Creating jars"
     - ./gradlew jar
+    - cp app/build/libs/app* ./
+    - cp sdk/build/libs/sdk* ./
   artifacts:
     paths:
-      - app/build/libs/app*
-      - sdk/build/libs/sdk*
+      - app*
+      - sdk*

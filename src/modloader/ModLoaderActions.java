@@ -1,7 +1,7 @@
 package modloader;
 
 import export.Exporter;
-import frames.SpeechConfig;
+import frames.SpeechDialog;
 import logging.Logger;
 import items.Item;
 import modloader.resources.ResourceManager;
@@ -27,7 +27,7 @@ public class ModLoaderActions extends ModLoader{
                 Mod.items.add(new Item());
                 Update();
                 ModLoader.modEditor.getModItemSelect().setSelectedIndex(Mod.items.size()-1);
-                Logger.Log("Created new item");
+                Logger.Log("Created Item");
             }
         });
 
@@ -36,7 +36,7 @@ public class ModLoaderActions extends ModLoader{
             public void actionPerformed(ActionEvent e) {
                 Mod.items.remove(Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()));
                 Update();
-                Logger.Log("Removed item");
+                Logger.Log("Deleted Item");
             }
         });
 
@@ -44,13 +44,14 @@ public class ModLoaderActions extends ModLoader{
             @Override
             public void actionPerformed(ActionEvent e) {
                 SaveAll();
+                Logger.Log("Saved All");
             }
         });
 
         modEditor.getResourcesAdd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switch(ModLoader.getOption("Type of resource", new Object[]{ "Texture", "Speech", "Animation" })){
+                switch(ModLoader.getOption("Type of resource", new Object[]{ "Texture", "Speech", })){
                     case 0:
                         Logger.Log("Importing texture....");
                         JFileChooser chooser = new JFileChooser();
@@ -68,16 +69,13 @@ public class ModLoaderActions extends ModLoader{
                         File xmlFile = chooser.getSelectedFile();
 
                         ResourceManager.CreateResource(texFile.getAbsolutePath(), xmlFile.getAbsolutePath(), ResourceManager.TextureLocation.values()[(ModLoader.getOption("Texture location", new Object[] {"Inventory Image", "Mod Icon", "Portrait", "Map Icon"}))]);
-                        Logger.Log("Created resource with settings:\n" +
-                                "   Tex Path: " + texFile.getAbsolutePath() + "\n" +
-                                "   Xml Path: " + xmlFile.getAbsolutePath() + "\n");
+                        Logger.Log("Created new texture");
                         break;
                     case 1:
-                        Logger.Log("Creating speech file...");
                         JFrame speechConfigFrame = new JFrame("Create New Speech File");
                         ImageIcon img = new ImageIcon(ResourceLoader.class.getResource("dstguimodcreatorlogo.png"));
                         speechConfigFrame.setIconImage(img.getImage());
-                        SpeechConfig speech = new SpeechConfig();
+                        SpeechDialog speech = new SpeechDialog();
                         speechConfigFrame.setContentPane(speech.getSpeechConfigPanel());
                         speechConfigFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -87,17 +85,16 @@ public class ModLoaderActions extends ModLoader{
                                 ResourceManager.CreateResource(SpeechFile.SpeechType.Character, speech.getSpeechNameTextField().getText());
                                 speechConfigFrame.dispose();
                                 Update();
-                                Logger.Log("Created speech resource");
+                                Logger.Log("Created new speech resource");
                             }
                         });
 
                         speechConfigFrame.pack();
                         speechConfigFrame.setLocationRelativeTo(null);
                         speechConfigFrame.setVisible(true);
-                        Logger.Log("Finished speechConfigFrame setup");
+                        Logger.Log("Created speech creation dialog");
                         break;
                     case 2:
-                        Logger.Log("Importing animation...");
                         JFileChooser animChooser = new JFileChooser();
                         animChooser.setAcceptAllFileFilterUsed(false);
                         FileNameExtensionFilter anim = new FileNameExtensionFilter("Animation File", "zip");
@@ -106,7 +103,7 @@ public class ModLoaderActions extends ModLoader{
                         JOptionPane.showMessageDialog(modEditorFrame, animChooser, "Open Animation file", JOptionPane.QUESTION_MESSAGE);
                         File animationFile = animChooser.getSelectedFile();
                         ResourceManager.CreateResource(animationFile.getAbsolutePath());
-                        Logger.Log("Finished importing animation");
+                        Logger.Log("Imported animation");
                         break;
                 }
 

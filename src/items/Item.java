@@ -41,4 +41,5 @@ public class Item implements java.io.Serializable {
 
     public boolean armorBool = false;
     public Armor armor = new Armor();
+    public int stackSize = 100;
 }

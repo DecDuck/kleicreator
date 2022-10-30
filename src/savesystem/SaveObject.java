@@ -32,8 +32,6 @@ public class SaveObject implements java.io.Serializable {
         ResourceManager.GenerateResourceLists();
         resources = ResourceManager.resources;
         recipes = Mod.recipes;
-
-        Logger.Log("Created SaveObject");
     }
 
     public void LoadBack(){
@@ -54,13 +52,11 @@ public class SaveObject implements java.io.Serializable {
 
         LoadResourcesList(resources);
         ResourceManager.GenerateResourceLists();
-
-        Logger.Log("Loaded from SaveObject");
     }
 
     public void LoadResourcesList(List<Resource> a){
         for(Resource r: a){
-            ResourceManager.CreateResource(r);
+            ResourceManager.LoadResource(r);
         }
     }
 }

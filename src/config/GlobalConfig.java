@@ -22,7 +22,7 @@ public class GlobalConfig {
 
         if(!new File(FILE_LOCATION + "/config.xml").exists()){
             new Config().Save();
-            Logger.Log("Created new config");
+            Logger.Log("Created config file with default settings");
         }
     }
 

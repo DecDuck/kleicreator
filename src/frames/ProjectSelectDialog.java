@@ -2,7 +2,7 @@ package frames;
 
 import javax.swing.*;
 
-public class ProjectSelect {
+public class ProjectSelectDialog {
     private JPanel ProjectSelectPanel;
     private JTable projectsListTable;
     private JButton newMod;

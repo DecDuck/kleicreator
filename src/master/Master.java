@@ -1,4 +1,5 @@
-import com.formdev.flatlaf.FlatDarculaLaf;
+package master;
+
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import config.Config;
@@ -18,7 +19,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -28,7 +28,7 @@ import java.util.List;
 import static constants.Constants.FILE_LOCATION;
 
 public class Master {
-    public static ProjectSelect projectSelect;
+    public static ProjectSelectDialog projectSelectDialog;
     public static JFrame projectSelectFrame;
 
     public static String version = "v0.0.6";
@@ -37,13 +37,17 @@ public class Master {
 
     public static void main(String[] args){
         Logger.Start();
-        Logger.Log("Starting up...");
+        Logger.Log("KleiCreator %s. Credits to decduck3", version);
         Constants.CreateConstants();
 
+        //Create working directories
         new File(FILE_LOCATION + "/").mkdir();
+        new File(FILE_LOCATION + "/mods").mkdir();
+        new File(FILE_LOCATION + "/speech").mkdir();
         GlobalConfig.CreateStream();
-        new Config().Load();
-        new Config().Save();
+        Config c = new Config();
+        c.Load(); //Load if config exists
+        c.Save(); //Otherwise, save default settings
 
         try {
             if(GlobalConfig.darkMode) {
@@ -51,19 +55,18 @@ public class Master {
             }else{
                 UIManager.setLookAndFeel(new FlatLightLaf());
             }
-            URL fontUrl = new URL("http://www.webpagepublicity.com/" +
-                    "free-fonts/a/Airacobra%20Condensed.ttf");
             try (InputStream in = ResourceLoader.class.getResourceAsStream("font.ttf")){
                 setUIFont (Font.createFont(Font.PLAIN, in).deriveFont(15f));
-                Logger.Log("Able to load custom font!");
+                Logger.Log("Successfully loaded custom font");
             }
-            Logger.Log("Changed look and feel");
+            Logger.Log("Successfully changed look and feel.");
         } catch (UnsupportedLookAndFeelException | IOException | FontFormatException e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
         }
 
-        JFrame startupForm = new JFrame("Loading...");
-        startupForm.setContentPane(new StartupForm().getStartupPanel());
+        //Create loading form
+        JFrame startupForm = new JFrame();
+        startupForm.setContentPane(new Startup().getStartupPanel());
         startupForm.setUndecorated(true);
         startupForm.setType(Window.Type.UTILITY);
         startupForm.pack();
@@ -76,26 +79,25 @@ public class Master {
             Logger.Error(ExceptionUtils.getStackTrace(e));
         }
 
+        //If arguments, we assume it's a project file and copy it to project directory
         if(args.length > 0){
             try {
                 Files.copy(Paths.get(args[0]), Paths.get(FILE_LOCATION + GlobalConfig.modsLocation + ModLoader.fileComponent(args[0])), StandardCopyOption.REPLACE_EXISTING);
-                Logger.Log("Copied files. From:" + args[0] + " To: " + FILE_LOCATION + GlobalConfig.modsLocation + ModLoader.fileComponent(args[0]));
+                Logger.Log("Copied project from %s to %s", args[0], FILE_LOCATION + GlobalConfig.modsLocation + ModLoader.fileComponent(args[0]));
             } catch (IOException e) {
                 Logger.Error(ExceptionUtils.getStackTrace(e));
             }
         }
 
-        Logger.Log("Creating frame...");
-        projectSelect = new ProjectSelect();
-        projectSelectFrame = new JFrame("Project Select");
+        Logger.Log("Instantiating ProjectSelect and setting up frame...");
+        projectSelectDialog = new ProjectSelectDialog();
+        projectSelectFrame = new JFrame("Select Project");
 
         ImageIcon img = new ImageIcon(ResourceLoader.class.getResource("dstguimodcreatorlogo.png"));
         projectSelectFrame.setIconImage(img.getImage());
-        projectSelectFrame.setContentPane(projectSelect.getProjectSelectPanel());
+        projectSelectFrame.setContentPane(projectSelectDialog.getProjectSelectPanel());
         projectSelectFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Logger.Log("Done!");
 
-        Logger.Log("Setting up mods table and reading mods...");
         DefaultTableModel model = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -103,31 +105,30 @@ public class Master {
                 return false;
             }
         };
-        projectSelect.getProjectsListTable().setModel(model);
+        projectSelectDialog.getProjectsListTable().setModel(model);
         model.addColumn("Project Name:");
         model.addColumn("Project Author:");
         model.addColumn("Project Path:");
         readMods();
-        Logger.Log("Done!");
 
-        projectSelect.getNewMod().addActionListener(new ActionListener() {
+        projectSelectDialog.getNewMod().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CreateNewMod();
             }
         });
 
-        projectSelect.getLoadMod().addActionListener(new ActionListener() {
+        projectSelectDialog.getLoadMod().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 LoadCurrentMod();
             }
         });
 
-        projectSelect.getProjectsListTable().addMouseListener(new java.awt.event.MouseAdapter() {
+        projectSelectDialog.getProjectsListTable().addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int row = projectSelect.getProjectsListTable().rowAtPoint(evt.getPoint());
+                int row = projectSelectDialog.getProjectsListTable().rowAtPoint(evt.getPoint());
                 if (row >= 0) {
                     currentlySelectedRow = row;
                 }
@@ -135,25 +136,23 @@ public class Master {
         });
 
         if(GlobalConfig.darkMode){
-
         }else{
-            projectSelect.getConfigButton().setForeground(Color.BLACK);
-
+            projectSelectDialog.getConfigButton().setForeground(Color.BLACK);
         }
 
-        projectSelect.getConfigButton().addActionListener(new ActionListener() {
+        projectSelectDialog.getConfigButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame configEditorFrame = new JFrame();
-                ConfigEditor configEditor = new ConfigEditor();
-                configEditorFrame.setContentPane(configEditor.getFrame());
-                configEditor.getDarkModeCheckBox().setSelected(GlobalConfig.darkMode);
-                configEditor.getAskSaveOnLeaveCheckBox().setSelected(GlobalConfig.askSaveOnLeave);
-                configEditor.getSave().addActionListener(new ActionListener() {
+                ConfigDialog configDialog = new ConfigDialog();
+                configEditorFrame.setContentPane(configDialog.getFrame());
+                configDialog.getDarkModeCheckBox().setSelected(GlobalConfig.darkMode);
+                configDialog.getAskSaveOnLeaveCheckBox().setSelected(GlobalConfig.askSaveOnLeave);
+                configDialog.getSave().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        GlobalConfig.darkMode = configEditor.getDarkModeCheckBox().isSelected();
-                        GlobalConfig.askSaveOnLeave = configEditor.getAskSaveOnLeaveCheckBox().isSelected();
+                        GlobalConfig.darkMode = configDialog.getDarkModeCheckBox().isSelected();
+                        GlobalConfig.askSaveOnLeave = configDialog.getAskSaveOnLeaveCheckBox().isSelected();
                         new Config().Save();
                         System.exit(0);
                     }
@@ -165,13 +164,12 @@ public class Master {
             }
         });
 
+        Logger.Log("Successfully setup project select.");
+
         projectSelectFrame.pack();
         startupForm.setVisible(false);
         projectSelectFrame.setLocationRelativeTo(null);
         projectSelectFrame.setVisible(true);
-
-        new File(FILE_LOCATION + "/mods").mkdir();
-        new File(FILE_LOCATION + "/speech").mkdir();
 
         Logger.Log("Checking for update...");
         if(Updater.CheckForUpdate(version)){
@@ -181,18 +179,18 @@ public class Master {
     }
 
     public static void CreateNewMod(){
-        JFrame newModConfigFrame = new JFrame("Create New Mod");
-        NewModConfig newModConfig = new NewModConfig();
-        newModConfigFrame.setContentPane(newModConfig.getNewModConfigPanel());
+        JFrame newModConfigFrame = new JFrame("Create New Project");
+        CreateModDialog createModDialog = new CreateModDialog();
+        newModConfigFrame.setContentPane(createModDialog.getNewModConfigPanel());
         newModConfigFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon img = new ImageIcon(ResourceLoader.class.getResource("dstguimodcreatorlogo.png"));
         newModConfigFrame.setIconImage(img.getImage());
 
-        newModConfig.getCreateMod().addActionListener(new ActionListener() {
+        createModDialog.getCreateMod().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = newModConfig.getModNameTextField().getText();
-                String author = newModConfig.getModAuthorTextField().getText();
+                String name = createModDialog.getModNameTextField().getText();
+                String author = createModDialog.getModAuthorTextField().getText();
                 projectSelectFrame.setVisible(false);
                 newModConfigFrame.setVisible(false);
                 Mod _temp = new Mod();
@@ -201,7 +199,7 @@ public class Master {
             }
         });
 
-        newModConfig.getCancel().addActionListener(new ActionListener() {
+        createModDialog.getCancel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 newModConfigFrame.dispose();
@@ -221,13 +219,13 @@ public class Master {
                     JOptionPane.WARNING_MESSAGE);
         }else{
             projectSelectFrame.setVisible(false);
-            ModLoader.LoadMod(FILE_LOCATION + GlobalConfig.modsLocation + projectSelect.getProjectsListTable().getModel().getValueAt(currentlySelectedRow, 2));
+            ModLoader.LoadMod(FILE_LOCATION + GlobalConfig.modsLocation + projectSelectDialog.getProjectsListTable().getModel().getValueAt(currentlySelectedRow, 2));
         }
     }
 
     public static void readMods(){
         try{
-            DefaultTableModel model = (DefaultTableModel) projectSelect.getProjectsListTable().getModel();
+            DefaultTableModel model = (DefaultTableModel) projectSelectDialog.getProjectsListTable().getModel();
             String[] mods = getAllDirectories(FILE_LOCATION + GlobalConfig.modsLocation);
             for(int i = 0; i < mods.length; i++){
                 SaveObject saveObject = SaveSystem.TempLoad(FILE_LOCATION + GlobalConfig.modsLocation + mods[i]);

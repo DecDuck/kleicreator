@@ -1,13 +1,8 @@
 package frames;
 
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
 
-public class StartupForm {
+public class Startup {
     private JPanel startupPanel;
     private JLabel image;
 

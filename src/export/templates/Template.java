@@ -1,5 +1,6 @@
 package export.templates;
 
+import export.AssetExporter;
 import export.PrefabExporter;
 import export.RecipeExporter;
 import export.SpeechExporter;
@@ -64,8 +65,14 @@ public class Template {
                 ReplaceAll("$ID$", item.itemId);
                 ReplaceAll("$UPPERID$", item.itemId.toUpperCase());
                 ReplaceAll("$NAME$", item.itemName);
+                ReplaceAll("$STACKSIZE$", String.valueOf(item.stackSize));
 
-                //TODO $ASSETS$
+                Logger.Log("Item texture is " + item.itemTexture);
+                if(item.itemTexture == -1){
+                    ReplaceAll("$ASSETS$", "");
+                }else{
+                    ReplaceAll("$ASSETS$", AssetExporter.ExportAsset(ResourceManager.inventoryimages.get(item.itemTexture)));
+                }
                 //TODO $UPPER$
                 //TODO $FILLER$
                 break;

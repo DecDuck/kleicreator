@@ -19,6 +19,6 @@ public class Templates {
                     new Template(TemplateLoader.ITEM_TEMPLATE, Template.Type.Item, Mod.items.get(i))
             );
         }
-        Logger.Log("Created template objects");
+        Logger.Log("Instantiated 'Template' object for export.");
     }
 }

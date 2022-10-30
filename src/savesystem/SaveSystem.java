@@ -10,7 +10,7 @@ import java.io.*;
 
 public class SaveSystem {
 
-    public static void clearTheFile(String fileName) {
+    public static void ClearFile(String fileName) {
         try {
             FileWriter fwOb = new FileWriter(fileName, false);
             PrintWriter pwOb = new PrintWriter(fwOb, false);
@@ -20,7 +20,6 @@ public class SaveSystem {
         }catch (IOException e){
             Logger.Error(ExceptionUtils.getStackTrace(e));
         }
-        Logger.Log("Cleared " + fileName);
     }
 
     public static void Save(String filePath){
@@ -31,7 +30,7 @@ public class SaveSystem {
             f.createNewFile();
         }
 
-        clearTheFile(filePath);
+        ClearFile(filePath);
 
         XStream xstream = new XStream(new DomDriver());
         
@@ -51,7 +50,6 @@ public class SaveSystem {
 
     public static void Load(String filePath){
         try {
-            Logger.Log("Starting load");
             SaveObject e = null;
             XStream xstream = new XStream(new StaxDriver());
 
@@ -66,6 +64,8 @@ public class SaveSystem {
             e = (SaveObject) xstream.fromXML(xml);
 
             e.LoadBack();
+
+            Logger.Log("Loaded project");
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
@@ -85,9 +85,6 @@ public class SaveSystem {
             String xml = new String(data);
 
             e = (SaveObject) xstream.fromXML(xml);
-
-            Logger.Log("TempLoaded " + filePath);
-
             return e;
         } catch (IOException ioException) {
             ioException.printStackTrace();

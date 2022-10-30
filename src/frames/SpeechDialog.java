@@ -1,12 +1,8 @@
 package frames;
 
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-
 import javax.swing.*;
-import java.awt.*;
 
-public class SpeechConfig {
+public class SpeechDialog {
     private JPanel speechConfigPanel;
     private JButton speechCreate;
     private JTextField speechNameTextField;

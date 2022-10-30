@@ -5,6 +5,7 @@ import frames.ModEditor;
 import items.ItemLoader;
 import logging.Logger;
 import items.Item;
+import master.Master;
 import modloader.resources.Resource;
 import modloader.resources.ResourceManager;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -36,29 +37,16 @@ public class ModLoader {
     }
 
     public static void LoadMod(String path){
-        Logger.Log("Loading mod...");
-        Logger.Log("Path: " + path);
         Mod.path = path;
-
         SaveSystem.Load(path);
-
         Debug();
-
-        Logger.Log("Creating editor window...");
         CreateModEditorFrame();
-        Logger.Log("Done!");
-
         Update();
+        Logger.Log("Loaded mod");
     }
     public static void CreateMod(String path, String author, String name){
-        Logger.Log("Creating mod...");
-        Logger.Log("Path: " + path);
         Mod.path = path;
-
-        Logger.Log("Creating editor window...");
         CreateModEditorFrame();
-        Logger.Log("Done!");
-
         Mod.modName = name;
         Mod.modAuthor = author;
         Mod.modDescription = "Example Description";
@@ -66,6 +54,7 @@ public class ModLoader {
 
         SaveSystem.Save(path);
         Update();
+        Logger.Log("Created mod");
     }
 
     public static void Debug(){
@@ -138,31 +127,20 @@ public class ModLoader {
 
         RecipeLoader.Update();
 
-        try {
-            if(modEditor.getModItemSelect().getSelectedIndex() != -1){
-                modEditor.getModItemConfigPanel().setVisible(true);
-                Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
+        if(modEditor.getModItemSelect().getSelectedIndex() != -1 && modEditor.getModItemSelect().getSelectedIndex() < Mod.items.size() + 1){
+            modEditor.getModItemConfigPanel().setVisible(true);
+            Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
 
-                if(modEditor.getModItemSelect().getSelectedIndex() < Mod.items.size() + 1){
+            ItemLoader.UpdateTrees(item);
 
-                }else{
-                    throw new Exception("Item not selected");
-                }
-
-                ItemLoader.UpdateTrees(item);
-
-                modEditor.getModItemNameTextField().setText(item.itemName);
-                modEditor.getModItemIdTextField().setText(item.itemId);
-                if(item.itemTexture != -1){
-                    modEditor.getModItemTextureSelect().setSelectedIndex(item.itemTexture);
-                }
-
-            }else{
-                modEditor.getModItemConfigPanel().setVisible(false);
+            modEditor.getModItemNameTextField().setText(item.itemName);
+            modEditor.getModItemIdTextField().setText(item.itemId);
+            if(item.itemTexture != -1){
+                modEditor.getModItemTextureSelect().setSelectedIndex(item.itemTexture);
             }
-
-        } catch (Exception e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            modEditor.getModItemStackSize().setValue(item.stackSize);
+        }else{
+            modEditor.getModItemConfigPanel().setVisible(false);
         }
         modEditorFrame.validate();
     }
@@ -192,9 +170,10 @@ public class ModLoader {
             item.itemName = modEditor.getModItemNameTextField().getText();
             item.itemId = modEditor.getModItemIdTextField().getText();
             item.itemTexture = modEditor.getModItemTextureSelect().getSelectedIndex();
+            item.stackSize = (int) modEditor.getModItemStackSize().getValue();
         }catch(java.lang.IndexOutOfBoundsException e){
             Logger.Error(ExceptionUtils.getStackTrace(e));
-            ShowWarning("There was a problem with saving an item. Please make sure all fields are filled then try again");
+            ShowWarning("There was a problem with saving the item. Please fix any errors and try again.");
         }
     }
 
@@ -207,7 +186,7 @@ public class ModLoader {
             Mod.modIcon = modEditor.getModIconTextureSelect().getSelectedIndex();
         }catch (java.lang.IndexOutOfBoundsException e){
             Logger.Error(ExceptionUtils.getStackTrace(e));
-            ShowWarning("There was a problem saving the mod config. Please make sure all fields are filled then try again");
+            ShowWarning("There was a problem with saving the mod config. Please fix any errors and try again.");
         }
 
     }
@@ -218,21 +197,16 @@ public class ModLoader {
             SaveModConfig();
             SaveSystem.Save(Mod.path);
         }catch(Exception e){
-            JOptionPane.showMessageDialog(modEditorFrame, e.getLocalizedMessage(), "Error while saving", JOptionPane.ERROR_MESSAGE);
             Logger.Error(ExceptionUtils.getStackTrace(e));
+            ShowWarning("There was a problem with saving.");
         }
-        Logger.Log("Saved All");
     }
 
     public static void CreateModEditorFrame(){
-        modEditorFrame = new JFrame("Mod Editor");
+        modEditorFrame = new JFrame(String.format("KleiCreator %s | %s", Master.version, Mod.modName));
         ImageIcon img = new ImageIcon(ResourceLoader.class.getResource("dstguimodcreatorlogo.png"));
         modEditorFrame.setIconImage(img.getImage());
         modEditor = new ModEditor();
-
-        Logger.Log("Created JFrame and ModEditor objects");
-
-        Logger.Log("Starting IntelliJ Frame setup");
 
         modEditorFrame.setContentPane(modEditor.getModEditorPanel());
         modEditorFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -279,10 +253,6 @@ public class ModLoader {
             }
         });
 
-        Logger.Log("Added window listener. Finished Frame setup.");
-
-        Logger.Log("Starting tab setup...");
-
         speechModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -314,11 +284,7 @@ public class ModLoader {
         ItemLoader.SetupAddedTree(addedTree);
         ItemLoader.SetupNotAddedTree(notAddedTree);
 
-        Logger.Log("Created table models");
-
         RecipeLoader.SetupRecipeEditor(recipeTree);
-
-        Logger.Log("Setup recipes editor");
 
         resourceModel.addColumn("Name");
         resourceModel.addColumn("Type");
@@ -329,20 +295,13 @@ public class ModLoader {
         speechModel.addColumn("Location");
         speechModel.addColumn("Type");
         speechModel.addColumn("Entries");
-
-        Logger.Log("Added columns to resourceModel and speechModel");
-
-
-
-        //Go see file for definitions
+        
         ModLoaderActions.SetupListeners();
-
-        Logger.Log("Completed ModLoaderActions.SetupListeners()");
 
         modEditorFrame.pack();
         modEditorFrame.setLocationRelativeTo(null);
         modEditorFrame.setVisible(true);
-        Logger.Log("Finished Init of modEditorFrame");
+        Logger.Log("Successfully completed ModEditor setup.");
     }
 
     public static int getInt(String message){

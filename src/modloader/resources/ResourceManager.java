@@ -3,13 +3,15 @@ package modloader.resources;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import constants.Constants;
+import items.Item;
 import logging.Logger;
+import modloader.ModLoader;
 import modloader.classes.Texture;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import speech.CharacterSpeech;
-import speech.ItemSpeech;
+import savesystem.SaveObject;
 import speech.SpeechFile;
 
+import javax.swing.*;
 import java.nio.file.Files;
 import java.util.*;
 import java.io.*;
@@ -32,17 +34,14 @@ public class ResourceManager {
         MapIcon
     }
 
-    public enum ResourceType{
-        Texture,
-        Speech
-    }
-
     public static void CreateSpeechXStream(){
         speechXStream = new XStream(new DomDriver());
         speechXStream.alias("type", SpeechFile.SpeechType.class);
-        speechXStream.alias("character", CharacterSpeech.class);
-        speechXStream.alias("item", ItemSpeech.class);
         speechXStream.alias("resource", Resource.class);
+        speechXStream.alias("project", SaveObject.class);
+        speechXStream.alias("item", Item.class);
+        speechXStream.alias("resource", Resource.class);
+
         Logger.Log("Created speechXStream with appropriate settings");
     }
 
@@ -121,12 +120,19 @@ public class ResourceManager {
         r.isAnim = false;
         String fileLocation = Constants.FILE_LOCATION + "/speech/" + speechName.toLowerCase() + ".dat";
         r.speechFile = new SpeechFile();
-        r.speechFile.speech.put("DESCRIBE.EXAMPLE", "Look! A cool new item!");
+        r.speechFile.speech.put("CHARACTERS.GENERIC.DESCRIBE.EXAMPLE", "Look! A cool new item!");
         r.speechFile.filePath = fileLocation;
         r.speechFile.resourceName = speechName.toLowerCase();
 
         try {
-            new File(fileLocation).createNewFile();
+
+            File f = new File(fileLocation);
+            if(f.exists()){
+                JOptionPane.showMessageDialog(ModLoader.modEditorFrame, "Speech file already exists!", "Error!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }else{
+                f.createNewFile();
+            }
             FileWriter fileWriter = new FileWriter(fileLocation);
             PrintWriter printWriter = new PrintWriter(fileWriter);
             String fileContents = "";
@@ -153,6 +159,15 @@ public class ResourceManager {
         Logger.Log("Directed");
     }
 
+    public static void LoadResource(Resource r){
+        if(r.isTexture){
+            CreateResource(r.texture.texPath, r.texture.xmlPath, r.texLocation);
+        }else{
+            resources.add(r);
+            ReloadSpeechResource(r);
+        }
+    }
+
     public static void ReloadSpeechResource(Resource r){
         try {
             File f = new File(r.speechFile.filePath);
@@ -170,10 +185,9 @@ public class ResourceManager {
             }
 
             resources.set(resources.indexOf(r), m);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
-        } catch (IOException e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            ModLoader.ShowWarning("Error loading resource: " + e.getLocalizedMessage());
         }
     }
 

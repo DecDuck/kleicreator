@@ -2,7 +2,7 @@ package frames;
 
 import javax.swing.*;
 
-public class ConfigEditor {
+public class ConfigDialog {
     private JCheckBox darkModeCheckBox;
     private JCheckBox askSaveOnLeaveCheckBox;
     private JPanel frame;

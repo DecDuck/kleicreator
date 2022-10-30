@@ -78,7 +78,7 @@ public class Updater {
             String downloadText = recent.getString("name");
             String tag = recent.getString("tag_name");
 
-            //CREATE POPUP
+            //Create popup
             JLabel hyperlink = new JLabel("Download new version? \"" + downloadText + "\"");
             hyperlink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             hyperlink.setFont(new Font("Serif", Font.PLAIN, 20));

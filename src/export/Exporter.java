@@ -2,7 +2,7 @@ package export;
 
 import constants.Constants;
 import export.templates.Template;
-import frames.ExportWindow;
+import frames.ExportDialog;
 import logging.Logger;
 import modloader.Mod;
 import modloader.ModLoader;
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.nio.file.*;
 
 public class Exporter {
-    private static ExportWindow exportWindow;
+    private static ExportDialog exportDialog;
     private static JFrame exportWindowFrame;
     private static int points;
 
@@ -95,13 +95,13 @@ public class Exporter {
         Logger.Log("Finished resource copy");
     }
     private static void InitLoading(){
-        exportWindow = new ExportWindow();
+        exportDialog = new ExportDialog();
         exportWindowFrame = new JFrame("Exporting...");
         Logger.Log("Exporting...");
         Logger.Log("Starting exporting init");
         ImageIcon img = new ImageIcon(ResourceLoader.class.getResource("dstguimodcreatorlogo.png"));
         exportWindowFrame.setIconImage(img.getImage());
-        exportWindowFrame.setContentPane(exportWindow.getExportWindowFrame());
+        exportWindowFrame.setContentPane(exportDialog.getExportWindowFrame());
         exportWindowFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         exportWindowFrame.pack();
         exportWindowFrame.setLocationRelativeTo(null);
@@ -122,14 +122,20 @@ public class Exporter {
         Logger.Log("Done");
     }
     private static void MoveLoading(){
-        int currentValue = exportWindow.getExportProgressBar().getValue();
+        int currentValue = exportDialog.getExportProgressBar().getValue();
         float eachPointValue = 100/points;
-        exportWindow.getExportProgressBar().setValue(currentValue + (int) eachPointValue);
+        try {
+            Thread.sleep(900);
+        } catch (InterruptedException e) {
+            
+        }
+        exportDialog.getExportProgressBar().setValue(currentValue + (int) eachPointValue);
         exportWindowFrame.pack();
+        SwingUtilities.updateComponentTreeUI(exportWindowFrame);
     }
     private static void Done(String finishedLocation){
         JOptionPane.showMessageDialog(ModLoader.modEditorFrame, "Done!");
-        exportWindow.getExportProgressBar().setValue(100);
+        exportDialog.getExportProgressBar().setValue(100);
         exportWindowFrame.dispose();
         try {
             Desktop.getDesktop().open(new File(finishedLocation));

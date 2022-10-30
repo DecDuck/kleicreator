@@ -113,7 +113,7 @@ public class RecipeLoader extends ModLoader {
         }else{
             modEditor.getModRecipesEditor().setVisible(true);
             if(Mod.recipes.size()-1 < recipeIndex){
-                Logger.Error("Selection too long");
+                Logger.Error("Selection too high");
             }
             LoadRecipe(Mod.recipes.get(recipeIndex));
         }
@@ -143,7 +143,6 @@ public class RecipeLoader extends ModLoader {
     }
 
     public static void CreateNewRecipe(){
-        Logger.Log("Creating recipe");
         Recipe r = new Recipe();
         r.result = "id";
         r.ingredients = new ArrayList<String>();
@@ -151,6 +150,7 @@ public class RecipeLoader extends ModLoader {
         r.tech = Recipe.TECH.NONE;
         Mod.recipes.add(r);
         Update();
+        Logger.Log("Created recipe");
     }
 
     public static void DeleteRecipe(){
@@ -159,6 +159,7 @@ public class RecipeLoader extends ModLoader {
             Mod.recipes.remove(recipeIndex);
         }
         Update();
+        Logger.Log("Deleted recipe");
     }
 
 }

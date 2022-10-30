@@ -53,6 +53,7 @@ public class ModEditor {
     private JComboBox modRecipesSelector;
     private JButton modRecipesCreate;
     private JButton modRecipesDelete;
+    private JSpinner modItemStackSize;
     private JPanel modRecipesPanel;
 
     public JPanel getModRecipes() {
@@ -263,4 +264,7 @@ public class ModEditor {
         // TODO: place custom component creation code here
     }
 
+    public JSpinner getModItemStackSize() {
+        return modItemStackSize;
+    }
 }

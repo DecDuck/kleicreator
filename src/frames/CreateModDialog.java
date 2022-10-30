@@ -1,12 +1,8 @@
 package frames;
 
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-
 import javax.swing.*;
-import java.awt.*;
 
-public class NewModConfig {
+public class CreateModDialog {
     private JPanel newModConfigPanel;
     private JTextField modNameTextField;
     private JLabel nameLabel;

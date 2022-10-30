@@ -1,6 +1,9 @@
 package com.deepcore.kleicreator.plugin;
 
 import com.deepcore.kleicreator.constants.Constants;
+import com.deepcore.kleicreator.items.Item;
+import com.deepcore.kleicreator.savesystem.SaveSystem;
+import com.deepcore.kleicreator.sdk.item.ItemComponent;
 import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.sdk.EventTrigger;
 import com.deepcore.kleicreator.sdk.Plugin;
@@ -36,6 +39,7 @@ public class PluginHandler {
 
     public static void LoadPlugin(File pluginFile) throws IOException {
         ClassLoader authorizedLoader = URLClassLoader.newInstance(new URL[] { pluginFile.toPath().toUri().toURL() });
+        SaveSystem.xstream.setClassLoader(authorizedLoader);
         JarInputStream jarFile = new JarInputStream(new FileInputStream(pluginFile.getAbsoluteFile()));
         JarEntry jarEntry;
         while (true) {
@@ -58,6 +62,10 @@ public class PluginHandler {
                         if (EventTrigger.class.isAssignableFrom(myLoadedClass)) {
                             EventTrigger p = (EventTrigger) myLoadedClass.getConstructor().newInstance();
                             eventTriggers.add(p);
+                            return;
+                        }
+                        if(ItemComponent.class.isAssignableFrom(myLoadedClass)){
+                            Item.registeredComponents.add((Class<? extends ItemComponent>) myLoadedClass);
                             return;
                         }
                     } catch (Exception e) {

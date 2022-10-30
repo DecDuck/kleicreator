@@ -1,4 +1,4 @@
-package com.deepcore.kleicreator.items.components;
+package example_plugin.items;
 
 import com.deepcore.kleicreator.sdk.item.FieldName;
 import com.deepcore.kleicreator.sdk.item.ItemComponent;
@@ -6,15 +6,11 @@ import com.deepcore.kleicreator.sdk.item.ItemComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Equippable implements ItemComponent {
-    @FieldName(name="Equip Location")
-    public Place place = Place.Hand;
+public class ExampleItemComponent implements ItemComponent {
+    public String example_field = "";
+    @FieldName(name="Another Example Field")
+    public int another_example_field;
 
-    public enum Place {
-        Hat,
-        Chest,
-        Hand
-    }
     @Override
     public List<String> ExportLines() {
         return new ArrayList<>();

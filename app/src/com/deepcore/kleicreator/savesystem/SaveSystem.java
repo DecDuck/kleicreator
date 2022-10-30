@@ -44,7 +44,9 @@ public class SaveSystem {
 
         } catch (IOException e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
+            return;
         }
+        Logger.Log("Completed save");
     }
 
     public static void Load(String filePath) {

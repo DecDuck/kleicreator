@@ -1,5 +1,7 @@
 package com.deepcore.kleicreator.util;
 
+import com.deepcore.kleicreator.items.ItemLoader;
+import com.deepcore.kleicreator.sdk.item.FieldName;
 import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.ModLoader;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -22,7 +24,14 @@ public class TreeHelper extends ModLoader {
         for (Field f : fields) {
             if (values != null) {
                 try {
-                    DefaultMutableTreeNode tempNode = new DefaultMutableTreeNode(f.getName() + ": " + f.get(values));
+                    DefaultMutableTreeNode tempNode;
+                    if(f.isAnnotationPresent(FieldName.class)){
+                        tempNode = new DefaultMutableTreeNode(f.getAnnotation(FieldName.class).name() + ": " + f.get(values));
+                        ItemLoader.annotatedFieldMap.put(f.getAnnotation(FieldName.class).name(), f.getName());
+                    }else{
+                        tempNode = new DefaultMutableTreeNode(f.getName() + ": " + f.get(values));
+                    }
+
                     node.add(tempNode);
                 } catch (IllegalAccessException e) {
                     Logger.Error(ExceptionUtils.getStackTrace(e));

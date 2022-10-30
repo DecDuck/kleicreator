@@ -1,3 +1,5 @@
+package example_plugin;
+
 import com.deepcore.kleicreator.sdk.Plugin;
 
 public class ExamplePlugin implements Plugin {

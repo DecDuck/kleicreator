@@ -2,6 +2,7 @@ package com.deepcore.kleicreator.items;
 
 import com.deepcore.kleicreator.items.components.*;
 import com.deepcore.kleicreator.sdk.item.ItemComponent;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.clapper.util.classutil.AndClassFilter;
 import org.clapper.util.classutil.ClassFilter;
@@ -13,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class Item {
 
@@ -21,25 +23,21 @@ public class Item {
     public String itemId = "new_item";
     public int itemTexture = -1;
     public int stackSize = 100;
-    public Item() {
-        ClassFinder finder = new ClassFinder();
-        finder.addClassPath();
-        Collection<ClassInfo> foundClasses = new ArrayList<ClassInfo>();
-        finder.findClasses(foundClasses);
-        for(ClassInfo i : foundClasses){
-            try{
-                i.getClass().cast(ItemComponent.class);
-                AddComponent((ItemComponent) i.getClass().getConstructor().newInstance());
-            }catch(ClassCastException e){
+    public static List<Class<? extends ItemComponent>> registeredComponents = new ArrayList<>();
+    static {
+        Reflections reflections = new Reflections("com.deepcore.kleicreator.items.components");
+        Set<Class<? extends ItemComponent>> components = reflections.getSubTypesOf(ItemComponent.class);
 
-            } catch (InvocationTargetException e) {
-                throw new RuntimeException(e);
-            } catch (InstantiationException e) {
-                throw new RuntimeException(e);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
+        for(Class<? extends ItemComponent> component : components){
+            registeredComponents.add(component);
+        }
+    }
+    public Item() {
+        for(Class<? extends ItemComponent> component : registeredComponents){
+            try {
+                AddComponent(component.getConstructor().newInstance());
+            } catch (Exception e ) {
+                Logger.Error(ExceptionUtils.getStackTrace(e));
             }
         }
     }

@@ -1,9 +1,5 @@
 package com.deepcore.kleicreator.sdk;
 
-import com.deepcore.kleicreator.config.Config;
-
-import javax.swing.*;
-
 public interface Plugin {
     default String Name(){
         return this.getClass().getSimpleName();

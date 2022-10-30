@@ -13,10 +13,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.lang.reflect.Field;
+import java.util.HashMap;
 
 import static com.deepcore.kleicreator.util.TreeHelper.*;
 
 public class ItemLoader extends ModLoader {
+
+    public static HashMap<String, String> annotatedFieldMap = new HashMap<>();
 
     public static void SetupAddedTree(JTree addedTree) {
         MouseListener ml = new MouseAdapter() {
@@ -47,23 +50,31 @@ public class ItemLoader extends ModLoader {
                                     continue;
                                 }
                                 Logger.Debug("Using default case.");
-                                String valueName = value.split(" ")[0];
-                                valueName = valueName.substring(0, valueName.length()-1);
-                                try {
-                                    Field f = c.b.getClass().getField(valueName);
+                                String valueName = value.split(":")[0];
 
-                                    Object toSetValue = getValueFromUser(f.getType(), "New value for \"" + valueName + "\"");
+                                Field field = null;
+                                try {
+                                    field = c.b.getClass().getField(valueName);
+                                } catch (NoSuchFieldException ex) {
+                                    try {
+                                        Logger.Log(valueName);
+                                        field = c.b.getClass().getField(annotatedFieldMap.get(valueName));
+                                    } catch (NoSuchFieldException exc) {
+                                        Logger.Debug("Unable to find value %s in class %s", valueName, c.b.getClass().getName());
+                                        return;
+                                    }
+                                }
+
+                                try {
+                                    Object toSetValue = getValueFromUser(field.getType(), "New value for \"" + valueName + "\"");
 
                                     if(toSetValue != null){
-                                        f.set(c.b, toSetValue);
+                                        field.set(c.b, toSetValue);
                                     }else{
                                         JOptionPane.showMessageDialog(modEditorFrame, "Unable to find suitable setter for value.", "Error in setting value", JOptionPane.WARNING_MESSAGE);
                                     }
 
-                                } catch (NoSuchFieldException ex) {
-                                    Logger.Debug("Unable to find value %s in class %s", valueName, c.b.getClass().getName());
-                                    return;
-                                } catch (IllegalAccessException ex) {
+                                }catch (IllegalAccessException ex) {
                                     Logger.Debug("Failed to find getter for value type");
                                     return;
                                 }

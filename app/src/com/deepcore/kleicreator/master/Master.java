@@ -298,7 +298,12 @@ public class Master {
             String[] mods = getAllDirectories(FILE_LOCATION + "/mods/");
             for (int i = 0; i < mods.length; i++) {
                 SaveObject saveObject = SaveSystem.TempLoad(FILE_LOCATION + "/mods/" + mods[i]);
-                model.addRow(new Object[]{saveObject.modName, saveObject.modAuthor, mods[i]});
+                if(saveObject == null){
+                    model.addRow(new Object[]{mods[i], "Modded - Cannot load", "Modded - Cannot load"});
+                }else{
+                    model.addRow(new Object[]{saveObject.modName, saveObject.modAuthor, mods[i]});
+                }
+
             }
         } catch (Exception e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));

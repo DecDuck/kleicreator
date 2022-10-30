@@ -46,7 +46,7 @@ public class ModLoader {
         SaveSystem.Load(path);
         Debug();
         CreateModEditorFrame();
-        PluginHandler.TriggerEvent("modload");
+        PluginHandler.TriggerEvent("OnModLoad");
         Update();
         Logger.Debug("Loaded mod");
     }
@@ -151,7 +151,7 @@ public class ModLoader {
             modEditor.getModItemConfigPanel().setVisible(false);
         }
 
-        PluginHandler.TriggerEvent("modeditorupdate");
+        PluginHandler.TriggerEvent("OnModEditorUpdate");
 
         modEditorFrame.validate();
         modEditorFrame.setVisible(true);
@@ -231,10 +231,8 @@ public class ModLoader {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                if (new SaveObject().hashCode() != SaveSystem.TempLoad(Mod.path).hashCode()) {
-                    if (GlobalConfig.askSaveOnLeave && getBool("Save?")) {
-                        SaveAll();
-                    }
+                if (GlobalConfig.askSaveOnLeave && getBool("Save?")) {
+                    SaveAll();
                 }
                 modEditorFrame.dispose();
                 System.exit(0);
@@ -317,7 +315,7 @@ public class ModLoader {
     }
 
     public static Integer getInt(String message) {
-        SpinnerNumberModel model = new SpinnerNumberModel(0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
+        SpinnerNumberModel model = new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
         JSpinner spinner = new JSpinner(model);
         JOptionPane.showMessageDialog(modEditorFrame, spinner, message, JOptionPane.QUESTION_MESSAGE);
         return (int) spinner.getValue();
@@ -360,6 +358,12 @@ public class ModLoader {
         }
         if(clazz.isEnum()){
             return (T) Enum.valueOf((Class<Enum>) clazz, clazz.getEnumConstants()[getOption(message,clazz.getEnumConstants())].toString());
+        }
+        if(clazz == int.class){
+            return (T) getInt(message);
+        }
+        if(clazz == String.class){
+            return (T) getString(message);
         }
         return null;
     }

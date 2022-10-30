@@ -18,4 +18,12 @@ public interface EventTrigger {
     default void OnStartup(){
 
     }
+
+    default void OnModEditorUpdate(){
+
+    }
+
+    default void OnModLoad(){
+
+    }
 }

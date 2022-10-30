@@ -56,7 +56,7 @@ public class Master {
         try {
             version = "v" + new Scanner(ClassLoader.getSystemClassLoader().getResource("version").openStream(), "UTF-8").next();
         } catch (IOException e) {
-            version = "v0.0.0";
+            version = "v0.0.0"; // Make sure we download a new version
         }
 
         ArgumentParser.ParseArguments(args);

@@ -27,12 +27,21 @@ public class Starter {
             Logger.Log("Oh no! We got an error!");
             if (e instanceof ConversionException) {
                 Logger.Log("Attempting to handle the error...");
-                new File(Constants.constants.KLEICREATOR_LOCATION + "/config").delete();
+                /*
+                * This is here because I had an issue with config messing up loading
+                * */
+                new File(Constants.constants.KLEICREATOR_LOCATION + "/config")
+                        .renameTo(
+                                new File(Constants.constants.KLEICREATOR_LOCATION
+                                        + "/config_bak_"
+                                        + new Date().getTime()
+                                )
+                        );
                 Master.Main(args);
                 main(args);
                 return;
             }
-            if(e instanceof StreamException){
+            if (e instanceof StreamException) {
                 new File(Constants.constants.KLEICREATOR_LOCATION).mkdirs();
                 Master.Main(args);
                 main(args);
@@ -46,7 +55,7 @@ public class Starter {
                 Logger.Error("We are seriously screwed guys, we can't write to a crash file. We're just gonna give up.");
                 return;
             }
-            JOptionPane.showMessageDialog(new JFrame(), "Hey! We hit an error that we couldn't handle. We wrote the error message to ~/.deepcore/, check it out and possibly file a bug report.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "Hey! We hit an error that we couldn't handle. We wrote the error message to ~/.kleicreator/, check it out and possibly file a bug report.", "ERROR", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
     }

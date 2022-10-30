@@ -2,6 +2,7 @@ package kleicreator.master;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import kleicreator.frames.LoadingStartup;
 import kleicreator.sdk.ArgumentParser;
 import kleicreator.sdk.config.Config;
 import kleicreator.sdk.constants.Constants;
@@ -39,7 +40,7 @@ import static kleicreator.master.Master.GlobalTheme.*;
 public class Master {
     public static ProjectSelectDialog projectSelectDialog;
     public static JFrame projectSelectFrame;
-    public static JFrame startupForm;
+    //public static JFrame startupForm;
     public static String version;
     public static int currentlySelectedRow = -1;
     public static boolean exit = false;
@@ -56,7 +57,7 @@ public class Master {
         try {
             version = "v" + new Scanner(ClassLoader.getSystemClassLoader().getResource("version").openStream(), "UTF-8").next();
         } catch (IOException e) {
-            version = "v0.0.0"; // Make sure we download a new version
+            version = "v0.0.0"; // Make sure we download a new version cause this one's broken as hell
         }
 
         ArgumentParser.ParseArguments(args);
@@ -100,8 +101,8 @@ public class Master {
             //UIManager.put( "TabbedPane.showTabSeparators", true );
 
             UIManager.put("ScrollBar.showButtons", false);
-            UIManager.put( "ScrollBar.thumbArc", 999 );
-            UIManager.put( "ScrollBar.thumbInsets", new Insets( 2, 2, 2, 2 ) );
+            UIManager.put("ScrollBar.thumbArc", 999);
+            UIManager.put("ScrollBar.thumbInsets", new Insets(2, 2, 2, 2));
 
             Logger.Debug("Successfully changed look and feel.");
         } catch (UnsupportedLookAndFeelException e) {
@@ -118,6 +119,7 @@ public class Master {
                 Exporter.Export();
             }
         } else {
+            /*
             //Create loading form
             startupForm = new JFrame();
             Startup startup = new Startup();
@@ -135,10 +137,15 @@ public class Master {
             startupForm.pack();
             startupForm.setLocationRelativeTo(null);
             startupForm.setVisible(true);
+            */
 
+            LoadingStartup startup = new LoadingStartup();
+            startup.SetProgress(0, "Starting up...");
+
+            startup.SetProgress(10, "Setting up project select dialog...");
             Logger.Debug("Instantiating ProjectSelect and setting up frame...");
             projectSelectDialog = new ProjectSelectDialog();
-            projectSelectFrame = new JFrame("KleiCreator "+version+" | Project Select");
+            projectSelectFrame = new JFrame("KleiCreator " + version + " | Project Select");
 
             projectSelectFrame.setIconImage(icon.getImage());
             projectSelectFrame.setContentPane(projectSelectDialog.getProjectSelectPanel());
@@ -236,14 +243,17 @@ public class Master {
                 }
             });
 
+            startup.SetProgress(90, "Finished setting up project select dialog");
             Logger.Debug("Successfully setup project select.");
 
+            startup.SetProgress(95, "Checking for update...");
             Logger.Debug("Checking for update...");
             if (Updater.CheckForUpdate(version)) {
                 Logger.Log("Found update.");
                 Updater.GetLatestRelease(projectSelectFrame);
             }
 
+            startup.SetProgress(100, "Starting...");
             // This is here so we look important
             long time = Calendar.getInstance().getTime().getTime() - Logger.startTime.getTime();
             if (time < 2000) {
@@ -257,7 +267,8 @@ public class Master {
             PluginHandler.TriggerEvent("OnStartup");
 
             projectSelectFrame.pack();
-            startupForm.setVisible(false);
+            //startupForm.setVisible(false);
+            startup.Destroy();
             projectSelectFrame.setLocationRelativeTo(null);
             projectSelectFrame.setVisible(true);
 
@@ -310,7 +321,9 @@ public class Master {
     }
 
     public static void LoadCurrentMod() {
-        startupForm.setVisible(true);
+        //startupForm.setVisible(true);
+        LoadingStartup startup = new LoadingStartup();
+        startup.SetProgress(10, "Loading mod...");
         if (currentlySelectedRow == -1) {
             JOptionPane.showMessageDialog(projectSelectFrame,
                     "No project is selected",
@@ -320,7 +333,8 @@ public class Master {
             projectSelectFrame.setVisible(false);
             ModLoader.LoadMod(Constants.constants.FetchModLocation() + projectSelectDialog.getProjectsListTable().getModel().getValueAt(currentlySelectedRow, 2));
         }
-        startupForm.setVisible(false);
+        startup.Destroy();
+        //startupForm.setVisible(false);
     }
 
     public static void readMods() {

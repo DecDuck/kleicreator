@@ -245,8 +245,10 @@ public class ModLoader {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                if ((Boolean) Config.GetData("kleicreator.asksaveonleave") && getBool("Save?")) {
-                    SaveAll();
+                if ((Boolean) Config.GetData("kleicreator.asksaveonleave")) {
+                    if(JOptionPane.showConfirmDialog(modEditorFrame, "Save project?", "Save?", JOptionPane.YES_NO_OPTION) == 0){
+                        SaveAll();
+                    }
                 }
                 modEditorFrame.dispose();
                 System.exit(0);

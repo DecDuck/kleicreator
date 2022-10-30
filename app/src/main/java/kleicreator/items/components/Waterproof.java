@@ -12,6 +12,11 @@ public class Waterproof implements ItemComponent {
     public double effectiveness = 0.0;
     @Override
     public List<String> ExportLines() {
-        return new ArrayList<>();
+        List<String> lines = new ArrayList<>();
+
+        lines.add("inst:AddComponent(\"waterproofer\")");
+        lines.add("inst.components.waterproofer:SetEffectiveness("+effectiveness+")");
+
+        return lines;
     }
 }

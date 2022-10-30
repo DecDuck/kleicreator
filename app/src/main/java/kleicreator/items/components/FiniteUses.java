@@ -17,6 +17,13 @@ public class FiniteUses implements ItemComponent {
 
     @Override
     public List<String> ExportLines() {
-        return new ArrayList<>();
+        List<String> lines = new ArrayList<>();
+
+        lines.add("inst:AddComponent(\"finiteuses\")");
+        lines.add("inst.components.finiteuses:SetConsumption(TOOLACTIONS."+action+", "+consumption+")");
+        lines.add("inst.components.finiteuses:SetMaxUses("+maxuses+")");
+        // inst.components.finiteuses:SetOnFinished(ontoolbreak)
+
+        return lines;
     }
 }

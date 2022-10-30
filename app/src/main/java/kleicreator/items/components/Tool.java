@@ -9,11 +9,16 @@ import java.util.List;
 
 public class Tool implements ItemComponent {
 
+    // These are TOOLACTIONS in the constants file
     public enum Action {
         CHOP,
-        MINE,
         DIG,
-        HAMMER
+        HAMMER,
+        MINE,
+        NET,
+        PLAY,
+        UNSADDLE,
+        REACH_HIGH
     }
     @FieldData(name="Action", tooltip = "What this tool does")
     public Action action;
@@ -22,6 +27,11 @@ public class Tool implements ItemComponent {
 
     @Override
     public List<String> ExportLines() {
-        return new ArrayList<>();
+        List<String> lines = new ArrayList<>();
+
+        lines.add("inst:AddComponent(\"tool\")");
+        lines.add("inst.components.tool:SetAction(TOOLACTIONS."+action+", "+effectiveness+")");
+
+        return lines;
     }
 }

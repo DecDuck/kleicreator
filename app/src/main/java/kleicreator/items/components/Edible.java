@@ -11,13 +11,21 @@ import java.util.List;
 public class Edible implements ItemComponent {
 
     public enum Foodtype {
-        MEATS,
-        FISHES,
-        VEGETABLE,
-        FRUIT,
-        EGGS,
-        CROCK_POT,
-        OTHER
+        GENERIC,
+        MEAT,
+        VEGGIE,
+        ELEMENTAL,
+        GEARS,
+        HORRIBLE,
+        INSECT,
+        SEEDS,
+        BERRY,
+        RAW,
+        BURNT,
+        ROUGHAGE,
+        WOOD,
+        GOODIES,
+        MONSTER
     }
 
     @FieldData(name="Foodtype", tooltip = "Type of food")
@@ -47,6 +55,25 @@ public class Edible implements ItemComponent {
 
     @Override
     public List<String> ExportLines() {
-        return new ArrayList<>();
+
+        List<String> lines = new ArrayList<>();
+        lines.add("inst:AddComponent(\"edible\")");
+        lines.add("inst.components.edible.foodtype = FOODTYPE."+foodtype.toString());
+        lines.add("inst.components.edible.secondaryfoodtype = FOODTYPE."+foodtype.toString());
+        lines.add("inst.components.edible.healthvalue = "+health);
+        lines.add("inst.components.edible.hungervalue = "+hunger);
+        lines.add("inst.components.edible.sanityvalue = "+sanity);
+        if(degrades_with_spoilage){
+            lines.add("inst.components.edible.degrades_with_spoilage = true");
+            lines.add("inst.components.edible.stale_health = "+stale_health);
+            lines.add("inst.components.edible.spoiled_health = "+spoiled_health);
+            lines.add("inst.components.edible.stale_hunger = "+stale_hunger);
+            lines.add("inst.components.edible.spoiled_hunger = "+spoiled_hunger);
+
+        }
+        // inst.components.edible:SetOnEatenFn(oneaten)
+        // inst.components.edible:SetGetHealthFn(healthfn)
+
+        return lines;
     }
 }

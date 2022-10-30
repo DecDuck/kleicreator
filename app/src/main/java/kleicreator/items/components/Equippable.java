@@ -9,7 +9,9 @@ import java.util.List;
 
 public class Equippable implements ItemComponent {
     public enum EquipSlot {
-        HANDS
+        HANDS,
+        HEAD,
+        BODY
     }
     @FieldData(name="Equip Slot", tooltip = "The slot in which the item is equipped")
     public EquipSlot equipSlot;
@@ -21,12 +23,36 @@ public class Equippable implements ItemComponent {
     public double dapperness;
     @FieldData(name="Insulated", tooltip = "Whether this item protects the user from lighting")
     public boolean isinsulated;
-    @FieldData(name="Moisture from equipped", tooltip = "How much moisture you get from ")
+    @FieldData(name="Moisture from equipped", tooltip = "How much moisture you get from this item")
     public double equippedmoisture;
+    @FieldData(name="Maximum moisture from equipped", tooltip = "How much moisture you get from this item (maximum)")
+    public double maxequippedmoisture;
     @FieldData(name="Restricted Tag", tooltip = "Tag required to equip this item")
     public String tag;
     @Override
     public List<String> ExportLines() {
-        return new ArrayList<>();
+        List<String> lines = new ArrayList<>();
+
+        lines.add("inst:AddComponent(\"equippable\")");
+        lines.add("inst.components.equippable.equipslot = EQUIPSLOT."+equipSlot.toString());
+        if(equipstack){
+            lines.add("inst.components.equippable.equipstack = true");
+        }
+        lines.add("inst.components.equippable.walkspeedmult = "+walkspeedmult);
+        lines.add("inst.components.equippable.dapperness = "+dapperness);
+        if(isinsulated){
+            lines.add("inst.components.equippable.insulated = true");
+        }
+        lines.add("inst.components.equippable.equippedmoisture = "+equippedmoisture);
+        lines.add("inst.components.equippable.maxequippedmoisture = "+maxequippedmoisture);
+        lines.add("inst.components.equippable.restrictedtag = "+tag);
+
+        /*
+        inst.components.equippable:SetOnEquip(onequip)
+        inst.components.equippable:SetOnUnequip(onunequip)
+        inst.components.equippable:SetOnPocket(onget)
+        */
+
+        return lines;
     }
 }

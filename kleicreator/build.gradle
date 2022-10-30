@@ -1,0 +1,39 @@
+buildscript {
+    ext {
+        depManagementVersion = "1.0.5.RELEASE"
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath ("io.spring.gradle:dependency-management-plugin:${depManagementVersion}")
+    }
+}
+
+allprojects {
+    group 'com.deepcore'
+    version '1.0-SNAPSHOT'
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 1.11
+    targetCompatibility = 1.11
+
+    dependencyManagement {
+        imports {
+            mavenBom 'io.spring.platform:platform-bom:1.1.2.RELEASE'
+        }
+    }
+
+    dependencies {
+
+    }
+}

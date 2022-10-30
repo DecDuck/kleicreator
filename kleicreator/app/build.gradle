@@ -1,0 +1,14 @@
+apply plugin: 'java'
+
+dependencies {
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.15'
+    implementation group: 'org.clapper', name: 'classutil_2.13', version: '1.5.1'
+    implementation group: 'org.reflections', name: 'reflections', version: '0.10.2'
+    implementation group: 'org.json', name: 'json', version: '20220320'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
+    implementation group: 'com.formdev', name: 'flatlaf', version: '0.22'
+    implementation group: 'commons-logging', name: 'commons-logging', version: '1.1.1'
+
+    implementation project(":sdk")
+}

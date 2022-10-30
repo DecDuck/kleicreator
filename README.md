@@ -1,6 +1,6 @@
 ![logo](app/src/main/resources/kleicreator_wide.png)
 # KleiCreator
-KleiCreator is a GUI tool for creating mods for games made by Klei Entertainment. Currently, only Don't Starve Together is supported. 
+KleiCreator is a GUI tool for creating mods for the games made by Klei Entertainment. It uses a the Java Runtime Environment and cross-platform libraries to enable mods to be made on any platform.  
 
 ### Download/Install
 There are 3 different versions you can download:
@@ -8,9 +8,6 @@ There are 3 different versions you can download:
  2. [TO BE SETUP] Master branch: This is a semi-official release. It's built automatically and most likely doesn't have any horrible bugs. You can download it by going [here]() and then click on the dots next to the entry that says "master".
  3. [TO BE SETUP] Development branch: This is a working branch. Expect unstable versions, breaking changes, things that can corrupt work. However, this is the most current version. You can download it by going [here]() and then click on the dots next to the entry that says "development".
 
-### How to use
-The tool is fairly self-explanatory, but there is a wiki in progress [here](https://lab.deepcore.dev/kleicreator/kleicreator/-/wikis/home).
-
-#### Footnote
+#### Colours:
 Gray: 5b5b5b
 Orange: ffb400

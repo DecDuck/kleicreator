@@ -14,7 +14,7 @@ public class Constants {
         if(ArgumentParser.doubleArguments.containsKey("--path")){
             KLEICREATOR_LOCATION = new File(ArgumentParser.doubleArguments.get("--path")).getAbsolutePath();
         }else{
-            KLEICREATOR_LOCATION = System.getProperty("user.home") + "/.deepcore/kleicreator";
+            KLEICREATOR_LOCATION = System.getProperty("user.home") + "/.kleicreator";
         }
     }
 

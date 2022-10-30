@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="kleicreator_sdk:jar">
-    <output-path>$PROJECT_DIR$/build/artifacts/kleicreator_sdk_jar</output-path>
-    <root id="archive" name="sdk.jar">
-      <element id="module-output" name="sdk" />
-    </root>
-  </artifact>
-</component>

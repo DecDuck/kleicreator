@@ -1,15 +1,18 @@
-![logo](https://lab.deepcore.dev/decduck3/kleicreator/-/raw/master/src/com/deepcore/kleicreator/resources/StartupSplash.png)
+![logo](https://cdn.deepcore.dev/kleicreator/kleicreator_wide.png)
 # KleiCreator
-KleiCreator is GUI tools written in Java to assist creating mods for Don't Starve Together.
+KleiCreator is a GUI tool for creating mods for games made by Klei Entertainment. Currently, only Don't Starve Together is supported. 
 
 ### Download/Install
-In the [Releases](https://lab.deepcore.dev/decduck3/kleicreator/-/releases) there are links to .jar files, which are pre-compiled version of the software. Download and run with at least Java 17. Currently, no installers.
+
 
 ### Progress
-Currently, KleiCreator is non-functional. It's missing some key functionality for it to be truly useful, but in it's current state, it can export mod info, recipes, speech and the basics of items. It currently lacks any components for these items (eg edible or armor) and any support for characters.
+There are 3 different versions you can download:
+ 1. Release: This is an official release, so we've spent some time making sure it's stable and the features are implemented well. You can download the latest from: [Releases](https://lab.deepcore.dev/kleicreator/kleicreator/-/releases)
+ 2. Master branch: This is a semi-official release. It's built automatically and most likely doesn't have any horrible bugs. You can download it by going [here](https://lab.deepcore.dev/kleicreator/kleicreator/-/pipelines/?scope=branches&page=1) and then click on the dots next to the entry that says "master" (the bottom one).
+ 3. Development branch: This is a working branch. Except unstable versions, breaking changes, things that can corrupt work. However, this is the most current version. You can download it by going [here](https://lab.deepcore.dev/kleicreator/kleicreator/-/pipelines/?scope=branches&page=1) and then click on the dots next to the entry that says "development" (the top one).
 
 ### How to use
-Check out the [wiki](https://lab.deepcore.dev/decduck3/kleicreator/-/wikis/home)
+The tool is fairly self-explanatory, but there is a wiki in progress [here](https://lab.deepcore.dev/kleicreator/kleicreator/-/wikis/home)/
 
 #### Footnote
 Gray: 5b5b5b

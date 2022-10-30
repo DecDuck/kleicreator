@@ -37,12 +37,12 @@ public class Startup {
         startupPanel = new JPanel();
         startupPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         startupPanel.setBackground(new Color(-1));
+        startupPanel.setEnabled(true);
         startupPanel.setForeground(new Color(-1));
         startupPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         image = new JLabel();
         image.setHorizontalAlignment(0);
         image.setHorizontalTextPosition(0);
-        image.setIcon(new ImageIcon(getClass().getResource("/StartupSplash.png")));
         image.setText("");
         startupPanel.add(image, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
     }
@@ -53,4 +53,5 @@ public class Startup {
     public JComponent $$$getRootComponent$$$() {
         return startupPanel;
     }
+
 }

@@ -70,7 +70,7 @@ public class ItemLoader extends ModLoader {
                                 }
 
                                 try {
-                                    Object toSetValue = getValueFromUser(field.getType(), "New value for \"" + valueName + "\"");
+                                    Object toSetValue = getValueFromUser(field.getType(), "New value for \"" + valueName + "\"", field.get(c.b));
 
                                     if(toSetValue != null){
                                         field.set(c.b, toSetValue);

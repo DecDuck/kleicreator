@@ -98,9 +98,9 @@ public class ResourceManager {
 
     public static void LoadResource(Resource r) {
         if (r.Is(ResourceTexture.class)) {
-            LoadTexture((ResourceTexture) r.Get());
+            LoadTexture(r.Get());
         } else if (r.Is(ResourceSpeech.class)) {
-            LoadSpeech((ResourceSpeech) r.Get());
+            LoadSpeech(r.Get());
         }
     }
 

@@ -10,3 +10,7 @@ Currently, KleiCreator is non-functional. It's missing some key functionality fo
 
 ### How to use
 Check out the [wiki](https://lab.deepcore.dev/decduck3/kleicreator/-/wikis/home)
+
+#### Footnote
+Gray: 5b5b5b
+Orange: ffb400

@@ -1,6 +1,7 @@
 package kleicreator.master;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import kleicreator.sdk.ArgumentParser;
 import kleicreator.sdk.config.Config;
@@ -42,6 +43,8 @@ public class Master {
     public static String version = "v0.0.8";
     public static int currentlySelectedRow = -1;
     public static boolean exit = false;
+    public static ImageIcon icon = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator_square.png"));
+    public static boolean darkMode = true;
 
     public enum GlobalTheme {
         Light,
@@ -67,34 +70,58 @@ public class Master {
         new File(Constants.FILE_LOCATION + "/plugins").mkdir();
         new File(Constants.FILE_LOCATION + "/config").mkdir();
         Config.AssertDataset("kleicreator");
-        Config.SaveData("kleicreator.theme", Light, false);
+        Config.SaveData("kleicreator.theme", Dark, false);
         Config.SaveData("kleicreator.asksaveonleave", true, false);
 
         try {
             Object o = Config.GetData("kleicreator.theme");
             if (Light.equals(o)) {
                 UIManager.setLookAndFeel(new FlatLightLaf());
+                darkMode = false;
             } else if (Dark.equals(o)) {
                 UIManager.setLookAndFeel(new FlatDarkLaf());
             } else if (Default.equals(o)) {
                 UIManager.setLookAndFeel(new NimbusLookAndFeel());
+                darkMode = false;
             }
+
+            // Custom theming
+            UIManager.put("Button.arc", 0);
+            UIManager.put("Component.arc", 0);
+            UIManager.put("CheckBox.arc", 0);
+            UIManager.put("ProgressBar.arc", 0);
+
+            UIManager.put("Component.arrowType", "triangle");
+            UIManager.put( "TabbedPane.showTabSeparators", true );
+
+            UIManager.put("ScrollBar.showButtons", false);
+            UIManager.put( "ScrollBar.thumbArc", 999 );
+            UIManager.put( "ScrollBar.thumbInsets", new Insets( 2, 2, 2, 2 ) );
 
             Logger.Debug("Successfully changed look and feel.");
         } catch (UnsupportedLookAndFeelException e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
         }
 
-        if(ArgumentParser.doubleArguments.containsKey("--project")){
+        if (ArgumentParser.doubleArguments.containsKey("--project")) {
             ModLoader.LoadMod(ArgumentParser.doubleArguments.get("--project"));
-            if(ArgumentParser.singleArguments.contains("--export")){
+            if (ArgumentParser.singleArguments.contains("--export")) {
                 Exporter.Export();
             }
-        }else{
+        } else {
             //Create loading form
             startupForm = new JFrame();
-            startupForm.setContentPane(new Startup().getStartupPanel());
+            Startup startup = new Startup();
+            ImageIcon image;
+            if (darkMode) {
+                image = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator_startup_splash_dark.png"));
+            } else {
+                image = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator_startup_splash_light.png"));
+            }
+            startup.getImage().setIcon(image);
+            startupForm.setContentPane(startup.getStartupPanel());
             startupForm.setUndecorated(true);
+            startupForm.setIconImage(icon.getImage());
             startupForm.setType(Window.Type.UTILITY);
             startupForm.pack();
             startupForm.setLocationRelativeTo(null);
@@ -104,12 +131,7 @@ public class Master {
             projectSelectDialog = new ProjectSelectDialog();
             projectSelectFrame = new JFrame("Select Project");
 
-            if(Config.GetData("kleicreator.theme") == GlobalTheme.Dark){
-                projectSelectDialog.getConfigButton().setForeground(new Color(33, 33, 33));
-            }
-
-            ImageIcon img = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("dstguimodcreatorlogo.png"));
-            projectSelectFrame.setIconImage(img.getImage());
+            projectSelectFrame.setIconImage(icon.getImage());
             projectSelectFrame.setContentPane(projectSelectDialog.getProjectSelectPanel());
             projectSelectFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -154,7 +176,7 @@ public class Master {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     JFrame configDialogFrame = new JFrame();
-                    configDialogFrame.setIconImage(img.getImage());
+                    configDialogFrame.setIconImage(Master.icon.getImage());
                     JPanel panel = new JPanel();
                     configDialogFrame.setContentPane(panel);
 
@@ -167,7 +189,7 @@ public class Master {
                     for (GlobalTheme t : GlobalTheme.values()) {
                         theme.addItem(t.toString());
                     }
-                    theme.setSelectedIndex(((GlobalTheme)Config.GetData("kleicreator.theme")).ordinal());
+                    theme.setSelectedIndex(((GlobalTheme) Config.GetData("kleicreator.theme")).ordinal());
 
                     JCheckBox askSaveOnLeave = new JCheckBox("Ask Save On Leave");
                     panel.add(askSaveOnLeave);
@@ -179,7 +201,7 @@ public class Master {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             Config.SaveData("kleicreator.theme", GlobalTheme.valueOf(theme.getSelectedItem().toString()));
-                            Config.SaveData("kleicreator.asksaveonleave",  askSaveOnLeave.isSelected());
+                            Config.SaveData("kleicreator.asksaveonleave", askSaveOnLeave.isSelected());
                             PluginHandler.TriggerEvent("OnConfigSave", configDialogFrame);
                             Starter.startCounter++;
                             exit = true;
@@ -191,7 +213,7 @@ public class Master {
 
                     panel.add(saveButton);
 
-                    panel.setLayout(new GridLayout(panel.getComponentCount(),1, 7, 7));
+                    panel.setLayout(new GridLayout(panel.getComponentCount(), 1, 7, 7));
 
                     configDialogFrame.pack();
 
@@ -210,9 +232,9 @@ public class Master {
 
             // This is here so we look important
             long time = Calendar.getInstance().getTime().getTime() - Logger.startTime.getTime();
-            if(time < 2000){
+            if (time < 2000) {
                 try {
-                    Thread.sleep(2000-time);
+                    Thread.sleep(2000 - time);
                 } catch (InterruptedException e) {
 
                 }
@@ -294,9 +316,9 @@ public class Master {
             String[] mods = getAllDirectories(Constants.FILE_LOCATION + "/mods/");
             for (int i = 0; i < mods.length; i++) {
                 SaveObject saveObject = SaveSystem.TempLoad(Constants.FILE_LOCATION + "/mods/" + mods[i]);
-                if(saveObject == null){
+                if (saveObject == null) {
                     model.addRow(new Object[]{mods[i], "Modded - Cannot load", "Modded - Cannot load"});
-                }else{
+                } else {
                     model.addRow(new Object[]{saveObject.modName, saveObject.modAuthor, mods[i]});
                 }
 

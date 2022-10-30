@@ -4,8 +4,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 
 public class TooltipTreeNode extends DefaultMutableTreeNode implements Tooltippable {
-    private String shortName;
-    private String longName;
+    private final String shortName;
+    private final String longName;
 
     public TooltipTreeNode(String shortName, String longName) {
         this.shortName = shortName;

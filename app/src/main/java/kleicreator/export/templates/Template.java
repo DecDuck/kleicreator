@@ -22,7 +22,7 @@ public class Template {
     private final Type templateType;
 
     private String customTemplateId;
-    private static Map<String, String> customTemplateMap = new HashMap<>();
+    private static final Map<String, String> customTemplateMap = new HashMap<>();
 
     private Item item;
     public Template(String rawTemplate, Type t) {

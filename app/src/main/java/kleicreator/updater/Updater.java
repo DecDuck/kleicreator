@@ -32,7 +32,7 @@ public class Updater {
             request.addHeader("content-type", "application/json");
             request.addHeader("accept", "application/vnd.github.v3+json");
             HttpResponse result = httpClient.execute(request);
-            String json = EntityUtils.toString(((CloseableHttpResponse) result).getEntity(), "UTF-8");
+            String json = EntityUtils.toString(result.getEntity(), "UTF-8");
 
             JSONArray obj = new JSONArray(json);
             JSONObject recent = obj.getJSONObject(0);
@@ -63,7 +63,7 @@ public class Updater {
             request.addHeader("content-type", "application/json");
             request.addHeader("accept", "application/vnd.github.v3+json");
             HttpResponse result = httpClient.execute(request);
-            String json = EntityUtils.toString(((CloseableHttpResponse) result).getEntity(), "UTF-8");
+            String json = EntityUtils.toString(result.getEntity(), "UTF-8");
 
             JSONArray obj = new JSONArray(json);
             JSONObject recent = obj.getJSONObject(0);

@@ -25,7 +25,7 @@ public class Item {
         for(Class<? extends ItemComponent> component : components){
             registeredComponents.add(component);
         }
-        Logger.Debug("Number of registered components: " + String.valueOf(registeredComponents.size()));
+        Logger.Debug("Number of registered components: " + registeredComponents.size());
     }
     public Item() {
         for(Class<? extends ItemComponent> component : registeredComponents){

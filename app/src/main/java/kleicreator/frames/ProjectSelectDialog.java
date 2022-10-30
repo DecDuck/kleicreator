@@ -68,9 +68,9 @@ public class ProjectSelectDialog {
         titleLabel = new JLabel();
         Font titleLabelFont = this.$$$getFont$$$("Arial", -1, 22, titleLabel.getFont());
         if (titleLabelFont != null) titleLabel.setFont(titleLabelFont);
-        titleLabel.setIcon(new ImageIcon(getClass().getResource("/small-logo.png")));
-        titleLabel.setText("KleiCreator");
-        ProjectSelectPanel.add(titleLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        titleLabel.setIcon(new ImageIcon(getClass().getResource("/kleicreator_wide_small.png")));
+        titleLabel.setText("");
+        ProjectSelectPanel.add(titleLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tableScrollPlane = new JScrollPane();
         ProjectSelectPanel.add(tableScrollPlane, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         projectsListTable = new JTable();
@@ -123,4 +123,5 @@ public class ProjectSelectDialog {
     public JComponent $$$getRootComponent$$$() {
         return ProjectSelectPanel;
     }
+
 }

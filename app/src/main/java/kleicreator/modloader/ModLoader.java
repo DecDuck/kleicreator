@@ -23,6 +23,7 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 public class ModLoader {
     public static JFrame modEditorFrame;
@@ -223,8 +224,7 @@ public class ModLoader {
 
     public static void CreateModEditorFrame() {
         modEditorFrame = new JFrame(String.format("KleiCreator %s | %s", Master.version, Mod.modName));
-        ImageIcon img = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("dstguimodcreatorlogo.png"));
-        modEditorFrame.setIconImage(img.getImage());
+        modEditorFrame.setIconImage(Master.icon.getImage());
         modEditor = new ModEditor();
 
         modEditorFrame.setContentPane(modEditor.getModEditorPanel());
@@ -320,16 +320,18 @@ public class ModLoader {
         Logger.Debug("Successfully completed ModEditor setup.");
     }
 
-    public static Integer getInt(String message) {
+    public static Integer getInt(String message, Integer defaultValue) {
         SpinnerNumberModel model = new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
         JSpinner spinner = new JSpinner(model);
+        spinner.setValue(defaultValue);
         JOptionPane.showMessageDialog(modEditorFrame, spinner, message, JOptionPane.QUESTION_MESSAGE);
         return (int) spinner.getValue();
     }
 
-    public static Double getFloat(String message) {
+    public static Double getFloat(String message, Double defaultValue) {
         SpinnerNumberModel model = new SpinnerNumberModel(0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0.1);
         JSpinner spinner = new JSpinner(model);
+        spinner.setValue(defaultValue);
         JOptionPane.showMessageDialog(modEditorFrame, spinner, message, JOptionPane.QUESTION_MESSAGE);
         return (double) spinner.getValue();
     }
@@ -355,9 +357,13 @@ public class ModLoader {
         return field.getText();
     }
 
-    public static  <T> T getValueFromUser(Class<T> clazz, String message){
+    public static <T> T getValueFromUser(Class<T> clazz, String message){
+        return getValueFromUser(clazz, message, new Object());
+    }
+
+    public static  <T> T getValueFromUser(Class<T> clazz, String message, Object starting){
         if(clazz == double.class){
-            return (T) getFloat(message);
+            return (T) getFloat(message, (Double) starting);
         }
         if(clazz == boolean.class){
             return (T) getBool(message);
@@ -366,7 +372,7 @@ public class ModLoader {
             return (T) Enum.valueOf((Class<Enum>) clazz, clazz.getEnumConstants()[getOption(message,clazz.getEnumConstants())].toString());
         }
         if(clazz == int.class){
-            return (T) getInt(message);
+            return (T) getInt(message, (Integer) starting);
         }
         if(clazz == String.class){
             return (T) getString(message);

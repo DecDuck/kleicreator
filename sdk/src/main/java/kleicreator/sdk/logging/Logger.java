@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
-import static kleicreator.sdk.constants.Constants.FILE_LOCATION;
+import static kleicreator.sdk.constants.Constants.KLEICREATOR_LOCATION;
 
 public class Logger {
     public enum Level {
@@ -18,7 +18,7 @@ public class Logger {
         Error
     }
 
-    public static String logLocation = FILE_LOCATION + "/log.txt";
+    public static String logLocation = KLEICREATOR_LOCATION + "/log.txt";
 
     public static String currentLog = "";
 

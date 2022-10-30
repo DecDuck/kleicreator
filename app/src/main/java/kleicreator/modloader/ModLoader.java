@@ -29,6 +29,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ModLoader {
@@ -79,7 +80,7 @@ public class ModLoader {
 
         }
         modEditor.getModItemSelect().removeAllItems();
-        for (Item i:Mod.items) {
+        for (Item i : Mod.items) {
             modEditor.getModItemSelect().addItem(i.itemName);
         }
 
@@ -157,12 +158,16 @@ public class ModLoader {
         modEditorFrame.setVisible(true);
     }
 
-    public static Item SelectFromAllItems(){
-        Object[] options = Mod.GetAllItems().stream().toArray();
-        JComboBox comboBox = new JComboBox(options);
-
-        JOptionPane.showMessageDialog(modEditorFrame, comboBox, "Select item", JOptionPane.QUESTION_MESSAGE);
-        return (Item) options[comboBox.getSelectedIndex()];
+    public static Item SelectFromAllItems() {
+        List<Item> items = Mod.GetAllItems();
+        Object[] objArray = items.toArray();
+        Object selection = JOptionPane.showInputDialog(modEditorFrame, "Select New Item", "Select New Item", JOptionPane.QUESTION_MESSAGE, null, objArray, 0);
+        for(Item i : items){
+            if(i.itemName.equals(selection.toString())){
+                return i;
+            }
+        }
+        return items.get(0);
     }
 
     public static void ReloadSpeech() {
@@ -225,7 +230,7 @@ public class ModLoader {
 
     public static void CreateModEditorFrame() {
         String truncatedModName = Mod.modName;
-        if(truncatedModName.length() > 20){
+        if (truncatedModName.length() > 20) {
             truncatedModName = truncatedModName.substring(0, 20);
             truncatedModName += "...";
         }
@@ -341,7 +346,7 @@ public class ModLoader {
         JSpinner spinner = new JSpinner(model);
         JOptionPane.showMessageDialog(modEditorFrame, spinner, message, JOptionPane.QUESTION_MESSAGE);
         int roundFactor = 1000; // Have to have this because floating
-        return (double) Math.round(((Double) spinner.getValue())*roundFactor)/roundFactor;
+        return (double) Math.round(((Double) spinner.getValue()) * roundFactor) / roundFactor;
     }
 
     public static Integer getOption(String message, Object[] options) {
@@ -365,7 +370,7 @@ public class ModLoader {
         return field.getText();
     }
 
-    public static <T,X> Map<T, X> getMap(Map<T, X> starting){
+    public static <T, X> Map<T, X> getMap(Map<T, X> starting) {
         MapCreatorDialog dialog = new MapCreatorDialog(starting);
         dialog.pack();
         dialog.setVisible(true);
@@ -373,7 +378,7 @@ public class ModLoader {
         return new HashMap<>();
     }
 
-    public static Object getObject(Object o){
+    public static Object getObject(Object o) {
         Gson g = new Gson();
         String data = g.toJson(o);
         JTextArea field = new JTextArea();
@@ -383,26 +388,22 @@ public class ModLoader {
         return g.fromJson(field.getText(), o.getClass());
     }
 
-    public static  <T> T getValueFromUser(Class<T> clazz, String message, Object starting){
-        if(clazz == double.class){
+    public static <T> T getValueFromUser(Class<T> clazz, String message, Object starting) {
+        if (clazz == double.class) {
             return (T) getDouble(message, (double) starting);
-        }
-        else if(clazz == boolean.class){
+        } else if (clazz == boolean.class) {
             return (T) getBool(message);
-        }
-        else if(clazz.isEnum()){
-            return (T) Enum.valueOf((Class<Enum>) clazz, clazz.getEnumConstants()[getOption(message,clazz.getEnumConstants())].toString());
-        }
-        else if(clazz == int.class){
+        } else if (clazz.isEnum()) {
+            return (T) Enum.valueOf((Class<Enum>) clazz, clazz.getEnumConstants()[getOption(message, clazz.getEnumConstants())].toString());
+        } else if (clazz == int.class) {
             return (T) getInt(message, (Integer) starting);
-        }
-        else if(clazz == String.class){
+        } else if (clazz == String.class) {
             return (T) getString(message);
         }
         //else if (clazz.isAssignableFrom(Map.class)){
         //    return (T) getMap((Map) starting);
         //}
-        else{
+        else {
             Logger.Log("Cannot find setter for value, so defaulting to JSON editing");
             return (T) getObject(starting);
         }

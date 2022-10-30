@@ -1,19 +1,22 @@
 package kleicreator.recipes;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Recipe {
 
+    public String id;
     public String result;
     public List<String> ingredients;
     public TECH tech;
     public RECIPETAB tab;
 
     public Recipe() {
-
+        this.id = UUID.randomUUID().toString().substring(0, 5);
     }
 
     public Recipe(String result, List<String> ingredients, RECIPETAB tab, TECH tech) {
+        this();
         this.result = result;
         this.ingredients = ingredients;
         this.tab = tab;

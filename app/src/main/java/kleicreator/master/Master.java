@@ -1,7 +1,6 @@
 package kleicreator.master;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import kleicreator.sdk.ArgumentParser;
 import kleicreator.sdk.config.Config;
@@ -29,7 +28,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -57,7 +55,7 @@ public class Master {
         try {
             version = "v" + new Scanner(ClassLoader.getSystemClassLoader().getResource("version").openStream(), "UTF-8").next();
         } catch (IOException e) {
-            version = "v?";
+            version = "v0.0.0";
         }
 
         ArgumentParser.ParseArguments(args);
@@ -67,12 +65,12 @@ public class Master {
         Logger.Log("Started with arguments: " + String.join(" ", args));
 
         //Create working directories
-        new File(Constants.FILE_LOCATION + "/").mkdir();
-        new File(Constants.FILE_LOCATION + "/mods").mkdir();
-        new File(Constants.FILE_LOCATION + "/speech").mkdir();
-        new File(Constants.FILE_LOCATION + "/plugins").mkdir();
-        new File(Constants.FILE_LOCATION + "/config").mkdir();
-        new File(Constants.FILE_LOCATION + "/data").mkdir();
+        new File(Constants.KLEICREATOR_LOCATION + "/").mkdir();
+        new File(Constants.KLEICREATOR_LOCATION + "/mods").mkdir();
+        new File(Constants.KLEICREATOR_LOCATION + "/speech").mkdir();
+        new File(Constants.KLEICREATOR_LOCATION + "/plugins").mkdir();
+        new File(Constants.KLEICREATOR_LOCATION + "/config").mkdir();
+        new File(Constants.KLEICREATOR_LOCATION + "/data").mkdir();
         Config.AssertDataset("kleicreator");
         Config.SaveData("kleicreator.theme", Dark, false);
         Config.SaveData("kleicreator.asksaveonleave", true, false);
@@ -293,7 +291,7 @@ public class Master {
                 newModConfigFrame.setVisible(false);
                 Mod _temp = new Mod();
                 Mod.modName = name;
-                ModLoader.CreateMod(Constants.FILE_LOCATION + "/mods/" + Mod.escapedModName() + ".proj", author, name);
+                ModLoader.CreateMod(Constants.KLEICREATOR_LOCATION + "/mods/" + Mod.escapedModName() + ".proj", author, name);
             }
         });
 
@@ -318,7 +316,7 @@ public class Master {
                     JOptionPane.WARNING_MESSAGE);
         } else {
             projectSelectFrame.setVisible(false);
-            ModLoader.LoadMod(Constants.FILE_LOCATION + "/mods/" + projectSelectDialog.getProjectsListTable().getModel().getValueAt(currentlySelectedRow, 2));
+            ModLoader.LoadMod(Constants.KLEICREATOR_LOCATION + "/mods/" + projectSelectDialog.getProjectsListTable().getModel().getValueAt(currentlySelectedRow, 2));
         }
         startupForm.setVisible(false);
     }
@@ -326,9 +324,9 @@ public class Master {
     public static void readMods() {
         try {
             DefaultTableModel model = (DefaultTableModel) projectSelectDialog.getProjectsListTable().getModel();
-            String[] mods = getAllDirectories(Constants.FILE_LOCATION + "/mods/");
+            String[] mods = getAllDirectories(Constants.KLEICREATOR_LOCATION + "/mods/");
             for (int i = 0; i < mods.length; i++) {
-                SaveObject saveObject = SaveSystem.TempLoad(Constants.FILE_LOCATION + "/mods/" + mods[i]);
+                SaveObject saveObject = SaveSystem.TempLoad(Constants.KLEICREATOR_LOCATION + "/mods/" + mods[i]);
                 if (saveObject == null) {
                     model.addRow(new Object[]{mods[i], "Modded - Cannot load", "Modded - Cannot load"});
                 } else {

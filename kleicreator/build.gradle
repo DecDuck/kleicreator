@@ -12,12 +12,15 @@ buildscript {
 
 allprojects {
     group 'com.deepcore'
-    version '1.0-SNAPSHOT'
+    version '0.0.7'
 }
 
 subprojects {
     repositories {
         mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://www.jetbrains.com/intellij-repository/releases" }
+        maven { url "https://jetbrains.bintray.com/intellij-third-party-dependencies" }
     }
 
     apply plugin: 'java'

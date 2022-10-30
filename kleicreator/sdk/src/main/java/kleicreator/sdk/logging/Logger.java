@@ -61,7 +61,7 @@ public class Logger {
         WriteChanges();
     }
 
-    public static void Print(Level level, String format, String... parts) {
+    public static void Print(Level level, String format, Object... parts) {
         Print(level, String.format(format, parts));
     }
 

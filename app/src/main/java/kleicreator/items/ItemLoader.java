@@ -50,7 +50,6 @@ public class ItemLoader extends ModLoader {
                             if(selPath.getPathComponent(1).toString() != c.b.getClass().getSimpleName()){
                                 continue;
                             }
-                            Logger.Debug("Using default case.");
                             String valueName = value.split(":")[0];
 
                             Field field = null;
@@ -58,7 +57,6 @@ public class ItemLoader extends ModLoader {
                                 field = c.b.getClass().getField(valueName);
                             } catch (NoSuchFieldException ex) {
                                 try {
-                                    Logger.Log(valueName);
                                     field = c.b.getClass().getField(annotatedFieldMap.get(valueName));
                                 } catch (NoSuchFieldException exc) {
                                     Logger.Debug("Unable to find value %s in class %s", valueName, c.b.getClass().getName());

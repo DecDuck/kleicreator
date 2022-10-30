@@ -1,11 +1,13 @@
 package kleicreator.master;
 
 import com.thoughtworks.xstream.converters.ConversionException;
+import com.thoughtworks.xstream.io.StreamException;
 import kleicreator.sdk.constants.Constants;
 import kleicreator.sdk.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,13 +27,16 @@ public class Starter {
             Logger.Log("Oh no! We got an error!");
             if (e instanceof ConversionException) {
                 Logger.Log("Attempting to handle the error...");
-                try {
-                    Files.delete(Path.of(Constants.FILE_LOCATION + "/config.xml"));
-                    Master.Main(args);
-                    main(args);
-                } catch (IOException ex) {
-
-                }
+                new File(Constants.FILE_LOCATION + "/config").delete();
+                Master.Main(args);
+                main(args);
+                return;
+            }
+            if(e instanceof StreamException){
+                new File(Constants.FILE_LOCATION).mkdirs();
+                Master.Main(args);
+                main(args);
+                return;
             }
             Logger.Log("More oh-nos, we got an error and couldn't handle it!");
             Logger.Error(ExceptionUtils.getStackTrace(e));

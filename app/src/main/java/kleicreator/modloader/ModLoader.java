@@ -1,8 +1,8 @@
 package kleicreator.modloader;
 
+import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 import kleicreator.frames.MapCreatorDialog;
 import kleicreator.frames.ModEditor;
 import kleicreator.items.Item;
@@ -19,6 +19,7 @@ import kleicreator.savesystem.SaveSystem;
 import kleicreator.sdk.config.Config;
 import kleicreator.sdk.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.reflections.serializers.JsonSerializer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -335,12 +336,12 @@ public class ModLoader {
         return (int) spinner.getValue();
     }
 
-    public static Double getFloat(String message, Double defaultValue) {
-        SpinnerNumberModel model = new SpinnerNumberModel(0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0.1);
+    public static Double getDouble(String message, double defaultValue) {
+        SpinnerNumberModel model = new SpinnerNumberModel(defaultValue, null, null, 0.1);
         JSpinner spinner = new JSpinner(model);
-        spinner.setValue(defaultValue);
         JOptionPane.showMessageDialog(modEditorFrame, spinner, message, JOptionPane.QUESTION_MESSAGE);
-        return (double) spinner.getValue();
+        int roundFactor = 1000; // Have to have this because floating
+        return (double) Math.round(((Double) spinner.getValue())*roundFactor)/roundFactor;
     }
 
     public static Integer getOption(String message, Object[] options) {
@@ -373,17 +374,18 @@ public class ModLoader {
     }
 
     public static Object getObject(Object o){
-        XStream xstream = new XStream(new DomDriver());
-        String data = xstream.toXML(o);
+        Gson g = new Gson();
+        String data = g.toJson(o);
         JTextArea field = new JTextArea();
+        field.setRows(10);
         field.setText(data);
-        JOptionPane.showMessageDialog(modEditorFrame, field, "Editing XML for object", JOptionPane.QUESTION_MESSAGE);
-        return xstream.fromXML(field.getText());
+        JOptionPane.showMessageDialog(modEditorFrame, field, "Editing JSON for object", JOptionPane.QUESTION_MESSAGE);
+        return g.fromJson(field.getText(), o.getClass());
     }
 
     public static  <T> T getValueFromUser(Class<T> clazz, String message, Object starting){
         if(clazz == double.class){
-            return (T) getFloat(message, (Double) starting);
+            return (T) getDouble(message, (double) starting);
         }
         else if(clazz == boolean.class){
             return (T) getBool(message);
@@ -401,7 +403,7 @@ public class ModLoader {
         //    return (T) getMap((Map) starting);
         //}
         else{
-            Logger.Log("Cannot find setter for value, so defaulting to XML editing");
+            Logger.Log("Cannot find setter for value, so defaulting to JSON editing");
             return (T) getObject(starting);
         }
     }

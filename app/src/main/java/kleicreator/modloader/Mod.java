@@ -1,6 +1,7 @@
 package kleicreator.modloader;
 
 
+import kleicreator.items.AllItems;
 import kleicreator.items.Item;
 import kleicreator.recipes.Recipe;
 
@@ -22,6 +23,9 @@ public class Mod {
     }
 
     public static List<Item> GetAllItems(){
-        return items;
+        List<Item> allItems = new ArrayList<>();
+        allItems.addAll(items);
+        allItems.addAll(AllItems.allItems);
+        return allItems;
     }
 }

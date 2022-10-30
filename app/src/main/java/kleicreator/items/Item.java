@@ -37,6 +37,12 @@ public class Item {
         }
     }
 
+    public Item(String itemName, String itemId) {
+        this();
+        this.itemName = itemName;
+        this.itemId = itemId;
+    }
+
     @Override
     public String toString() {
         return itemName;

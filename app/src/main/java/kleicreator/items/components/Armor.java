@@ -13,8 +13,8 @@ import java.util.Map;
 public class Armor implements ItemComponent {
     @FieldData(name="Absorption", tooltip = "(0-1) Percentage of damage taken by armor")
     public double absorption;
-    @FieldData(name="Indestructable", tooltip = "If the armor can break")
-    public boolean is_indestructable;
+    @FieldData(name="Indestructible", tooltip = "If the armor can break")
+    public boolean is_indestructible;
     @FieldData(name="Durability", tooltip = "How much health the armor has")
     public double condition;
     @FieldData(name="Absorption Tags", tooltip = "A list of types of damage this armor blocks")
@@ -26,7 +26,7 @@ public class Armor implements ItemComponent {
     public List<String> ExportLines() {
         List<String> lines = new ArrayList<>();
         lines.add("inst:AddComponent(\"armor\")");
-        if(is_indestructable){
+        if(is_indestructible){
             lines.add(String.format("inst.components.armor:InitIndestructible(%s)", absorption));
         }else{
             lines.add(String.format("inst.components.armor:InitCondition(%s, %s)", condition, absorption));

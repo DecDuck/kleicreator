@@ -49,9 +49,9 @@ public class Logger {
         Print(Level.Debug, format, parts);
     }
 
-    public static void Print(Level level, String message) {
+    private static void Print(Level level, String message) {
         long time = Calendar.getInstance().getTime().getTime() - startTime.getTime();
-        String currentMessage = "[" + String.format("%08d", time) + "] " + message + "\n";
+        String currentMessage = "[" + String.format("%08d", time) + "] ["+ getCallerClassName()+"] " + message + "\n";
         currentLog = currentLog + currentMessage;
         if(level.ordinal() < MinimumLogLevel.ordinal()){
 
@@ -59,6 +59,17 @@ public class Logger {
             System.out.print(currentMessage);
         }
         WriteChanges();
+    }
+
+    private static String getCallerClassName() {
+        StackTraceElement[] stElements = Thread.currentThread().getStackTrace();
+        for (int i=1; i<stElements.length; i++) {
+            StackTraceElement ste = stElements[i];
+            if (!ste.getClassName().equals(Logger.class.getName()) && ste.getClassName().indexOf("java.lang.Thread")!=0) {
+                return ste.getFileName().split("[.]")[0];
+            }
+        }
+        return null;
     }
 
     public static void Print(Level level, String format, Object... parts) {

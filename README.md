@@ -1,4 +1,4 @@
-![logo](app/src/main/kleicreator_wide.png)
+![logo](app/src/main/resources/kleicreator_wide.png)
 # KleiCreator
 KleiCreator is a GUI tool for creating mods for games made by Klei Entertainment. Currently, only Don't Starve Together is supported. 
 

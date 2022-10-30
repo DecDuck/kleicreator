@@ -39,7 +39,7 @@ public class ItemLoader extends ModLoader {
                         Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
                         for (int i = 0; i < item.itemComponents.size(); i++) {
                             Item.Entry<Boolean, ItemComponent> c = item.itemComponents.get(i);
-                            if (c.b.getClass().getSimpleName() == selPath.getLastPathComponent().toString()) {
+                            if (c.b.getClass().getSimpleName().equals(selPath.getLastPathComponent().toString())) {
                                 c.a = !c.a;
                                 Update();
                                 return;

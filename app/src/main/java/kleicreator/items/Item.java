@@ -22,13 +22,10 @@ public class Item {
     static {
         // This fancy reflection stuff is just for us. Plugins' components are registered when they're loaded in
         // Could probably be removed as it doesn't add much, but requires a whole new library
-        Item.registeredComponents.clear();
         Reflections reflections = new Reflections("kleicreator.items.components");
         Set<Class<? extends ItemComponent>> components = reflections.getSubTypesOf(ItemComponent.class);
 
-        for(Class<? extends ItemComponent> component : components){
-            registeredComponents.add(component);
-        }
+        registeredComponents.addAll(components);
         Logger.Debug("Number of registered components: " + registeredComponents.size());
     }
     public Item() {

@@ -57,6 +57,8 @@ public class LoadingStartup {
         label1.setText("");
         loadingBar.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         progressBar = new JProgressBar();
+        progressBar.setBackground(new Color(-10790053));
+        progressBar.setForeground(new Color(-19456));
         progressBar.setStringPainted(true);
         loadingBar.add(progressBar, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
@@ -67,4 +69,5 @@ public class LoadingStartup {
     public JComponent $$$getRootComponent$$$() {
         return loadingBar;
     }
+
 }

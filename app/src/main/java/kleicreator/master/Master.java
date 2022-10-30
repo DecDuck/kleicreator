@@ -119,26 +119,6 @@ public class Master {
                 Exporter.Export();
             }
         } else {
-            /*
-            //Create loading form
-            startupForm = new JFrame();
-            Startup startup = new Startup();
-            ImageIcon image;
-            if (darkMode) {
-                image = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator_startup_splash_dark.png"));
-            } else {
-                image = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator_startup_splash_light.png"));
-            }
-            startup.getImage().setIcon(image);
-            startupForm.setContentPane(startup.getStartupPanel());
-            startupForm.setUndecorated(true);
-            startupForm.setIconImage(icon.getImage());
-            startupForm.setType(Window.Type.UTILITY);
-            startupForm.pack();
-            startupForm.setLocationRelativeTo(null);
-            startupForm.setVisible(true);
-            */
-
             LoadingStartup startup = new LoadingStartup();
             startup.SetProgress(0, "Starting up...");
 

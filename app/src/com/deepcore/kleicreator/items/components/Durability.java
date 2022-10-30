@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Durability implements ItemComponent {
     @FieldName(name="Durability")
-    public double durability = 0.0;
+    public double max_durability = 0.0;
     @Override
     public List<String> ExportLines() {
         return new ArrayList<>();

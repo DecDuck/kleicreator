@@ -21,9 +21,6 @@ public class Template {
     private String template;
     private final Type templateType;
 
-    private String customTemplateId;
-    private static final Map<String, String> customTemplateMap = new HashMap<>();
-
     private Item item;
     public Template(String rawTemplate, Type t) {
         this.template = rawTemplate;

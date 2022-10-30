@@ -93,8 +93,8 @@ public class ResourceManager {
 
         if((Boolean) Config.GetData("kleicreator.copyresources")){
             try{
-                resource.texPath = String.valueOf(copyTo(Path.of(texPath), Constants.KLEICREATOR_LOCATION +"/data/"));
-                resource.xmlPath = String.valueOf(copyTo(Path.of(xmlPath), Constants.KLEICREATOR_LOCATION +"/data/"));
+                resource.texPath = String.valueOf(copyTo(Path.of(texPath), Constants.constants.KLEICREATOR_LOCATION +"/data/"));
+                resource.xmlPath = String.valueOf(copyTo(Path.of(xmlPath), Constants.constants.KLEICREATOR_LOCATION +"/data/"));
             }catch (IOException e){
                 ModLoader.ShowWarning("Failed to copy files, disabling \"Copy Resources\"");
                 Logger.Error(ExceptionUtils.getStackTrace(e));
@@ -150,7 +150,7 @@ public class ResourceManager {
     }
 
     public static void CreateSpeech(String fileName) {
-        String fileLocation = Constants.KLEICREATOR_LOCATION + "/speech/" + fileName.toLowerCase() + ".dat";
+        String fileLocation = Constants.constants.KLEICREATOR_LOCATION + "/speech/" + fileName.toLowerCase() + ".dat";
         try {
             new File(fileLocation).createNewFile();
             Files.writeString(Path.of(fileLocation), "CHARACTERS.GENERIC.DESCRIBE.EXAMPLE = \"Look! A cool new item\"");

@@ -1,14 +1,13 @@
 package kleicreator.sdk.logging;
 
 import kleicreator.sdk.ArgumentParser;
+import kleicreator.sdk.constants.Constants;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-
-import static kleicreator.sdk.constants.Constants.KLEICREATOR_LOCATION;
 
 public class Logger {
     public enum Level {
@@ -18,7 +17,7 @@ public class Logger {
         Error
     }
 
-    public static String logLocation = KLEICREATOR_LOCATION + "/log.txt";
+    public static String logLocation = Constants.constants.FetchLogLocation();
 
     public static String currentLog = "";
 

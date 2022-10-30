@@ -25,7 +25,7 @@ public class SaveObject implements java.io.Serializable {
         modName = Mod.modName;
         modAuthor = Mod.modAuthor;
         modDescription = Mod.modDescription;
-        modVersion = Mod.modAuthor;
+        modVersion = Mod.modVersion;
         modIcon = Mod.modIcon;
 
         items = Mod.items;

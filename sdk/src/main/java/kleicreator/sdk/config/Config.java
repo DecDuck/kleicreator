@@ -10,7 +10,7 @@ import java.nio.file.Files;
 
 public class Config {
 
-    public static String CONFIG_LOCATION = Constants.KLEICREATOR_LOCATION + "/config/";
+    public static String CONFIG_LOCATION = Constants.constants.KLEICREATOR_LOCATION + "/config/";
     public static XStream xstream = new XStream(new DomDriver());
 
     public static String GetFilePath(String datasetName){

@@ -6,6 +6,7 @@ import kleicreator.items.Item;
 import kleicreator.master.Master;
 import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.recipes.RecipeLoader;
+import kleicreator.sdk.constants.Constants;
 import kleicreator.sdk.logging.Logger;
 
 import javax.swing.*;
@@ -16,7 +17,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import static kleicreator.sdk.constants.Constants.KLEICREATOR_LOCATION;
 
 public class ModLoaderActions extends ModLoader {
     public static void SetupListeners() {
@@ -171,7 +171,7 @@ public class ModLoaderActions extends ModLoader {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Desktop.getDesktop().open(new File(KLEICREATOR_LOCATION + "/speech/"));
+                    Desktop.getDesktop().open(new File(Constants.constants.KLEICREATOR_LOCATION + "/speech/"));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }

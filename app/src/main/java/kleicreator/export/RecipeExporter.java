@@ -35,7 +35,10 @@ public class RecipeExporter {
             ingredients += String.format(ingredientsTemplate, pair.getKey(), pair.getValue().toString());
         }
 
-        ingredients = ingredients.substring(0, ingredients.length() - 2);
+        if(ingredientsMap.size() > 0){
+            ingredients = ingredients.substring(0, ingredients.length() - 2);
+        }
+
 
         Logger.Debug("Using ingredient string '%s'", ingredients);
 

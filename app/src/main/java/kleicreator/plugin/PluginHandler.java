@@ -26,10 +26,10 @@ public class PluginHandler {
     public static void LoadPlugins() {
         blobs.clear();
         try {
-            String[] jarFiles = new File(Constants.KLEICREATOR_LOCATION + "/plugins/").list();
+            String[] jarFiles = new File(Constants.constants.KLEICREATOR_LOCATION + "/plugins/").list();
             if (jarFiles.length > 0) {
                 for (String jarLocation : jarFiles) {
-                    File pluginFile = new File(Constants.KLEICREATOR_LOCATION + "/plugins/" + jarLocation);
+                    File pluginFile = new File(Constants.constants.KLEICREATOR_LOCATION + "/plugins/" + jarLocation);
                     PluginBlob blob = FetchMetadata(pluginFile);
                     if (blob != null) {
                         blobs.add(blob);

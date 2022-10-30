@@ -27,13 +27,13 @@ public class Starter {
             Logger.Log("Oh no! We got an error!");
             if (e instanceof ConversionException) {
                 Logger.Log("Attempting to handle the error...");
-                new File(Constants.KLEICREATOR_LOCATION + "/config").delete();
+                new File(Constants.constants.KLEICREATOR_LOCATION + "/config").delete();
                 Master.Main(args);
                 main(args);
                 return;
             }
             if(e instanceof StreamException){
-                new File(Constants.KLEICREATOR_LOCATION).mkdirs();
+                new File(Constants.constants.KLEICREATOR_LOCATION).mkdirs();
                 Master.Main(args);
                 main(args);
                 return;
@@ -41,7 +41,7 @@ public class Starter {
             Logger.Log("More oh-nos, we got an error and couldn't handle it!");
             Logger.Error(ExceptionUtils.getStackTrace(e));
             try {
-                Files.writeString(Path.of(Constants.KLEICREATOR_LOCATION + "_crash_" + new Date().getTime() + ".log"), ExceptionUtils.getStackTrace(e));
+                Files.writeString(Path.of(Constants.constants.KLEICREATOR_LOCATION + "_crash_" + new Date().getTime() + ".log"), ExceptionUtils.getStackTrace(e));
             } catch (IOException ex) {
                 Logger.Error("We are seriously screwed guys, we can't write to a crash file. We're just gonna give up.");
                 return;

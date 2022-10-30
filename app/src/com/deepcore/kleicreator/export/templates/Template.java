@@ -5,13 +5,15 @@ import com.deepcore.kleicreator.export.PrefabExporter;
 import com.deepcore.kleicreator.export.RecipeExporter;
 import com.deepcore.kleicreator.export.SpeechExporter;
 import com.deepcore.kleicreator.items.Item;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.Mod;
 import com.deepcore.kleicreator.modloader.resources.Resource;
 import com.deepcore.kleicreator.modloader.resources.ResourceManager;
 import com.deepcore.kleicreator.sdk.Plugin;
+import com.deepcore.kleicreator.sdk.item.ItemComponent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Template {
@@ -35,7 +37,7 @@ public class Template {
     }
 
     public static void RegisterTemplate(Plugin p, String templateId, String template){
-        customTemplateMap.put(p.id()+":"+templateId, template);
+        customTemplateMap.put(p.Id()+":"+templateId, template);
     }
 
     public void Create() {
@@ -74,7 +76,17 @@ public class Template {
                     ReplaceAll("$ASSETS$", AssetExporter.ExportAsset(ResourceManager.inventoryimages.get(item.itemTexture).Get()));
                 }
                 //TODO $UPPER$
-                //TODO $FILLER$
+
+                String filler = "";
+                for(Item.Entry<Boolean, ItemComponent> pair : item.itemComponents){
+                    if(pair.a){
+                        List<String> lines = pair.b.ExportLines();
+                        for(String line : lines){
+                            filler += line + "\n";
+                        }
+                    }
+                }
+                ReplaceAll("$FILLER$", filler);
                 break;
         }
     }

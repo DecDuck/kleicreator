@@ -35,6 +35,8 @@ local function fn()
 
     inst:AddComponent("inventoryitem")
 
+    $FILLER$
+
     MakeHauntableLaunch(inst)
 
     return inst

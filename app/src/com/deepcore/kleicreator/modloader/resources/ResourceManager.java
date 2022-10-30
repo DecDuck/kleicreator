@@ -1,16 +1,12 @@
 package com.deepcore.kleicreator.modloader.resources;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.deepcore.kleicreator.constants.Constants;
-import com.deepcore.kleicreator.items.Item;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.ModLoader;
 import com.deepcore.kleicreator.modloader.classes.ResourceAnimation;
 import com.deepcore.kleicreator.modloader.classes.ResourceSpeech;
 import com.deepcore.kleicreator.modloader.classes.ResourceTexture;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import com.deepcore.kleicreator.savesystem.SaveObject;
 import com.deepcore.kleicreator.speech.SpeechFile;
 
 import java.io.File;

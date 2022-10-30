@@ -2,7 +2,7 @@ package com.deepcore.kleicreator.config;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 
 import java.io.File;
 import java.util.HashMap;

@@ -1,6 +1,4 @@
-package com.deepcore.kleicreator.logging;
-
-import com.sun.jna.platform.win32.IPHlpAPI;
+package com.deepcore.kleicreator.sdk.logging;
 
 import java.io.File;
 import java.io.FileWriter;

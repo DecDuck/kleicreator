@@ -1,7 +1,7 @@
 package com.deepcore.kleicreator.sdk.config;
 
 import com.deepcore.kleicreator.config.GlobalConfig;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 
 public class Config {
     public static void SaveValue(String name, Object value){

@@ -1,6 +1,6 @@
 package com.deepcore.kleicreator.export;
 
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.Mod;
 import com.deepcore.kleicreator.recipes.Recipe;
 

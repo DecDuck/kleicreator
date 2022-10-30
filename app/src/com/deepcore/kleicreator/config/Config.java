@@ -1,7 +1,6 @@
 package com.deepcore.kleicreator.config;
 
-import com.deepcore.kleicreator.logging.Logger;
-import com.deepcore.kleicreator.plugin.PluginHandler;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.*;

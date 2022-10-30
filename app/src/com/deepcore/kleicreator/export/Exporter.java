@@ -3,7 +3,7 @@ package com.deepcore.kleicreator.export;
 import com.deepcore.kleicreator.constants.Constants;
 import com.deepcore.kleicreator.export.templates.Template;
 import com.deepcore.kleicreator.frames.ExportDialog;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.Mod;
 import com.deepcore.kleicreator.modloader.ModLoader;
 import com.deepcore.kleicreator.modloader.classes.ResourceAnimation;

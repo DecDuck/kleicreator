@@ -3,7 +3,7 @@ package com.deepcore.kleicreator.modloader;
 import com.deepcore.kleicreator.export.Exporter;
 import com.deepcore.kleicreator.frames.SpeechDialog;
 import com.deepcore.kleicreator.items.Item;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.resources.ResourceManager;
 import com.deepcore.kleicreator.recipes.RecipeLoader;
 import com.deepcore.kleicreator.resources.ResourceLoader;

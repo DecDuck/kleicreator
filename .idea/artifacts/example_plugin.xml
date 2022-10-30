@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="example_plugin">
+    <output-path>$PROJECT_DIR$/../.deepcore/kleicreator/plugins/</output-path>
+    <root id="archive" name="example_plugin.jar">
+      <element id="module-output" name="example_plugin" />
+    </root>
+  </artifact>
+</component>

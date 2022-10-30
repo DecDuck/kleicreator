@@ -10,7 +10,7 @@ import com.deepcore.kleicreator.config.GlobalConfig;
 import com.deepcore.kleicreator.constants.Constants;
 import com.deepcore.kleicreator.frames.CreateModDialog;
 import com.deepcore.kleicreator.frames.Startup;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.Mod;
 import com.deepcore.kleicreator.modloader.ModLoader;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -55,7 +55,7 @@ public class Master {
         Logger.Log("KleiCreator %s. Credits to DeepCore", version);
 
         PluginHandler.LoadPlugins();
-        PluginHandler.TriggerEvent("load");
+        PluginHandler.TriggerEvent("OnLoad");
 
         //Create working directories
         new File(FILE_LOCATION + "/").mkdir();
@@ -181,7 +181,7 @@ public class Master {
                 panel.add(askSaveOnLeave);
                 askSaveOnLeave.setSelected(GlobalConfig.askSaveOnLeave);
 
-                PluginHandler.TriggerEvent("configdialogsetup", configDialogFrame);
+                PluginHandler.TriggerEvent("OnConfigSetup", configDialogFrame);
 
                 JButton saveButton = new JButton("Save and Restart");
                 saveButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
@@ -191,7 +191,7 @@ public class Master {
                     public void actionPerformed(ActionEvent e) {
                         GlobalConfig.theme = GlobalConfig.Theme.valueOf(theme.getSelectedItem().toString());
                         GlobalConfig.askSaveOnLeave = askSaveOnLeave.isSelected();
-                        PluginHandler.TriggerEvent("configdialogsave", configDialogFrame);
+                        PluginHandler.TriggerEvent("OnConfigSave", configDialogFrame);
                         new Config().Save();
                         Starter.startCounter++;
                         exit = true;
@@ -225,7 +225,7 @@ public class Master {
             }
         }
 
-        PluginHandler.TriggerEvent("startup");
+        PluginHandler.TriggerEvent("OnStartup");
 
         projectSelectFrame.pack();
         startupForm.setVisible(false);

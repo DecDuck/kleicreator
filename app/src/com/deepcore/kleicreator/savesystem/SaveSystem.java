@@ -2,7 +2,7 @@ package com.deepcore.kleicreator.savesystem;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.*;

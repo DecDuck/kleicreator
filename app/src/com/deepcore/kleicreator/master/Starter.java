@@ -2,7 +2,7 @@ package com.deepcore.kleicreator.master;
 
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.deepcore.kleicreator.constants.Constants;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.swing.*;

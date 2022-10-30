@@ -4,7 +4,7 @@ import com.deepcore.kleicreator.config.GlobalConfig;
 import com.deepcore.kleicreator.frames.ModEditor;
 import com.deepcore.kleicreator.items.Item;
 import com.deepcore.kleicreator.items.ItemLoader;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.master.Master;
 import com.deepcore.kleicreator.modloader.classes.ResourceAnimation;
 import com.deepcore.kleicreator.modloader.classes.ResourceSpeech;

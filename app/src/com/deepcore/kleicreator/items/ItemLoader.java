@@ -1,9 +1,9 @@
 package com.deepcore.kleicreator.items;
 
-import com.deepcore.kleicreator.items.components.*;
-import com.deepcore.kleicreator.logging.Logger;
+import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.Mod;
 import com.deepcore.kleicreator.modloader.ModLoader;
+import com.deepcore.kleicreator.sdk.item.ItemComponent;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -30,7 +30,7 @@ public class ItemLoader extends ModLoader {
                     } else if (e.getClickCount() == 2) {
                         Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
                         for (int i = 0; i < item.itemComponents.size(); i++) {
-                            Item.Entry<Boolean, Component> c = item.itemComponents.get(i);
+                            Item.Entry<Boolean, ItemComponent> c = item.itemComponents.get(i);
                             if (c.b.getClass().getSimpleName() == selPath.getLastPathComponent().toString()) {
                                 c.a = !c.a;
                                 Update();
@@ -38,7 +38,7 @@ public class ItemLoader extends ModLoader {
                             }
                         }
                         for (int i = 0; i < item.itemComponents.size(); i++) {
-                            Item.Entry<Boolean, Component> c = item.itemComponents.get(i);
+                            Item.Entry<Boolean, ItemComponent> c = item.itemComponents.get(i);
                             String value = selPath.getLastPathComponent().toString();
                             if (false) { // Add specific cases here, although it's unlikely you'll need to cause of the gnarly function getValueFromUser
 
@@ -91,7 +91,7 @@ public class ItemLoader extends ModLoader {
                     } else if (e.getClickCount() == 2) {
                         Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
                         for (int i = 0; i < item.itemComponents.size(); i++) {
-                            Item.Entry<Boolean, Component> c = item.itemComponents.get(i);
+                            Item.Entry<Boolean, ItemComponent> c = item.itemComponents.get(i);
                             if (c.b.getClass().getSimpleName() == selPath.getLastPathComponent().toString()) {
                                 c.a = !c.a;
                                 Update();
@@ -118,7 +118,7 @@ public class ItemLoader extends ModLoader {
         rootNotAdded.removeAllChildren();
         rootAdded.removeAllChildren();
 
-        for (Item.Entry<Boolean, Component> c : item.itemComponents) {
+        for (Item.Entry<Boolean, ItemComponent> c : item.itemComponents) {
             if (c.a) {
                 AddClassToTree(rootAdded, c.b.getClass(), c.b);
             } else {

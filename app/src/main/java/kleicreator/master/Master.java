@@ -64,7 +64,7 @@ public class Master {
         Constants.constants = new Constants();
         Constants.constants.CreateConstants();
         Logger.Start();
-        Logger.Log("KleiCreator %s. Created by decduck3", version);
+        Logger.Log("KleiCreator %s. Developed by DecDuck", version);
         Logger.Log("Started with arguments: " + String.join(" ", args));
 
         //Create working directories

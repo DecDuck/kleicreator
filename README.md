@@ -11,5 +11,3 @@ There are 3 different versions you can download:
 #### Colours:
 Gray: 5b5b5b
 Orange: ffb400
-
-#### Ignore the Git history, I'm not good with it. Figured it out though and am improving

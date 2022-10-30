@@ -9,6 +9,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.swing.*;
@@ -21,7 +22,7 @@ import java.net.URISyntaxException;
 public class Updater {
     public static boolean CheckForUpdate(String version) {
 
-        String url = "https://api.github.com/repos/deepcoredev/kleicreator/releases";
+        String url = "https://api.github.com/repos/DecDuck/kleicreator/releases";
 
         version = version.substring(1); // Remove v
 
@@ -56,14 +57,14 @@ public class Updater {
             }
             return false;
 
-        } catch (IOException | ParseException ex) {
+        } catch (IOException | ParseException | JSONException ex) {
             ex.printStackTrace();
         }
         return false;
     }
 
     public static void GetLatestRelease(JFrame frame) {
-        String url = "https://api.github.com/repos/deepcoredev/kleicreator/releases";
+        String url = "https://api.github.com/repos/DecDuck/kleicreator/releases";
 
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();

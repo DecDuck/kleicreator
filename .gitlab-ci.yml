@@ -31,5 +31,6 @@ deploy-job:      # This job runs in the deploy stage.
     - echo "Creating jars"
     - ./gradlew jar
   artifacts:
-    - app/build/libs/app*
-    - sdk/build/libs/sdk*
+    paths:
+      - app/build/libs/app*
+      - sdk/build/libs/sdk*

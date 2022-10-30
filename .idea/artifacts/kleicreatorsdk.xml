@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="kleicreatorsdk">
+    <output-path>$PROJECT_DIR$/build/artifacts/kleicreatorsdk</output-path>
+    <root id="archive" name="kleicreatorsdk.jar">
+      <element id="module-output" name="sdk" />
+    </root>
+  </artifact>
+</component>

@@ -16,6 +16,7 @@ public class SaveObject implements java.io.Serializable {
     public String modDescription;
     public String modVersion;
     public int modIcon;
+    public Mod.Game game;
 
     public List<Item> items = new ArrayList<Item>();
     public List<Resource> resources = new ArrayList<Resource>();
@@ -32,6 +33,7 @@ public class SaveObject implements java.io.Serializable {
         ResourceManager.GenerateResourceLists();
         resources = ResourceManager.resources;
         recipes = Mod.recipes;
+        game = Mod.game;
     }
 
     public void LoadBack() {
@@ -40,6 +42,7 @@ public class SaveObject implements java.io.Serializable {
         Mod.modDescription = modDescription;
         Mod.modVersion = modVersion;
         Mod.modIcon = modIcon;
+        Mod.game = game;
 
         Mod.items.clear();
         for (int i = 0; i < items.size(); i++) {

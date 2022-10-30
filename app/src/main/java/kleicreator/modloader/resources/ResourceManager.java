@@ -1,5 +1,6 @@
 package kleicreator.modloader.resources;
 
+import kleicreator.sdk.config.Config;
 import kleicreator.sdk.constants.Constants;
 import kleicreator.sdk.logging.Logger;
 import kleicreator.speech.SpeechFile;
@@ -9,6 +10,7 @@ import kleicreator.modloader.classes.ResourceSpeech;
 import kleicreator.modloader.classes.ResourceTexture;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,13 +35,13 @@ public class ResourceManager {
         for (Resource r : resources) {
             if (r.Is(ResourceTexture.class)) {
                 ResourceTexture m = r.Get();
-                if (m.type == TextureLocation.InventoryImage) {
+                if (m.type == TextureType.InventoryImage) {
                     inventoryimages.add(r);
                 }
-                if (m.type == TextureLocation.ModIcon) {
+                if (m.type == TextureType.ModIcon) {
                     modicons.add(r);
                 }
-                if (m.type == TextureLocation.MapIcon) {
+                if (m.type == TextureType.MapIcon) {
                     mapicons.add(r);
                 }
             }
@@ -67,16 +69,16 @@ public class ResourceManager {
         resource.texPath = texture.texPath;
         resource.xmlPath = texture.xmlPath;
 
-        if (texture.type == TextureLocation.InventoryImage) {
+        if (texture.type == TextureType.InventoryImage) {
             resource.filePath = "images/inventoryimages/";
             resource.displayUse = "Inventory Image";
-        } else if (texture.type == TextureLocation.ModIcon) {
+        } else if (texture.type == TextureType.ModIcon) {
             resource.filePath = "";
             resource.displayUse = "Mod Icon";
-        } else if (texture.type == TextureLocation.Portrait) {
+        } else if (texture.type == TextureType.Portrait) {
             resource.filePath = "bigportrait/";
             resource.displayUse = "Character Portrait";
-        } else if (texture.type == TextureLocation.MapIcon) {
+        } else if (texture.type == TextureType.MapIcon) {
             resource.filePath = "images/map_icons/";
             resource.displayUse = "Map Icon";
         }
@@ -86,14 +88,32 @@ public class ResourceManager {
         Logger.Debug("Loaded texture resource");
     }
 
-    public static void CreateTexture(String texPath, String xmlPath, TextureLocation location) {
+    public static void CreateTexture(String texPath, String xmlPath, TextureType location) {
         ResourceTexture resource = new ResourceTexture();
 
-        resource.texPath = texPath;
-        resource.xmlPath = xmlPath;
+        if((Boolean) Config.GetData("kleicreator.copyresources")){
+            try{
+                resource.texPath = String.valueOf(copyTo(Path.of(texPath), Constants.FILE_LOCATION+"/data/"));
+                resource.xmlPath = String.valueOf(copyTo(Path.of(xmlPath), Constants.FILE_LOCATION+"/data/"));
+            }catch (IOException e){
+                ModLoader.ShowWarning("Failed to copy files, disabling \"Copy Resources\"");
+                Logger.Error(ExceptionUtils.getStackTrace(e));
+                Config.SaveData("kleicreator.copyresources", false);
+                CreateTexture(texPath, xmlPath, location);
+            }
+        }else{
+            resource.texPath = texPath;
+            resource.xmlPath = xmlPath;
+        }
         resource.type = location;
 
         LoadTexture(resource);
+    }
+
+    private static Path copyTo(Path in, String destination) throws IOException {
+        Path out = Path.of(destination+in.getFileName());
+        Files.copy(in, out);
+        return out;
     }
 
     public static void LoadResource(Resource r) {
@@ -130,12 +150,13 @@ public class ResourceManager {
     }
 
     public static void CreateSpeech(String fileName) {
-        String fileLocation = Constants.FILE_LOCATION + "/kleicreator/speech/" + fileName.toLowerCase() + ".dat";
+        String fileLocation = Constants.FILE_LOCATION + "/speech/" + fileName.toLowerCase() + ".dat";
         try {
             new File(fileLocation).createNewFile();
             Files.writeString(Path.of(fileLocation), "CHARACTERS.GENERIC.DESCRIBE.EXAMPLE = \"Look! A cool new item\"");
         } catch (IOException e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
+            JOptionPane.showMessageDialog(ModLoader.modEditorFrame, "Unable to create speech file!", "Error!", JOptionPane.ERROR_MESSAGE);
             return;
         }
         ResourceSpeech r = new ResourceSpeech();
@@ -146,7 +167,7 @@ public class ResourceManager {
         LoadSpeech(r);
     }
 
-    public enum TextureLocation {
+    public enum TextureType {
         InventoryImage,
         ModIcon,
         Portrait,

@@ -4,6 +4,7 @@ import kleicreator.sdk.item.FieldData;
 import kleicreator.sdk.item.ItemComponent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +18,9 @@ public class Armor implements ItemComponent {
     @FieldData(name="Durability", tooltip = "How much health the armor has")
     public double condition;
     @FieldData(name="Absorption Tags", tooltip = "A list of types of damage this armor blocks")
-    public List<String> absorptiontags;
+    public List<String> absorptiontags = new ArrayList<>();
     @FieldData(name="Weaknesses", tooltip = "A dictionary of types of damage and their multipliers")
-    public Map<String, Double> weakness;
+    public Map<String, Double> weakness = new HashMap<>();
 
     @Override
     public List<String> ExportLines() {

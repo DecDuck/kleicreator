@@ -47,41 +47,37 @@ public class ItemLoader extends ModLoader {
                         for (int i = 0; i < item.itemComponents.size(); i++) {
                             Item.Entry<Boolean, ItemComponent> c = item.itemComponents.get(i);
                             String value = selPath.getLastPathComponent().toString();
-                            if (false) { // Add specific cases here, although it's unlikely you'll need to cause of the gnarly function getValueFromUser
+                            if(selPath.getPathComponent(1).toString() != c.b.getClass().getSimpleName()){
+                                continue;
+                            }
+                            Logger.Debug("Using default case.");
+                            String valueName = value.split(":")[0];
 
-                            }else{
-                                if(selPath.getPathComponent(1).toString() != c.b.getClass().getSimpleName()){
-                                    continue;
-                                }
-                                Logger.Debug("Using default case.");
-                                String valueName = value.split(":")[0];
-
-                                Field field = null;
+                            Field field = null;
+                            try {
+                                field = c.b.getClass().getField(valueName);
+                            } catch (NoSuchFieldException ex) {
                                 try {
-                                    field = c.b.getClass().getField(valueName);
-                                } catch (NoSuchFieldException ex) {
-                                    try {
-                                        Logger.Log(valueName);
-                                        field = c.b.getClass().getField(annotatedFieldMap.get(valueName));
-                                    } catch (NoSuchFieldException exc) {
-                                        Logger.Debug("Unable to find value %s in class %s", valueName, c.b.getClass().getName());
-                                        return;
-                                    }
-                                }
-
-                                try {
-                                    Object toSetValue = getValueFromUser(field.getType(), "New value for \"" + valueName + "\"", field.get(c.b));
-
-                                    if(toSetValue != null){
-                                        field.set(c.b, toSetValue);
-                                    }else{
-                                        JOptionPane.showMessageDialog(modEditorFrame, "Unable to find suitable setter for value.", "Error in setting value", JOptionPane.WARNING_MESSAGE);
-                                    }
-
-                                }catch (IllegalAccessException ex) {
-                                    Logger.Debug("Failed to find getter for value type");
+                                    Logger.Log(valueName);
+                                    field = c.b.getClass().getField(annotatedFieldMap.get(valueName));
+                                } catch (NoSuchFieldException exc) {
+                                    Logger.Debug("Unable to find value %s in class %s", valueName, c.b.getClass().getName());
                                     return;
                                 }
+                            }
+
+                            try {
+                                Object toSetValue = getValueFromUser(field.getType(), "New value for \"" + valueName + "\"", field.get(c.b));
+
+                                if(toSetValue != null){
+                                    field.set(c.b, toSetValue);
+                                }else{
+                                    //JOptionPane.showMessageDialog(modEditorFrame, "Unable to find suitable setter for value.", "Error in setting value", JOptionPane.WARNING_MESSAGE);
+                                }
+
+                            }catch (IllegalAccessException ex) {
+                                Logger.Debug("Failed to find getter for value type");
+                                return;
                             }
                             item.itemComponents.set(i, c);
                         }

@@ -62,6 +62,7 @@ public class ModEditor {
     private JButton modRecipesCreate;
     private JButton modRecipesDelete;
     private JSpinner modItemStackSize;
+    private JPanel aboutTab;
     private JPanel modRecipesPanel;
 
     public JPanel getModRecipes() {
@@ -297,8 +298,8 @@ public class ModEditor {
         modConfig.setEnabled(true);
         Font modConfigFont = this.$$$getFont$$$(null, -1, -1, modConfig.getFont());
         if (modConfigFont != null) modConfig.setFont(modConfigFont);
-        modConfig.setTabLayoutPolicy(0);
-        modConfig.setTabPlacement(1);
+        modConfig.setTabLayoutPolicy(1);
+        modConfig.setTabPlacement(2);
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -307,43 +308,49 @@ public class ModEditor {
         gbc.weighty = 100.0;
         gbc.fill = GridBagConstraints.BOTH;
         modEditorPanel.add(modConfig, gbc);
+        aboutTab = new JPanel();
+        aboutTab.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        modConfig.addTab("", new ImageIcon(getClass().getResource("/kleicreator_info_tab.png")), aboutTab);
+        modConfig.setDisabledIconAt(0, new ImageIcon(getClass().getResource("/kleicreator_info_tab.png")));
+        modConfig.setEnabledAt(0, false);
         mainConfig = new JPanel();
-        mainConfig.setLayout(new GridLayoutManager(10, 3, new Insets(20, 20, 20, 20), -1, -1));
+        mainConfig.setLayout(new GridLayoutManager(9, 3, new Insets(20, 20, 20, 20), -1, -1));
         Font mainConfigFont = this.$$$getFont$$$(null, -1, -1, mainConfig.getFont());
         if (mainConfigFont != null) mainConfig.setFont(mainConfigFont);
-        modConfig.addTab("Config", null, mainConfig, "Change things such as mod name, author, com.deepcore.kleicreator.config options");
+        mainConfig.setToolTipText("Configure things like mod name, mod author and description.");
+        modConfig.addTab("Mod", null, mainConfig, "Change things such as mod name, author, config options");
         modNameLabel = new JLabel();
-        modNameLabel.setText("Mod Name:");
+        modNameLabel.setText("Mod Name");
         mainConfig.add(modNameLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         modAuthorLabel = new JLabel();
         modAuthorLabel.setText("Mod Author");
-        mainConfig.add(modAuthorLabel, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainConfig.add(modAuthorLabel, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         modAuthorTextField = new JTextField();
-        mainConfig.add(modAuthorTextField, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        mainConfig.add(modAuthorTextField, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         modDescriptionLabel = new JLabel();
         modDescriptionLabel.setText("Mod Description");
-        mainConfig.add(modDescriptionLabel, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainConfig.add(modDescriptionLabel, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         modVersionLabel = new JLabel();
         modVersionLabel.setText("Mod Version");
-        mainConfig.add(modVersionLabel, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainConfig.add(modVersionLabel, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         modVersionTextField = new JTextField();
-        mainConfig.add(modVersionTextField, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        mainConfig.add(modVersionTextField, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         modConfigSave = new JButton();
         modConfigSave.setText("Save");
-        mainConfig.add(modConfigSave, new GridConstraints(9, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainConfig.add(modConfigSave, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         modIconTextureSelect = new JComboBox();
-        mainConfig.add(modIconTextureSelect, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainConfig.add(modIconTextureSelect, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         modIconLabel = new JLabel();
         modIconLabel.setText("Mod Icon");
-        mainConfig.add(modIconLabel, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        modNameTextField = new JTextField();
-        mainConfig.add(modNameTextField, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        mainConfig.add(modIconLabel, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         modDescriptTextArea = new JTextArea();
         modDescriptTextArea.setText("");
-        mainConfig.add(modDescriptTextArea, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, -1), null, 0, false));
+        mainConfig.add(modDescriptTextArea, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, -1), null, 0, false));
+        modNameTextField = new JTextField();
+        mainConfig.add(modNameTextField, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         modItems = new JPanel();
         modItems.setLayout(new GridLayoutManager(4, 2, new Insets(20, 20, 20, 20), -1, -1, false, true));
-        modConfig.addTab("Items", null, modItems, "Create, delete and modify your modded com.deepcore.kleicreator.items");
+        modConfig.addTab("Items", null, modItems, "Create, delete and modify your modded items");
         modItemConfigPanel = new JPanel();
         modItemConfigPanel.setLayout(new GridLayoutManager(7, 2, new Insets(0, 0, 0, 0), -1, -1));
         modItems.add(modItemConfigPanel, new GridConstraints(0, 1, 4, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(1000, -1), new Dimension(1000, -1), null, 0, false));
@@ -384,18 +391,19 @@ public class ModEditor {
         modItemDelete.setText("Delete Item");
         modItems.add(modItemDelete, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(200, -1), 0, false));
         modItemSelect = new JComboBox();
-        modItems.add(modItemSelect, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(200, -1), 0, false));
+        modItemSelect.setEditable(false);
+        modItems.add(modItemSelect, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, 1, GridConstraints.SIZEPOLICY_FIXED, new Dimension(100, -1), null, null, 0, false));
         modItemSave = new JButton();
         modItemSave.setText("Save");
         modItems.add(modItemSave, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(200, -1), 0, false));
         modRecipes = new JPanel();
         modRecipes.setLayout(new GridLayoutManager(1, 2, new Insets(20, 20, 20, 20), -1, -1));
-        modConfig.addTab("Recipes", null, modRecipes, "Add/Remove custom com.deepcore.kleicreator.recipes");
+        modConfig.addTab("Recipes", null, modRecipes, "Add/Remove custom recipes");
         modRecipesButtonPanel = new JPanel();
         modRecipesButtonPanel.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         modRecipes.add(modRecipesButtonPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         modRecipesSelector = new JComboBox();
-        modRecipesButtonPanel.add(modRecipesSelector, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        modRecipesButtonPanel.add(modRecipesSelector, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(100, -1), null, null, 0, false));
         modRecipesCreate = new JButton();
         modRecipesCreate.setText("Create");
         modRecipesButtonPanel.add(modRecipesCreate, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -407,7 +415,7 @@ public class ModEditor {
         modCharacters = new JPanel();
         modCharacters.setLayout(new GridLayoutManager(1, 1, new Insets(20, 20, 20, 20), -1, -1));
         modConfig.addTab("Characters", null, modCharacters, "Create, delete and modify your modded characters");
-        modConfig.setEnabledAt(3, false);
+        modConfig.setEnabledAt(4, false);
         resources = new JPanel();
         resources.setLayout(new GridLayoutManager(3, 1, new Insets(20, 20, 20, 20), -1, -1));
         modConfig.addTab("Resources", null, resources, "Import assets to use in your mod");
@@ -435,17 +443,21 @@ public class ModEditor {
         openFolder.setText("Open Folder");
         modSpeechConfig.add(openFolder, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(300, -1), 0, false));
         modExportPanel = new JPanel();
-        modExportPanel.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        modConfig.addTab("Export", null, modExportPanel, "Export your mod");
+        modExportPanel.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        modConfig.addTab("Save & Export", null, modExportPanel, "Export your mod");
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        modExportPanel.add(panel1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 15, 0), -1, -1));
+        modExportPanel.add(panel1, new GridConstraints(0, 0, 2, 2, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         modExport = new JButton();
         modExport.setText("Export");
         panel1.add(modExport, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(300, 150), 0, false));
         saveAll = new JButton();
-        saveAll.setText("Save All");
+        saveAll.setText("Save Project");
         panel1.add(saveAll, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(300, 150), 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setIcon(new ImageIcon(getClass().getResource("/kleicreator_wide_small.png")));
+        label2.setText("");
+        modExportPanel.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -476,4 +488,5 @@ public class ModEditor {
     public JComponent $$$getRootComponent$$$() {
         return modEditorPanel;
     }
+
 }

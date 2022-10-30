@@ -1,5 +1,9 @@
 package kleicreator.modloader;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
+import kleicreator.frames.MapCreatorDialog;
 import kleicreator.frames.ModEditor;
 import kleicreator.items.Item;
 import kleicreator.items.ItemLoader;
@@ -23,7 +27,8 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModLoader {
     public static JFrame modEditorFrame;
@@ -32,7 +37,7 @@ public class ModLoader {
     public static DefaultTableModel speechModel;
     public static DefaultTableModel recipeModel;
 
-    public static String fileComponent(String fname) {
+    public static String GetFileName(String fname) {
         int pos = fname.lastIndexOf(File.separator);
         if (pos > -1)
             return fname.substring(pos + 1);
@@ -43,7 +48,6 @@ public class ModLoader {
     public static void LoadMod(String path) {
         Mod.path = path;
         SaveSystem.Load(path);
-        Debug();
         CreateModEditorFrame();
         PluginHandler.TriggerEvent("OnModLoad");
         Update();
@@ -61,10 +65,6 @@ public class ModLoader {
         SaveSystem.Save(path);
         Update();
         Logger.Debug("Created mod");
-    }
-
-    public static void Debug() {
-        //Nothing here
     }
 
     public static void Update() {
@@ -93,21 +93,21 @@ public class ModLoader {
         for (Resource r : ResourceManager.resources) {
             if (r.Is(ResourceTexture.class)) {
                 ResourceTexture m = r.Get();
-                resourceModel.addRow(new Object[]{ModLoader.fileComponent(m.texPath), "Texture", m.texPath + ";" + m.xmlPath, m.filePath});
+                resourceModel.addRow(new Object[]{ModLoader.GetFileName(m.texPath), "Texture", m.texPath + ";" + m.xmlPath, m.filePath});
             } else if (r.Is(ResourceSpeech.class)) {
                 ResourceSpeech m = r.Get();
                 resourceModel.addRow(new Object[]{m.speechFile.resourceName, "Speech", m.speechFile.filePath, "Size: " + m.speechFile.speech.size()});
             } else if (r.Is(ResourceAnimation.class)) {
                 ResourceAnimation m = r.Get();
-                resourceModel.addRow(new Object[]{fileComponent(m.animFilePath), "Animation", m.animFilePath, ""});
+                resourceModel.addRow(new Object[]{GetFileName(m.animFilePath), "Animation", m.animFilePath, ""});
             }
         }
 
         for (Resource r : ResourceManager.inventoryimages) {
-            modEditor.getModItemTextureSelect().addItem(fileComponent(((ResourceTexture) r).texPath));
+            modEditor.getModItemTextureSelect().addItem(GetFileName(((ResourceTexture) r).texPath));
         }
         for (Resource r : ResourceManager.modicons) {
-            modEditor.getModIconTextureSelect().addItem(fileComponent(((ResourceTexture) r).texPath));
+            modEditor.getModIconTextureSelect().addItem(GetFileName(((ResourceTexture) r).texPath));
         }
 
         if (Mod.items.size() < selectedModIcon) {
@@ -206,7 +206,7 @@ public class ModLoader {
             Mod.modIcon = modEditor.getModIconTextureSelect().getSelectedIndex();
         } catch (java.lang.IndexOutOfBoundsException e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
-            ShowWarning("There was a problem with saving the mod com.deepcore.kleicreator.config. Please fix any errors and try again.");
+            ShowWarning("There was a problem with saving the mod config. Please fix any errors and try again.");
         }
 
     }
@@ -223,7 +223,12 @@ public class ModLoader {
     }
 
     public static void CreateModEditorFrame() {
-        modEditorFrame = new JFrame(String.format("KleiCreator %s | %s", Master.version, Mod.modName));
+        String truncatedModName = Mod.modName;
+        if(truncatedModName.length() > 20){
+            truncatedModName = truncatedModName.substring(0, 20);
+            truncatedModName += "...";
+        }
+        modEditorFrame = new JFrame(String.format("KleiCreator %s | %s", Master.version, truncatedModName));
         modEditorFrame.setIconImage(Master.icon.getImage());
         modEditor = new ModEditor();
 
@@ -315,6 +320,8 @@ public class ModLoader {
 
         ModLoaderActions.SetupListeners();
 
+        modEditor.getModConfig().setSelectedIndex(1);
+
         modEditorFrame.pack();
         modEditorFrame.setLocationRelativeTo(null);
         Logger.Debug("Successfully completed ModEditor setup.");
@@ -357,30 +364,51 @@ public class ModLoader {
         return field.getText();
     }
 
-    public static <T> T getValueFromUser(Class<T> clazz, String message){
-        return getValueFromUser(clazz, message, new Object());
+    public static <T,X> Map<T, X> getMap(Map<T, X> starting){
+        MapCreatorDialog dialog = new MapCreatorDialog(starting);
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setLocationRelativeTo(null);
+        return new HashMap<>();
+    }
+
+    public static Object getObject(Object o){
+        XStream xstream = new XStream(new DomDriver());
+        String data = xstream.toXML(o);
+        JTextArea field = new JTextArea();
+        field.setText(data);
+        JOptionPane.showMessageDialog(modEditorFrame, field, "Editing XML for object", JOptionPane.QUESTION_MESSAGE);
+        return xstream.fromXML(field.getText());
     }
 
     public static  <T> T getValueFromUser(Class<T> clazz, String message, Object starting){
         if(clazz == double.class){
             return (T) getFloat(message, (Double) starting);
         }
-        if(clazz == boolean.class){
+        else if(clazz == boolean.class){
             return (T) getBool(message);
         }
-        if(clazz.isEnum()){
+        else if(clazz.isEnum()){
             return (T) Enum.valueOf((Class<Enum>) clazz, clazz.getEnumConstants()[getOption(message,clazz.getEnumConstants())].toString());
         }
-        if(clazz == int.class){
+        else if(clazz == int.class){
             return (T) getInt(message, (Integer) starting);
         }
-        if(clazz == String.class){
+        else if(clazz == String.class){
             return (T) getString(message);
         }
-        return null;
+        //else if (clazz.isAssignableFrom(Map.class)){
+        //    return (T) getMap((Map) starting);
+        //}
+        else{
+            Logger.Log("Cannot find setter for value, so defaulting to XML editing");
+            return (T) getObject(starting);
+        }
     }
 
     public static void ShowWarning(String message) {
         JOptionPane.showMessageDialog(modEditorFrame, message, "Warning", JOptionPane.WARNING_MESSAGE);
     }
+
+
 }

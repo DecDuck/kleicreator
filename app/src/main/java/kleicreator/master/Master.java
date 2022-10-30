@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Scanner;
 
 import static kleicreator.master.Master.GlobalTheme.*;
 
@@ -40,7 +41,7 @@ public class Master {
     public static ProjectSelectDialog projectSelectDialog;
     public static JFrame projectSelectFrame;
     public static JFrame startupForm;
-    public static String version = "v0.0.8";
+    public static String version;
     public static int currentlySelectedRow = -1;
     public static boolean exit = false;
     public static ImageIcon icon = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator_square.png"));
@@ -53,25 +54,29 @@ public class Master {
     }
 
     public static void Main(String[] args) {
+        try {
+            version = "v" + new Scanner(ClassLoader.getSystemClassLoader().getResource("version").openStream(), "UTF-8").next();
+        } catch (IOException e) {
+            version = "v?";
+        }
+
         ArgumentParser.ParseArguments(args);
         Constants.CreateConstants();
         Logger.Start();
-        Logger.Log("KleiCreator %s. Credits to DeepCore", version);
-        Logger.Log("Started with args: " + String.join(" ", args));
-
-        PluginHandler.LoadPlugins();
-        Logger.Debug("Loaded plugins");
-        PluginHandler.TriggerEvent("OnLoad");
+        Logger.Log("KleiCreator %s. Created by decduck3", version);
+        Logger.Log("Started with arguments: " + String.join(" ", args));
 
         //Create working directories
         new File(Constants.FILE_LOCATION + "/").mkdir();
         new File(Constants.FILE_LOCATION + "/mods").mkdir();
-        new File(Constants.FILE_LOCATION + "/kleicreator/speech").mkdir();
+        new File(Constants.FILE_LOCATION + "/speech").mkdir();
         new File(Constants.FILE_LOCATION + "/plugins").mkdir();
         new File(Constants.FILE_LOCATION + "/config").mkdir();
+        new File(Constants.FILE_LOCATION + "/data").mkdir();
         Config.AssertDataset("kleicreator");
         Config.SaveData("kleicreator.theme", Dark, false);
         Config.SaveData("kleicreator.asksaveonleave", true, false);
+        Config.SaveData("kleicreator.copyresources", false, false);
 
         try {
             Object o = Config.GetData("kleicreator.theme");
@@ -92,7 +97,7 @@ public class Master {
             UIManager.put("ProgressBar.arc", 0);
 
             UIManager.put("Component.arrowType", "triangle");
-            UIManager.put( "TabbedPane.showTabSeparators", true );
+            //UIManager.put( "TabbedPane.showTabSeparators", true );
 
             UIManager.put("ScrollBar.showButtons", false);
             UIManager.put( "ScrollBar.thumbArc", 999 );
@@ -102,6 +107,10 @@ public class Master {
         } catch (UnsupportedLookAndFeelException e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
         }
+
+        PluginHandler.LoadPlugins();
+        Logger.Debug("Loaded plugins");
+        PluginHandler.TriggerEvent("OnLoad");
 
         if (ArgumentParser.doubleArguments.containsKey("--project")) {
             ModLoader.LoadMod(ArgumentParser.doubleArguments.get("--project"));
@@ -129,7 +138,7 @@ public class Master {
 
             Logger.Debug("Instantiating ProjectSelect and setting up frame...");
             projectSelectDialog = new ProjectSelectDialog();
-            projectSelectFrame = new JFrame("Select Project");
+            projectSelectFrame = new JFrame("KleiCreator "+version+" | Project Select");
 
             projectSelectFrame.setIconImage(icon.getImage());
             projectSelectFrame.setContentPane(projectSelectDialog.getProjectSelectPanel());
@@ -195,6 +204,10 @@ public class Master {
                     panel.add(askSaveOnLeave);
                     askSaveOnLeave.setSelected((Boolean) Config.GetData("kleicreator.asksaveonleave"));
 
+                    JCheckBox copyResources = new JCheckBox("Copy Resources When Importing");
+                    panel.add(copyResources);
+                    copyResources.setSelected((Boolean) Config.GetData("kleicreator.copyresources"));
+
                     JButton saveButton = new JButton("Save and Restart");
                     saveButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
                     saveButton.addActionListener(new ActionListener() {
@@ -202,6 +215,7 @@ public class Master {
                         public void actionPerformed(ActionEvent e) {
                             Config.SaveData("kleicreator.theme", GlobalTheme.valueOf(theme.getSelectedItem().toString()));
                             Config.SaveData("kleicreator.asksaveonleave", askSaveOnLeave.isSelected());
+                            Config.SaveData("kleicreator.copyresources", copyResources.isSelected());
                             PluginHandler.TriggerEvent("OnConfigSave", configDialogFrame);
                             Starter.startCounter++;
                             exit = true;
@@ -268,8 +282,7 @@ public class Master {
         final CreateModDialog createModDialog = new CreateModDialog();
         newModConfigFrame.setContentPane(createModDialog.getNewModConfigPanel());
         newModConfigFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon img = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("dstguimodcreatorlogo.png"));
-        newModConfigFrame.setIconImage(img.getImage());
+        newModConfigFrame.setIconImage(icon.getImage());
 
         createModDialog.getCreateMod().addActionListener(new ActionListener() {
             @Override

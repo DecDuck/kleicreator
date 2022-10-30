@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="kleicreator.frames.ModEditor">
   <grid id="27dc6" binding="modEditorPanel" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="2064" height="829"/>
+      <xy x="20" y="20" width="2590" height="829"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -17,20 +17,32 @@
         <properties>
           <enabled value="true"/>
           <font/>
-          <tabLayoutPolicy value="0"/>
-          <tabPlacement value="1"/>
+          <tabLayoutPolicy value="1"/>
+          <tabPlacement value="2"/>
         </properties>
         <border type="none"/>
         <children>
-          <grid id="c3700" binding="mainConfig" layout-manager="GridLayoutManager" row-count="10" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="3238a" binding="aboutTab" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="" icon="kleicreator_info_tab.png" disabled-icon="kleicreator_info_tab.png" enabled="false"/>
+            </constraints>
+            <properties/>
+            <border type="none">
+              <size top="8" left="8" bottom="8" right="8"/>
+            </border>
+            <children/>
+          </grid>
+          <grid id="c3700" binding="mainConfig" layout-manager="GridLayoutManager" row-count="9" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="20" left="20" bottom="20" right="20"/>
             <constraints>
-              <tabbedpane title="Config">
-                <tooltip value="Change things such as mod name, author, com.deepcore.kleicreator.config options"/>
+              <tabbedpane title="Mod">
+                <tooltip value="Change things such as mod name, author, config options"/>
               </tabbedpane>
             </constraints>
             <properties>
               <font/>
+              <toolTipText value="Configure things like mod name, mod author and description."/>
             </properties>
             <border type="none"/>
             <children>
@@ -39,12 +51,12 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Mod Name:"/>
+                  <text value="Mod Name"/>
                 </properties>
               </component>
               <component id="81615" class="javax.swing.JLabel" binding="modAuthorLabel">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Mod Author"/>
@@ -52,7 +64,7 @@
               </component>
               <component id="68a68" class="javax.swing.JTextField" binding="modAuthorTextField">
                 <constraints>
-                  <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
@@ -60,7 +72,7 @@
               </component>
               <component id="6aeac" class="javax.swing.JLabel" binding="modDescriptionLabel">
                 <constraints>
-                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Mod Description"/>
@@ -68,7 +80,7 @@
               </component>
               <component id="e089a" class="javax.swing.JLabel" binding="modVersionLabel">
                 <constraints>
-                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Mod Version"/>
@@ -76,7 +88,7 @@
               </component>
               <component id="2f195" class="javax.swing.JTextField" binding="modVersionTextField">
                 <constraints>
-                  <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
@@ -84,7 +96,7 @@
               </component>
               <component id="75602" class="javax.swing.JButton" binding="modConfigSave">
                 <constraints>
-                  <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Save"/>
@@ -92,29 +104,21 @@
               </component>
               <component id="570ba" class="javax.swing.JComboBox" binding="modIconTextureSelect">
                 <constraints>
-                  <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
               </component>
               <component id="650cf" class="javax.swing.JLabel" binding="modIconLabel">
                 <constraints>
-                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Mod Icon"/>
                 </properties>
               </component>
-              <component id="396b5" class="javax.swing.JTextField" binding="modNameTextField">
-                <constraints>
-                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="9143c" class="javax.swing.JTextArea" binding="modDescriptTextArea">
                 <constraints>
-                  <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                  <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
@@ -122,13 +126,21 @@
                   <text value=""/>
                 </properties>
               </component>
+              <component id="396b5" class="javax.swing.JTextField" binding="modNameTextField">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
             </children>
           </grid>
           <grid id="e9185" binding="modItems" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="true" hgap="-1" vgap="-1">
             <margin top="20" left="20" bottom="20" right="20"/>
             <constraints>
               <tabbedpane title="Items">
-                <tooltip value="Create, delete and modify your modded com.deepcore.kleicreator.items"/>
+                <tooltip value="Create, delete and modify your modded items"/>
               </tabbedpane>
             </constraints>
             <properties/>
@@ -260,10 +272,12 @@
               <component id="ffef0" class="javax.swing.JComboBox" binding="modItemSelect">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                    <maximum-size width="200" height="-1"/>
+                    <minimum-size width="100" height="-1"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <editable value="false"/>
+                </properties>
               </component>
               <component id="c0f7f" class="javax.swing.JButton" binding="modItemSave">
                 <constraints>
@@ -281,7 +295,7 @@
             <margin top="20" left="20" bottom="20" right="20"/>
             <constraints>
               <tabbedpane title="Recipes">
-                <tooltip value="Add/Remove custom com.deepcore.kleicreator.recipes"/>
+                <tooltip value="Add/Remove custom recipes"/>
               </tabbedpane>
             </constraints>
             <properties/>
@@ -297,7 +311,9 @@
                 <children>
                   <component id="db35d" class="javax.swing.JComboBox" binding="modRecipesSelector">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <minimum-size width="100" height="-1"/>
+                      </grid>
                     </constraints>
                     <properties/>
                   </component>
@@ -424,10 +440,10 @@
               </component>
             </children>
           </grid>
-          <grid id="25d81" binding="modExportPanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="25d81" binding="modExportPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Export">
+              <tabbedpane title="Save &amp; Export">
                 <tooltip value="Export your mod"/>
               </tabbedpane>
             </constraints>
@@ -435,9 +451,9 @@
             <border type="none"/>
             <children>
               <grid id="c8703" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+                <margin top="0" left="0" bottom="15" right="0"/>
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="2" col-span="2" vsize-policy="3" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -459,11 +475,20 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Save All"/>
+                      <text value="Save Project"/>
                     </properties>
                   </component>
                 </children>
               </grid>
+              <component id="9a2a8" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <icon value="kleicreator_wide_small.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>

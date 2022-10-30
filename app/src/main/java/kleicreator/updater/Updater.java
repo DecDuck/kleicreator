@@ -17,6 +17,9 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Updater {
@@ -74,7 +77,6 @@ public class Updater {
 
             //Create popup
             JLabel hyperlink = new JLabel("Download new version? \"" + downloadText + "\"");
-            hyperlink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             hyperlink.setFont(new Font("Serif", Font.PLAIN, 20));
 
             if (JOptionPane.showConfirmDialog(frame, hyperlink, "New version: " + tag, JOptionPane.YES_NO_OPTION) == 0) {

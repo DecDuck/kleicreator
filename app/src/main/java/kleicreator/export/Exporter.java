@@ -1,6 +1,7 @@
 package kleicreator.export;
 
 
+import kleicreator.master.Master;
 import kleicreator.sdk.constants.Constants;
 import kleicreator.export.templates.Template;
 import kleicreator.frames.ExportDialog;
@@ -85,8 +86,8 @@ public class Exporter {
             if (r.Is(ResourceTexture.class)) {
                 try {
                     ResourceTexture m = r.Get();
-                    Files.copy(Paths.get(m.texPath), Paths.get(outputLocation + m.filePath + ModLoader.fileComponent(m.texPath)), StandardCopyOption.REPLACE_EXISTING);
-                    Files.copy(Paths.get(m.xmlPath), Paths.get(outputLocation + m.filePath + ModLoader.fileComponent(m.xmlPath)), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(Paths.get(m.texPath), Paths.get(outputLocation + m.filePath + ModLoader.GetFileName(m.texPath)), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(Paths.get(m.xmlPath), Paths.get(outputLocation + m.filePath + ModLoader.GetFileName(m.xmlPath)), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
                     Logger.Error(ExceptionUtils.getStackTrace(e));
                 }
@@ -94,7 +95,7 @@ public class Exporter {
             if (r.Is(ResourceAnimation.class)) {
                 try {
                     ResourceAnimation m = r.Get();
-                    Files.copy(Paths.get(m.animFilePath), Paths.get(outputLocation + "/anim/" + ModLoader.fileComponent(m.animFilePath)), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(Paths.get(m.animFilePath), Paths.get(outputLocation + "/anim/" + ModLoader.GetFileName(m.animFilePath)), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
                     Logger.Error(ExceptionUtils.getStackTrace(e));
                 }
@@ -108,8 +109,7 @@ public class Exporter {
         exportWindowFrame = new JFrame("Exporting...");
         Logger.Debug("Exporting...");
         Logger.Debug("Starting exporting init");
-        ImageIcon img = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("dstguimodcreatorlogo.png"));
-        exportWindowFrame.setIconImage(img.getImage());
+        exportWindowFrame.setIconImage(Master.icon.getImage());
         exportWindowFrame.setContentPane(exportDialog.getExportWindowFrame());
         exportWindowFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         exportWindowFrame.pack();
@@ -135,14 +135,8 @@ public class Exporter {
     private static void MoveLoading() {
         int currentValue = exportDialog.getExportProgressBar().getValue();
         float eachPointValue = 100 / points;
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-
-        }
         exportDialog.getExportProgressBar().setValue(currentValue + (int) eachPointValue);
         exportWindowFrame.pack();
-        //SwingUtilities.updateComponentTreeUI(exportWindowFrame);
     }
 
     private static void Done(String finishedLocation) {

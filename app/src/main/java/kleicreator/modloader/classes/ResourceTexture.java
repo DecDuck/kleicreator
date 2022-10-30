@@ -10,5 +10,5 @@ public class ResourceTexture extends Resource {
 
     public String filePath;
     public String displayUse;
-    public ResourceManager.TextureLocation type;
+    public ResourceManager.TextureType type;
 }

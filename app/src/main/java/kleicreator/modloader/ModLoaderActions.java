@@ -3,6 +3,7 @@ package kleicreator.modloader;
 import kleicreator.export.Exporter;
 import kleicreator.frames.SpeechDialog;
 import kleicreator.items.Item;
+import kleicreator.master.Master;
 import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.recipes.RecipeLoader;
 import kleicreator.sdk.logging.Logger;
@@ -60,19 +61,24 @@ public class ModLoaderActions extends ModLoader {
                         chooser.addChoosableFileFilter(tex);
                         JOptionPane.showMessageDialog(modEditorFrame, chooser, "Open TEX file", JOptionPane.QUESTION_MESSAGE);
                         File texFile = chooser.getSelectedFile();
+                        if(texFile == null){
+                            return;
+                        }
 
                         chooser.removeChoosableFileFilter(tex);
                         chooser.addChoosableFileFilter(xml);
                         JOptionPane.showMessageDialog(modEditorFrame, chooser, "Open XML file", JOptionPane.QUESTION_MESSAGE);
                         File xmlFile = chooser.getSelectedFile();
+                        if(xmlFile == null){
+                            return;
+                        }
 
-                        ResourceManager.CreateTexture(texFile.getAbsolutePath(), xmlFile.getAbsolutePath(), ResourceManager.TextureLocation.values()[(getOption("Texture location", new Object[]{"Inventory Image", "Mod Icon", "Portrait", "Map Icon"}))]);
+                        ResourceManager.CreateTexture(texFile.getAbsolutePath(), xmlFile.getAbsolutePath(), ResourceManager.TextureType.values()[(getOption("Texture location", new Object[]{"Inventory Image", "Mod Icon", "Portrait", "Map Icon"}))]);
                         Logger.Debug("Created new texture");
                         break;
                     case 1:
                         final JFrame speechConfigFrame = new JFrame("Create New Speech File");
-                        ImageIcon img = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("dstguimodcreatorlogo.png"));
-                        speechConfigFrame.setIconImage(img.getImage());
+                        speechConfigFrame.setIconImage(Master.icon.getImage());
                         final SpeechDialog speech = new SpeechDialog();
                         speechConfigFrame.setContentPane(speech.getSpeechConfigPanel());
                         speechConfigFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -83,7 +89,7 @@ public class ModLoaderActions extends ModLoader {
                                 ResourceManager.CreateSpeech(speech.getSpeechNameTextField().getText());
                                 speechConfigFrame.dispose();
                                 Update();
-                                Logger.Debug("Created new com.deepcore.kleicreator.speech resource");
+                                Logger.Debug("Created new speech resource");
                             }
                         });
 
@@ -164,7 +170,7 @@ public class ModLoaderActions extends ModLoader {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Desktop.getDesktop().open(new File(FILE_LOCATION + "/kleicreator/speech/"));
+                    Desktop.getDesktop().open(new File(FILE_LOCATION + "/speech/"));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }

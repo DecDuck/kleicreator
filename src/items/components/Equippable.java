@@ -1,6 +1,6 @@
 package items.components;
 
-public class Equippable {
+public class Equippable extends Component {
     public enum Place{
         Hat,
         Chest,

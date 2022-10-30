@@ -1,6 +1,7 @@
 package items;
 
 import items.components.*;
+import logging.Logger;
 import modloader.Mod;
 import modloader.ModLoader;
 
@@ -12,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.lang.reflect.Field;
+import java.util.Map;
 
 import static util.TreeHelper.*;
 
@@ -28,104 +30,65 @@ public class ItemLoader extends ModLoader {
 
                     }
                     else if(e.getClickCount() == 2) {
-                        try {
-                            if (Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Axe.class)) {
-                                Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).axeBool = false;
+                        Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
+                        for(int i = 0; i < item.itemComponents.size(); i++){
+                            Item.Entry<Boolean, Component> c = item.itemComponents.get(i);
+                            if(c.b.getClass().getSimpleName() == selPath.getLastPathComponent().toString()){
+                                c.a = !c.a;
                                 Update();
                                 return;
                             }
-                            if (Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Edible.class)) {
-                                Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).edibleBool = false;
-                                Update();
-                                return;
-                            }
-                            if (Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Dapperness.class)) {
-                                Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).dappernessBool = false;
-                                Update();
-                                return;
-                            }
-                            if (Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Durability.class)) {
-                                Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).durabilityBool = false;
-                                Update();
-                                return;
-                            }
-                            if (Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Equippable.class)) {
-                                Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).equipableBool = false;
-                                Update();
-                                return;
-                            }
-                            if (Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Armor.class)) {
-                                Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).armorBool = false;
-                                Update();
-                                return;
-                            }
-                        }catch(NullPointerException n){
-
                         }
-
-                        if (Item.classMap.get(selPath.getPath()[1].toString()).equals(Axe.class)) {
-                            Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
+                        for(int i = 0; i < item.itemComponents.size(); i++){
+                            Item.Entry<Boolean, Component> c = item.itemComponents.get(i);
                             String value = selPath.getLastPathComponent().toString();
-                            if(value.startsWith("efficiency")){
-                                item.axe.efficiency = getFloat("Axe efficiency");
+                            if(c.b instanceof Armor){
+                                if(value.startsWith("resistance")){
+                                    ((Armor)c.b).resistance = getFloat("Resistance");
+                                }
+                                if(value.startsWith("maxCondition")){
+                                    ((Armor)c.b).maxCondition = getFloat("Max Condition");
+                                }
                             }
-                            Update();
-                            return;
+                            else if(c.b instanceof Axe){
+                                if(value.startsWith("efficiency")){
+                                    ((Axe)c.b).efficiency = getFloat("Axe efficiency");
+                                }
+                            }
+                            else if(c.b instanceof Dapperness){
+                                if(value.startsWith("rate")){
+                                    ((Dapperness)c.b).rate = getFloat("Dapperness rate");
+                                }
+                            }
+                            else if(c.b instanceof Durability){
+                                if(value.startsWith("durability")){
+                                    ((Durability)c.b).durability = getFloat("Durability");
+                                }
+                            }
+                            else if(c.b instanceof Edible){
+                                if(value.startsWith("health")){
+                                    ((Edible)c.b).health = getFloat("Food health");
+                                }
+                                if(value.startsWith("sanity")){
+                                    ((Edible)c.b).sanity = getFloat("Food sanity");
+                                }
+                                if(value.startsWith("hunger")){
+                                    ((Edible)c.b).hunger = getFloat("Food hunger");
+                                }
+                            }
+                            else if(c.b instanceof Equippable){
+                                if(value.startsWith("place")){
+                                    Object[] options = new Object[Equippable.Place.values().length];
+                                    for(int x = 0; x < options.length; x++){
+                                        options[x] = Equippable.Place.values()[x];
+                                    }
+                                    ((Equippable)c.b).place = Equippable.Place.values()[getOption("Place", options)];
+                                }
+                            }
+                            item.itemComponents.set(i, c);
                         }
-                        if (Item.classMap.get(selPath.getPath()[1].toString()).equals(Edible.class)) {
-                            Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
-                            String value = selPath.getLastPathComponent().toString();
-                            if(value.startsWith("health")){
-                                item.edible.health = getFloat("Food health");
-                            }
-                            if(value.startsWith("sanity")){
-                                item.edible.sanity = getFloat("Food sanity");
-                            }
-                            if(value.startsWith("hunger")){
-                                item.edible.hunger = getFloat("Food hunger");
-                            }
-                            Update();
-                            return;
-                        }
-                        if (Item.classMap.get(selPath.getPath()[1].toString()).equals(Dapperness.class)) {
-                            Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
-                            String value = selPath.getLastPathComponent().toString();
-                            if(value.startsWith("rate")){
-                                item.dapperness.rate = getFloat("Dapperness rate");
-                            }
-                            Update();
-                            return;
-                        }
-                        if (Item.classMap.get(selPath.getPath()[1].toString()).equals(Durability.class)) {
-                            Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
-                            String value = selPath.getLastPathComponent().toString();
-                            if(value.startsWith("durability")){
-                                item.durability.durability = getFloat("Durability");
-                            }
-                            Update();
-                            return;
-                        }
-                        if (Item.classMap.get(selPath.getPath()[1].toString()).equals(Equippable.class)) {
-                            Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
-                            String value = selPath.getLastPathComponent().toString();
-                            if(value.startsWith("place")){
-                                item.equippable.place = Equippable.Place.values()[getOption("Place", new Object[]{ "Hat", "Chest", "Hand" })];
-                            }
-                            Update();
-                            return;
-                        }
-                        if (Item.classMap.get(selPath.getPath()[1].toString()).equals(Armor.class)) {
-                            Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
-                            String value = selPath.getLastPathComponent().toString();
-                            if(value.startsWith("resistance")){
-                                item.armor.resistance = getFloat("Resistance");
-                            }
-                            if(value.startsWith("maxCondition")){
-                                item.armor.maxCondition = getFloat("Max Condition");
-                            }
-                            Update();
-                            return;
-                        }
+                        Update();
+                        return;
                     }
                 }
             }
@@ -144,29 +107,14 @@ public class ItemLoader extends ModLoader {
 
                     }
                     else if(e.getClickCount() == 2) {
-                        if(Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Axe.class)){
-                            Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).axeBool = true;
-                            Update();
-                        }
-                        if(Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Edible.class)){
-                            Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).edibleBool = true;
-                            Update();
-                        }
-                        if(Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Dapperness.class)){
-                            Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).dappernessBool = true;
-                            Update();
-                        }
-                        if(Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Durability.class)){
-                            Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).durabilityBool = true;
-                            Update();
-                        }
-                        if(Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Equippable.class)){
-                            Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).equipableBool = true;
-                            Update();
-                        }
-                        if(Item.classMap.get(selPath.getLastPathComponent().toString()).equals(Armor.class)){
-                            Mod.items.get(modEditor.getModItemSelect().getSelectedIndex()).armorBool = true;
-                            Update();
+                        Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
+                        for(int i = 0; i < item.itemComponents.size(); i++){
+                            Item.Entry<Boolean, Component> c = item.itemComponents.get(i);
+                            if(c.b.getClass().getSimpleName() == selPath.getLastPathComponent().toString()){
+                                c.a = !c.a;
+                                Update();
+                                return;
+                            }
                         }
                     }
                 }
@@ -189,40 +137,12 @@ public class ItemLoader extends ModLoader {
         rootNotAdded.removeAllChildren();
         rootAdded.removeAllChildren();
 
-        if(item.armorBool){
-            AddClassToTree(rootAdded, Armor.class, item.armor);
-        }else{
-            AddClassToTree(rootNotAdded, Armor.class, null);
-        }
-
-        if(item.edibleBool){
-            AddClassToTree(rootAdded, Edible.class, item.edible);
-        }else{
-            AddClassToTree(rootNotAdded, Edible.class, null);
-        }
-
-        if(item.axeBool){
-            AddClassToTree(rootAdded, Axe.class, item.axe);
-        }else{
-            AddClassToTree(rootNotAdded, Axe.class, null);
-        }
-
-        if(item.dappernessBool){
-            AddClassToTree(rootAdded, Dapperness.class, item.dapperness);
-        }else{
-            AddClassToTree(rootNotAdded, Dapperness.class, null);
-        }
-
-        if(item.durabilityBool){
-            AddClassToTree(rootAdded, Durability.class, item.durability);
-        }else{
-            AddClassToTree(rootNotAdded, Durability.class, null);
-        }
-
-        if(item.equipableBool){
-            AddClassToTree(rootAdded, Equippable.class, item.equippable);
-        }else{
-            AddClassToTree(rootNotAdded, Equippable.class, null);
+        for(Item.Entry<Boolean, Component> c : item.itemComponents){
+            if(c.a){
+                AddClassToTree(rootAdded, c.b.getClass(), c.b);
+            }else{
+                AddClassToTree(rootNotAdded, c.b.getClass(), null);
+            }
         }
 
         modelNotAdded.reload();

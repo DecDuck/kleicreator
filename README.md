@@ -1,4 +1,4 @@
-![logo](https://lab.deepcore.dev/decduck3/kleicreator/-/raw/master/src/resources/StartupSplash.png)
+![logo](https://lab.deepcore.dev/decduck3/kleicreator/-/raw/master/src/com/deepcore/kleicreator/resources/StartupSplash.png)
 # KleiCreator
 KleiCreator is GUI tools written in Java to assist creating mods for Don't Starve Together.
 

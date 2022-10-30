@@ -29,6 +29,10 @@ public class Logger {
         WriteChanges();
     }
 
+    public static void Log(String format, String... parts){
+        Log(String.format(format, parts));
+    }
+
     public static void Warn(String warning){
         Log("[WARN] " + warning);
         WriteChanges();

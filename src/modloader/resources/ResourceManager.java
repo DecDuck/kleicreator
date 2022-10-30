@@ -5,6 +5,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import constants.Constants;
 import logging.Logger;
 import modloader.classes.Texture;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import speech.CharacterSpeech;
 import speech.ItemSpeech;
 import speech.SpeechFile;
@@ -135,7 +136,7 @@ public class ResourceManager {
             printWriter.print(fileContents);
             printWriter.close();
         } catch (IOException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
 
         resources.add(r);
@@ -147,7 +148,7 @@ public class ResourceManager {
         if(r.isTexture){
             CreateResource(r.texture.texPath, r.texture.xmlPath, r.texLocation);
         }else if(r.isSpeech){
-            CreateResource(SpeechFile.SpeechType.Item, r.speechFile.filePath);
+            CreateResource(SpeechFile.SpeechType.Item, r.speechFile.resourceName);
         }
         Logger.Log("Directed");
     }
@@ -170,9 +171,9 @@ public class ResourceManager {
 
             resources.set(resources.indexOf(r), m);
         } catch (FileNotFoundException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         } catch (IOException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
     }
 

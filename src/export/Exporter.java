@@ -8,6 +8,7 @@ import modloader.Mod;
 import modloader.ModLoader;
 import modloader.resources.Resource;
 import modloader.resources.ResourceManager;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import resources.ResourceLoader;
 
 import javax.swing.*;
@@ -57,9 +58,8 @@ public class Exporter {
 
             Done(modOutput);
         }catch(Exception e){
-            ModLoader.ShowWarning("There was an error while exporting the mod! Continuing anyways!");
-            Logger.Error(e.getLocalizedMessage());
-            Done(Mod.path + "_exported/");
+            Logger.Error(ExceptionUtils.getStackTrace(e));
+            ModLoader.ShowWarning("There was an error while exporting the mod");
         }
 
     }
@@ -81,14 +81,14 @@ public class Exporter {
                     Files.copy(Paths.get(r.texture.texPath), Paths.get(outputLocation + r.filePath + ModLoader.fileComponent(r.texture.texPath)), StandardCopyOption.REPLACE_EXISTING);
                     Files.copy(Paths.get(r.texture.xmlPath), Paths.get(outputLocation + r.filePath + ModLoader.fileComponent(r.texture.xmlPath)), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
-                    Logger.Error(e.getLocalizedMessage());
+                    Logger.Error(ExceptionUtils.getStackTrace(e));
                 }
             }
             if(r.isAnim){
                 try {
                     Files.copy(Paths.get(r.animFilePath), Paths.get(outputLocation + "/anim/" + ModLoader.fileComponent(r.animFilePath)), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
-                    Logger.Error(e.getLocalizedMessage());
+                    Logger.Error(ExceptionUtils.getStackTrace(e));
                 }
             }
         }
@@ -117,7 +117,7 @@ public class Exporter {
             f.write(toWrite.getTemplate());
             f.close();
         } catch (IOException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
         Logger.Log("Done");
     }
@@ -134,7 +134,7 @@ public class Exporter {
         try {
             Desktop.getDesktop().open(new File(finishedLocation));
         } catch (IOException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
         Logger.Log("Finished export");
     }

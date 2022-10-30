@@ -7,6 +7,7 @@ import logging.Logger;
 import items.Item;
 import modloader.resources.Resource;
 import modloader.resources.ResourceManager;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import recipes.RecipeLoader;
 import resources.ResourceLoader;
 import savesystem.SaveObject;
@@ -152,13 +153,16 @@ public class ModLoader {
 
                 modEditor.getModItemNameTextField().setText(item.itemName);
                 modEditor.getModItemIdTextField().setText(item.itemId);
-                modEditor.getModItemTextureSelect().setSelectedIndex(item.itemTexture);
+                if(item.itemTexture != -1){
+                    modEditor.getModItemTextureSelect().setSelectedIndex(item.itemTexture);
+                }
+
             }else{
                 modEditor.getModItemConfigPanel().setVisible(false);
             }
 
         } catch (Exception e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
         modEditorFrame.validate();
     }
@@ -189,8 +193,8 @@ public class ModLoader {
             item.itemId = modEditor.getModItemIdTextField().getText();
             item.itemTexture = modEditor.getModItemTextureSelect().getSelectedIndex();
         }catch(java.lang.IndexOutOfBoundsException e){
+            Logger.Error(ExceptionUtils.getStackTrace(e));
             ShowWarning("There was a problem with saving an item. Please make sure all fields are filled then try again");
-            Logger.Error(e.getLocalizedMessage());
         }
     }
 
@@ -202,8 +206,8 @@ public class ModLoader {
             Mod.modVersion = modEditor.getModVersionTextField().getText();
             Mod.modIcon = modEditor.getModIconTextureSelect().getSelectedIndex();
         }catch (java.lang.IndexOutOfBoundsException e){
+            Logger.Error(ExceptionUtils.getStackTrace(e));
             ShowWarning("There was a problem saving the mod config. Please make sure all fields are filled then try again");
-            Logger.Error(e.getLocalizedMessage());
         }
 
     }
@@ -215,7 +219,7 @@ public class ModLoader {
             SaveSystem.Save(Mod.path);
         }catch(Exception e){
             JOptionPane.showMessageDialog(modEditorFrame, e.getLocalizedMessage(), "Error while saving", JOptionPane.ERROR_MESSAGE);
-            Logger.Error(e.getStackTrace().toString());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
         Logger.Log("Saved All");
     }

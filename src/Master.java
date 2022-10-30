@@ -7,6 +7,7 @@ import constants.Constants;
 import logging.Logger;
 import frames.*;
 import modloader.*;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import resources.ResourceLoader;
 import savesystem.*;
 import updater.Updater;
@@ -58,7 +59,7 @@ public class Master {
             }
             Logger.Log("Changed look and feel");
         } catch (UnsupportedLookAndFeelException | IOException | FontFormatException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
 
         JFrame startupForm = new JFrame("Loading...");
@@ -72,7 +73,7 @@ public class Master {
         try {
             Thread.sleep(1500); //Enjoy that logo and make the user think we're doing something important
         } catch (InterruptedException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
 
         if(args.length > 0){
@@ -80,7 +81,7 @@ public class Master {
                 Files.copy(Paths.get(args[0]), Paths.get(FILE_LOCATION + GlobalConfig.modsLocation + ModLoader.fileComponent(args[0])), StandardCopyOption.REPLACE_EXISTING);
                 Logger.Log("Copied files. From:" + args[0] + " To: " + FILE_LOCATION + GlobalConfig.modsLocation + ModLoader.fileComponent(args[0]));
             } catch (IOException e) {
-                Logger.Error(e.getLocalizedMessage());
+                Logger.Error(ExceptionUtils.getStackTrace(e));
             }
         }
 
@@ -137,6 +138,7 @@ public class Master {
 
         }else{
             projectSelect.getConfigButton().setForeground(Color.BLACK);
+
         }
 
         projectSelect.getConfigButton().addActionListener(new ActionListener() {
@@ -232,7 +234,7 @@ public class Master {
                 model.addRow(new Object[]{saveObject.modName, saveObject.modAuthor, mods[i]});
             }
         }catch (Exception e){
-            Logger.Error(e.getMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
     }
 

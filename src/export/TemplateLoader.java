@@ -2,6 +2,7 @@ package export;
 
 import export.templates.Template;
 import logging.Logger;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,17 +25,17 @@ public class TemplateLoader {
         try {
             ITEM_TEMPLATE = LoadTemplate(ITEM_TEMPLATE_LOCATION);
         } catch (IOException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
         try {
             MODMAIN_TEMPLATE = LoadTemplate(MODMAIN_TEMPLATE_LOCATION);
         } catch (IOException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
         try {
             MODINFO_TEMPLATE = LoadTemplate(MODINFO_TEMPLATE_LOCATION);
         } catch (IOException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
     }
 

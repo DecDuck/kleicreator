@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RecipeLoader extends ModLoader {
 
@@ -43,17 +44,21 @@ public class RecipeLoader extends ModLoader {
                                     Update();
                                     return;
                                 }
-                                if(selected.startsWith("Workstation: ")){
-                                    //We're changing the workstation
-                                    String newWorkstation = getString("New workstation: ");
-                                    Mod.recipes.get(i).workstation = newWorkstation;
+                                if(selected.startsWith("Tech: ")){
+                                    //We're changing the tech
+                                    Object[] options = getNames(Recipe.TECH.class);
+                                    Object selectionObject = JOptionPane.showInputDialog(modEditorFrame, "New Tech: ", "Select Tech", JOptionPane.QUESTION_MESSAGE, null, options, options[Mod.recipes.get(i).tech.ordinal()]);
+                                    String selectionString = selectionObject.toString();
+                                    Mod.recipes.get(i).tech = Recipe.TECH.valueOf(selectionString);
                                     Update();
                                     return;
                                 }
-                                if(selected.startsWith("Tag: ")){
-                                    //We're changing the tag
-                                    String newTag = getString("New tag: ");
-                                    Mod.recipes.get(i).tag = newTag;
+                                if(selected.startsWith("Tab: ")){
+                                    //We're changing the tab
+                                    Object[] options = getNames(Recipe.RECIPETAB.class);
+                                    Object selectionObject = JOptionPane.showInputDialog(modEditorFrame, "New Tab: ", "Select Tab", JOptionPane.QUESTION_MESSAGE, null, options, options[Mod.recipes.get(i).tech.ordinal()]);
+                                    String selectionString = selectionObject.toString();
+                                    Mod.recipes.get(i).tab = Recipe.RECIPETAB.valueOf(selectionString);
                                     Update();
                                     return;
                                 }
@@ -80,6 +85,10 @@ public class RecipeLoader extends ModLoader {
             }
         };
         tree.addMouseListener(ml);
+    }
+
+    public static String[] getNames(Class<? extends Enum<?>> e) {
+        return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
 
     public static void Update(){
@@ -125,8 +134,8 @@ public class RecipeLoader extends ModLoader {
         ingredients.add(TreeHelper.CreateNode("Add"));
 
         root.add(ingredients);
-        root.add(TreeHelper.CreateNode("Workstation: " + r.workstation));
-        root.add(TreeHelper.CreateNode("Tag: " + r.tag));
+        root.add(TreeHelper.CreateNode("Tech: " + r.tech.toString()));
+        root.add(TreeHelper.CreateNode("Tab: " + r.tab.toString()));
 
         model.reload();
 
@@ -138,15 +147,17 @@ public class RecipeLoader extends ModLoader {
         Recipe r = new Recipe();
         r.result = "id";
         r.ingredients = new ArrayList<String>();
-        r.tag = "";
-        r.workstation = "";
+        r.tab = Recipe.RECIPETAB.TOOLS;
+        r.tech = Recipe.TECH.NONE;
         Mod.recipes.add(r);
         Update();
     }
 
     public static void DeleteRecipe(){
         int recipeIndex = modEditor.getModRecipesSelector().getSelectedIndex();
-        Mod.recipes.remove(recipeIndex);
+        if(recipeIndex != -1){
+            Mod.recipes.remove(recipeIndex);
+        }
         Update();
     }
 

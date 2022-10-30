@@ -1,5 +1,7 @@
 package export.templates;
 
+import export.PrefabExporter;
+import export.RecipeExporter;
 import export.SpeechExporter;
 import logging.Logger;
 import modloader.Mod;
@@ -41,16 +43,22 @@ public class Template {
                 String speechBlock = SpeechExporter.GenerateSpeech();
                 ReplaceAll("$SPEECH$", speechBlock);
 
-                //TODO $PREFABS$
+                ReplaceAll("$PREFABS$", PrefabExporter.GenerateModmainPrefabs());
+                ReplaceAll("$RECIPES$", RecipeExporter.GenerateRecipeExport());
                 break;
             case Modinfo:
                 ReplaceAll("$MODNAME$", Mod.modName);
                 ReplaceAll("$MODDESCRIPTION$", Mod.modDescription);
                 ReplaceAll("$MODAUTHOR$", Mod.modAuthor);
                 ReplaceAll("$MODVERSION$", Mod.modVersion);
-                Resource modIcon = ResourceManager.resources.get(Mod.modIcon);
-                ReplaceAll("$MODICON$", modIcon.texture.texPath);
-                ReplaceAll("$MODICONXML$", modIcon.texture.xmlPath);
+                if(Mod.modIcon != -1){
+                    Resource modIcon = ResourceManager.resources.get(Mod.modIcon);
+                    ReplaceAll("$MODICON$", modIcon.texture.texPath);
+                    ReplaceAll("$MODICONXML$", modIcon.texture.xmlPath);
+                }else{
+                    ReplaceAll("$MODICON$", "");
+                    ReplaceAll("$MODICONXML$", "");
+                }
                 break;
             case Item:
                 ReplaceAll("$ID$", item.itemId);

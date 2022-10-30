@@ -1,6 +1,7 @@
 package updater;
 
 import logging.Logger;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -88,14 +89,14 @@ public class Updater {
                     try {
                         desktop.browse(new URI(downloadURL));
                     } catch (IOException | URISyntaxException m) {
-                        Logger.Error(m.getLocalizedMessage());
+                        Logger.Error(ExceptionUtils.getStackTrace(m));
                     }
                 }else{
                     Runtime runtime = Runtime.getRuntime();
                     try {
                         runtime.exec("xdg-open " + downloadURL);
                     } catch (IOException m) {
-                        Logger.Error(m.getLocalizedMessage());
+                        Logger.Error(ExceptionUtils.getStackTrace(m));
                     }
                 }
             }

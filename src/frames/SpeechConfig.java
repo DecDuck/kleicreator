@@ -8,17 +8,12 @@ import java.awt.*;
 
 public class SpeechConfig {
     private JPanel speechConfigPanel;
-    private JComboBox speechFileType;
     private JButton speechCreate;
     private JTextField speechNameTextField;
     private JLabel speechNameLabel;
 
     public JPanel getSpeechConfigPanel() {
         return speechConfigPanel;
-    }
-
-    public JComboBox getSpeechFileType() {
-        return speechFileType;
     }
 
     public JButton getSpeechCreate() {

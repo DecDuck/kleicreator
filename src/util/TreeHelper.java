@@ -2,6 +2,7 @@ package util;
 
 import logging.Logger;
 import modloader.ModLoader;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -24,7 +25,7 @@ public class TreeHelper extends ModLoader {
                     DefaultMutableTreeNode tempNode = new DefaultMutableTreeNode(f.getName() + ": " + f.get(values));
                     node.add(tempNode);
                 } catch (IllegalAccessException e) {
-                    Logger.Error(e.getLocalizedMessage());
+                    Logger.Error(ExceptionUtils.getStackTrace(e));
                 }
             }else{
                 DefaultMutableTreeNode tempNode = new DefaultMutableTreeNode(f.getName());

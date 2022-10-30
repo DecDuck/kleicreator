@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 import logging.Logger;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.*;
 
@@ -17,7 +18,7 @@ public class SaveSystem {
             pwOb.close();
             fwOb.close();
         }catch (IOException e){
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
         Logger.Log("Cleared " + fileName);
     }
@@ -44,7 +45,7 @@ public class SaveSystem {
         printWriter.close();
 
         } catch (IOException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
     }
 

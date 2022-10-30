@@ -1,6 +1,7 @@
 package config;
 
 import logging.Logger;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.*;
 
@@ -23,7 +24,7 @@ public class Config {
             fr.write(GlobalConfig.stream.toXML(this));
             fr.close();
         } catch (IOException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
     }
 
@@ -43,9 +44,9 @@ public class Config {
             GlobalConfig.askSaveOnLeave = config.askSaveOnLeave;
             GlobalConfig.modsLocation = config.modsLocation;
         } catch (FileNotFoundException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         } catch (IOException e) {
-            Logger.Error(e.getLocalizedMessage());
+            Logger.Error(ExceptionUtils.getStackTrace(e));
         }
 
     }

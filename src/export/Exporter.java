@@ -6,6 +6,8 @@ import frames.ExportDialog;
 import logging.Logger;
 import modloader.Mod;
 import modloader.ModLoader;
+import modloader.classes.ResourceAnimation;
+import modloader.classes.ResourceTexture;
 import modloader.resources.Resource;
 import modloader.resources.ResourceManager;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -76,17 +78,19 @@ public class Exporter {
     private static void CopyResources(String outputLocation){
         Logger.Log("Starting resource copy");
         for(Resource r: ResourceManager.resources){
-            if(r.isTexture) {
+            if(r.Is(ResourceTexture.class)) {
                 try {
-                    Files.copy(Paths.get(r.texture.texPath), Paths.get(outputLocation + r.filePath + ModLoader.fileComponent(r.texture.texPath)), StandardCopyOption.REPLACE_EXISTING);
-                    Files.copy(Paths.get(r.texture.xmlPath), Paths.get(outputLocation + r.filePath + ModLoader.fileComponent(r.texture.xmlPath)), StandardCopyOption.REPLACE_EXISTING);
+                    ResourceTexture m = r.Get();
+                    Files.copy(Paths.get(m.texPath), Paths.get(outputLocation + m.filePath + ModLoader.fileComponent(m.texPath)), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(Paths.get(m.xmlPath), Paths.get(outputLocation + m.filePath + ModLoader.fileComponent(m.xmlPath)), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
                     Logger.Error(ExceptionUtils.getStackTrace(e));
                 }
             }
-            if(r.isAnim){
+            if(r.Is(ResourceAnimation.class)){
                 try {
-                    Files.copy(Paths.get(r.animFilePath), Paths.get(outputLocation + "/anim/" + ModLoader.fileComponent(r.animFilePath)), StandardCopyOption.REPLACE_EXISTING);
+                    ResourceAnimation m = r.Get();
+                    Files.copy(Paths.get(m.animFilePath), Paths.get(outputLocation + "/anim/" + ModLoader.fileComponent(m.animFilePath)), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
                     Logger.Error(ExceptionUtils.getStackTrace(e));
                 }

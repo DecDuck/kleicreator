@@ -1,5 +1,6 @@
 package export;
 
+import modloader.classes.ResourceSpeech;
 import modloader.resources.Resource;
 import modloader.resources.ResourceManager;
 import speech.SpeechFile;
@@ -16,7 +17,8 @@ public class SpeechExporter {
         String output = "";
         List<Resource> speech = ResourceManager.speeches;
         for(Resource r:speech){
-            for(Map.Entry<String, String> e: r.speechFile.speech.entrySet()){
+            ResourceSpeech m = r.Get();
+            for(Map.Entry<String, String> e: m.speechFile.speech.entrySet()){
                 output += DEFAULT_TEMPLATE.replace("$KEY$", e.getKey()).replace("$VALUE$", e.getValue());
             }
         }

@@ -1,22 +1,19 @@
 package modloader.resources;
 
-import modloader.classes.Texture;
+import modloader.classes.ResourceTexture;
 import speech.SpeechFile;
 
 public class Resource {
-    public boolean isTexture;
-    public boolean isSpeech;
-    public boolean isAnim;
+    public <T> boolean Is(Class<T> t){
+        try {
+            t.cast(this);
+            return true;
+        }catch(ClassCastException e){
+            return false;
+        }
+    }
 
-    //TEXTURE
-    public Texture texture;
-    public String filePath;
-    public String displayUse;
-    public ResourceManager.TextureLocation texLocation;
-
-    //SPEECH
-    public SpeechFile speechFile;
-
-    //ANIMATION
-    public String animFilePath;
+    public <T extends Resource> T Get(){
+        return (T) this;
+    }
 }

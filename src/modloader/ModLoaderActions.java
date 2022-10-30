@@ -68,7 +68,7 @@ public class ModLoaderActions extends ModLoader{
                         JOptionPane.showMessageDialog(modEditorFrame, chooser, "Open XML file", JOptionPane.QUESTION_MESSAGE);
                         File xmlFile = chooser.getSelectedFile();
 
-                        ResourceManager.CreateResource(texFile.getAbsolutePath(), xmlFile.getAbsolutePath(), ResourceManager.TextureLocation.values()[(ModLoader.getOption("Texture location", new Object[] {"Inventory Image", "Mod Icon", "Portrait", "Map Icon"}))]);
+                        ResourceManager.CreateTexture(texFile.getAbsolutePath(), xmlFile.getAbsolutePath(), ResourceManager.TextureLocation.values()[(ModLoader.getOption("Texture location", new Object[] {"Inventory Image", "Mod Icon", "Portrait", "Map Icon"}))]);
                         Logger.Log("Created new texture");
                         break;
                     case 1:
@@ -82,7 +82,7 @@ public class ModLoaderActions extends ModLoader{
                         speech.getSpeechCreate().addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                ResourceManager.CreateResource(SpeechFile.SpeechType.Character, speech.getSpeechNameTextField().getText());
+                                ResourceManager.CreateSpeech(speech.getSpeechNameTextField().getText());
                                 speechConfigFrame.dispose();
                                 Update();
                                 Logger.Log("Created new speech resource");
@@ -102,7 +102,7 @@ public class ModLoaderActions extends ModLoader{
                         animChooser.addChoosableFileFilter(anim);
                         JOptionPane.showMessageDialog(modEditorFrame, animChooser, "Open Animation file", JOptionPane.QUESTION_MESSAGE);
                         File animationFile = animChooser.getSelectedFile();
-                        ResourceManager.CreateResource(animationFile.getAbsolutePath());
+                        ResourceManager.CreateAnimation(animationFile.getAbsolutePath());
                         Logger.Log("Imported animation");
                         break;
                 }

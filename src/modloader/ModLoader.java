@@ -6,6 +6,9 @@ import items.ItemLoader;
 import logging.Logger;
 import items.Item;
 import master.Master;
+import modloader.classes.ResourceAnimation;
+import modloader.classes.ResourceSpeech;
+import modloader.classes.ResourceTexture;
 import modloader.resources.Resource;
 import modloader.resources.ResourceManager;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -87,20 +90,23 @@ public class ModLoader {
         modEditor.getModIconTextureSelect().removeAllItems();
         modEditor.getModItemTextureSelect().removeAllItems();
         for(Resource r: ResourceManager.resources){
-            if(r.isTexture){
-                resourceModel.addRow(new Object[] { ModLoader.fileComponent(r.texture.texPath), "Texture", r.texture.texPath + ";" + r.texture.xmlPath, r.filePath});
-            }else if(r.isSpeech){
-                resourceModel.addRow(new Object[] { r.speechFile.resourceName, "Speech", r.speechFile.filePath, "Size: " + r.speechFile.speech.size()});
-            }else if(r.isAnim){
-                resourceModel.addRow(new Object[] { fileComponent(r.animFilePath), "Animation", r.animFilePath, ""});
+            if(r.Is(ResourceTexture.class)){
+                ResourceTexture m = r.Get();
+                resourceModel.addRow(new Object[] { ModLoader.fileComponent(m.texPath), "Texture", m.texPath + ";" + m.xmlPath, m.filePath});
+            }else if(r.Is(ResourceSpeech.class)){
+                ResourceSpeech m = r.Get();
+                resourceModel.addRow(new Object[] { m.speechFile.resourceName, "Speech", m.speechFile.filePath, "Size: " + m.speechFile.speech.size()});
+            }else if(r.Is(ResourceAnimation.class)){
+                ResourceAnimation m = r.Get();
+                resourceModel.addRow(new Object[] { fileComponent(m.animFilePath), "Animation", m.animFilePath, ""});
             }
         }
 
         for(Resource r: ResourceManager.inventoryimages){
-            modEditor.getModItemTextureSelect().addItem(fileComponent(r.texture.texPath));
+            modEditor.getModItemTextureSelect().addItem(fileComponent(((ResourceTexture)r).texPath));
         }
         for(Resource r: ResourceManager.modicons){
-            modEditor.getModIconTextureSelect().addItem(fileComponent(r.texture.texPath));
+            modEditor.getModIconTextureSelect().addItem(fileComponent(((ResourceTexture)r).texPath));
         }
 
         if(Mod.items.size() < selectedModIcon){
@@ -147,13 +153,14 @@ public class ModLoader {
 
     public static void ReloadSpeech(){
         for(int i = 0; i < speechModel.getRowCount(); i++){
-            speechModel.removeRow(i);
+            speechModel.removeRow(0);
         }
 
         for(Resource r: ResourceManager.resources){
-            if(r.isSpeech){
-                ResourceManager.ReloadSpeechResource(r);
-                speechModel.addRow(new Object[]{r.speechFile.resourceName, r.speechFile.filePath, "Speech", r.speechFile.speech.size()});
+            if(r.Is(ResourceSpeech.class)){
+                ResourceSpeech m = r.Get();
+                ResourceManager.LoadSpeech(m);
+                speechModel.addRow(new Object[]{m.speechFile.resourceName, m.speechFile.filePath, "Speech", m.speechFile.speech.size()});
             }
         }
     }

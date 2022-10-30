@@ -5,14 +5,19 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import constants.Constants;
 import items.Item;
 import logging.Logger;
+import master.Master;
 import modloader.ModLoader;
-import modloader.classes.Texture;
+import modloader.classes.ResourceAnimation;
+import modloader.classes.ResourceSpeech;
+import modloader.classes.ResourceTexture;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.w3c.dom.Text;
 import savesystem.SaveObject;
 import speech.SpeechFile;
 
 import javax.swing.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.io.*;
 
@@ -53,135 +58,99 @@ public class ResourceManager {
         speeches.clear();
 
         for(Resource r:resources){
-            if(r.displayUse == "Inventory Image"){
-                inventoryimages.add(r);
+            if(r.Is(ResourceTexture.class)){
+                ResourceTexture m = r.Get();
+                if(m.displayUse == "Inventory Image"){
+                    inventoryimages.add(r);
+                }
+                if(m.displayUse == "Mod Icon"){
+                    modicons.add(r);
+                }
+                if(m.displayUse == "Character Portrait"){
+                    characterportraits.add(r);
+                }
+                if(m.displayUse == "Map Icon"){
+                    mapicons.add(r);
+                }
             }
-            if(r.displayUse == "Mod Icon"){
-                modicons.add(r);
-            }
-            if(r.displayUse == "Character Portrait"){
-                characterportraits.add(r);
-            }
-            if(r.displayUse == "Map Icon"){
-                mapicons.add(r);
-            }
-            if(r.isSpeech){
+
+            if(r.Is(ResourceSpeech.class)){
                 speeches.add(r);
             }
         }
     }
 
-    public static void CreateResource(String animPath){
-        Resource resource = new Resource();
-        resource.isAnim = true;
-        resource.isSpeech = false;
-        resource.isTexture = false;
-        resource.animFilePath = animPath;
-
+    public static void LoadAnimation(ResourceAnimation r){
+        ResourceAnimation resource = new ResourceAnimation();
+        resource.animFilePath = r.animFilePath;
         resources.add(resource);
     }
 
-    public static void CreateResource(String tex, String xml, TextureLocation texLocation){
-        Resource resource = new Resource();
-        resource.isTexture = true;
-        resource.isSpeech = false;
-        resource.isAnim = false;
+    public static void CreateAnimation(String filePath){
+        ResourceAnimation resource = new ResourceAnimation();
+        resource.animFilePath = filePath;
+        resources.add(resource);
+    }
 
-        resource.texture = new Texture();
-        resource.texture.texPath = tex;
-        resource.texture.xmlPath = xml;
+    public static void LoadTexture(ResourceTexture texture){
+        ResourceTexture resource = new ResourceTexture();
 
-        if(texLocation == TextureLocation.InventoryImage){
+        resource.texPath = texture.texPath;
+        resource.xmlPath = texture.xmlPath;
+
+        if(texture.type == TextureLocation.InventoryImage){
             resource.filePath = "images/inventoryimages/";
             resource.displayUse = "Inventory Image";
-        }else if(texLocation == TextureLocation.ModIcon){
+        }else if(texture.type == TextureLocation.ModIcon){
             resource.filePath = "";
             resource.displayUse = "Mod Icon";
-        }else if(texLocation == TextureLocation.Portrait){
+        }else if(texture.type == TextureLocation.Portrait){
             resource.filePath = "bigportrait/";
             resource.displayUse = "Character Portrait";
-        }else if(texLocation == TextureLocation.MapIcon){
+        }else if(texture.type == TextureLocation.MapIcon){
             resource.filePath = "images/map_icons/";
             resource.displayUse = "Map Icon";
         }
-        resource.texLocation = texLocation;
+        resource.type = texture.type;
 
         resources.add(resource);
         Logger.Log("Loaded texture resource");
     }
 
-    public static void CreateResource(SpeechFile.SpeechType speechType, String speechName){
-        if(speechXStream == null){
-            CreateSpeechXStream();
-        }
-        Resource r = new Resource();
-        r.isTexture = false;
-        r.isSpeech = true;
-        r.isAnim = false;
-        String fileLocation = Constants.FILE_LOCATION + "/speech/" + speechName.toLowerCase() + ".dat";
-        r.speechFile = new SpeechFile();
-        r.speechFile.speech.put("CHARACTERS.GENERIC.DESCRIBE.EXAMPLE", "Look! A cool new item!");
-        r.speechFile.filePath = fileLocation;
-        r.speechFile.resourceName = speechName.toLowerCase();
+    public static void CreateTexture(String texPath, String xmlPath, TextureLocation location){
+        ResourceTexture resource = new ResourceTexture();
 
-        try {
+        resource.texPath = texPath;
+        resource.xmlPath = xmlPath;
+        resource.type = location;
 
-            File f = new File(fileLocation);
-            if(f.exists()){
-                JOptionPane.showMessageDialog(ModLoader.modEditorFrame, "Speech file already exists!", "Error!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }else{
-                f.createNewFile();
-            }
-            FileWriter fileWriter = new FileWriter(fileLocation);
-            PrintWriter printWriter = new PrintWriter(fileWriter);
-            String fileContents = "";
-            for(Map.Entry<String, String> e:r.speechFile.speech.entrySet()){
-                fileContents += String.format("%s=%s", e.getKey(), e.getValue());
-            }
-            printWriter.print(fileContents);
-            printWriter.close();
-        } catch (IOException e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
-        }
-
-        resources.add(r);
-        Logger.Log("Loaded speech resource");
-    }
-
-    public static void CreateResource(Resource r){
-        Logger.Log("Directing resource");
-        if(r.isTexture){
-            CreateResource(r.texture.texPath, r.texture.xmlPath, r.texLocation);
-        }else if(r.isSpeech){
-            CreateResource(SpeechFile.SpeechType.Item, r.speechFile.resourceName);
-        }
-        Logger.Log("Directed");
+        LoadTexture(resource);
     }
 
     public static void LoadResource(Resource r){
-        if(r.isTexture){
-            CreateResource(r.texture.texPath, r.texture.xmlPath, r.texLocation);
-        }else{
-            resources.add(r);
-            ReloadSpeechResource(r);
+        if(r.Is(ResourceTexture.class)){
+            LoadTexture(r.Get());
+        }else if(r.Is(ResourceSpeech.class)){
+            LoadSpeech(r.Get());
         }
     }
 
-    public static void ReloadSpeechResource(Resource r){
+    public static void LoadSpeech(ResourceSpeech r){
         try {
             File f = new File(r.speechFile.filePath);
+            if(!f.exists()){
+                Logger.Error("Speech resource doesn't exist.");
+                return;
+            }
             String dat = Files.readString(f.toPath());
-            Resource m = new Resource();
-            m.isSpeech = true;
+            ResourceSpeech m = new ResourceSpeech();
             m.speechFile = new SpeechFile();
             m.speechFile.filePath = r.speechFile.filePath;
             m.speechFile.resourceName = r.speechFile.resourceName;
-            m.filePath = r.filePath;
 
             for(String line:dat.split("\\\n")){
                 String[] parts = line.split("\\=");
-                m.speechFile.speech.put(parts[0], parts[1]);
+                m.speechFile.speech.put(parts[0].strip(), parts[1].strip().replaceAll("\\\"", ""));
             }
 
             resources.set(resources.indexOf(r), m);
@@ -191,28 +160,20 @@ public class ResourceManager {
         }
     }
 
-    public static Resource GetResource(String name){
-        for(int i = 0; i < resources.size(); i++){
-            if(resources.get(i).texture.texPath == name || new File(resources.get(i).texture.texPath).getName() == name){
-                return resources.get(i);
-            }
+    public static void CreateSpeech(String fileName){
+        String fileLocation = Constants.FILE_LOCATION + "/speech/" + fileName.toLowerCase() + ".dat";
+        try {
+            new File(fileLocation).createNewFile();
+            Files.writeString(Path.of(fileLocation), "CHARACTERS.GENERIC.DESCRIBE.EXAMPLE = \"Look! A cool new item\"");
+        } catch (IOException e) {
+            Logger.Error(ExceptionUtils.getStackTrace(e));
+            return;
         }
-        return null;
-    }
-
-    public static void RemoveResource(String type, String feature){
-        if(type == "Speech"){
-            for(Resource r:resources){
-                if(r.speechFile.filePath == feature){
-                    resources.remove(r);
-                }
-            }
-        }else if(type == "Texture"){
-            for(Resource r:resources){
-                if(r.texture.texPath + ";" + r.texture.xmlPath == feature){
-                    resources.remove(r);
-                }
-            }
-        }
+        ResourceSpeech r = new ResourceSpeech();
+        r.speechFile = new SpeechFile();
+        r.speechFile.filePath = fileLocation;
+        r.speechFile.resourceName = fileName;
+        resources.add(r);
+        LoadSpeech(r);
     }
 }

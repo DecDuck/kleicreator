@@ -54,8 +54,8 @@ public class Template {
                 ReplaceAll("$MODVERSION$", Mod.modVersion);
                 if(Mod.modIcon != -1){
                     Resource modIcon = ResourceManager.resources.get(Mod.modIcon);
-                    ReplaceAll("$MODICON$", modIcon.texture.texPath);
-                    ReplaceAll("$MODICONXML$", modIcon.texture.xmlPath);
+                    ReplaceAll("$MODICON$", ""); // To-do
+                    ReplaceAll("$MODICONXML$", ""); //To-do
                 }else{
                     ReplaceAll("$MODICON$", "");
                     ReplaceAll("$MODICONXML$", "");
@@ -71,7 +71,7 @@ public class Template {
                 if(item.itemTexture == -1){
                     ReplaceAll("$ASSETS$", "");
                 }else{
-                    ReplaceAll("$ASSETS$", AssetExporter.ExportAsset(ResourceManager.inventoryimages.get(item.itemTexture)));
+                    ReplaceAll("$ASSETS$", AssetExporter.ExportAsset(ResourceManager.inventoryimages.get(item.itemTexture).Get()));
                 }
                 //TODO $UPPER$
                 //TODO $FILLER$

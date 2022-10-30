@@ -30,7 +30,7 @@ public class Master {
     public static ProjectSelect projectSelect;
     public static JFrame projectSelectFrame;
 
-    public static String version = "v0.0.5";
+    public static String version = "v0.0.6";
 
     public static int currentlySelectedRow = -1;
 
@@ -133,6 +133,12 @@ public class Master {
             }
         });
 
+        if(GlobalConfig.darkMode){
+
+        }else{
+            projectSelect.getConfigButton().setForeground(Color.BLACK);
+        }
+
         projectSelect.getConfigButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,8 +150,8 @@ public class Master {
                 configEditor.getSave().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        GlobalConfig.darkMode = configEditor.getAskSaveOnLeaveCheckBox().isSelected();
-                        GlobalConfig.askSaveOnLeave = configEditor.getDarkModeCheckBox().isSelected();
+                        GlobalConfig.darkMode = configEditor.getDarkModeCheckBox().isSelected();
+                        GlobalConfig.askSaveOnLeave = configEditor.getAskSaveOnLeaveCheckBox().isSelected();
                         new Config().Save();
                         System.exit(0);
                     }

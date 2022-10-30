@@ -1,5 +1,6 @@
 package com.deepcore.kleicreator.recipes;
 
+import com.deepcore.kleicreator.items.Item;
 import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.Mod;
 import com.deepcore.kleicreator.modloader.ModLoader;
@@ -33,8 +34,8 @@ public class RecipeLoader extends ModLoader {
                             if (recipeId == Mod.recipes.get(i).result) {
                                 if (selected == recipeId) {
                                     //We're changing this recipe
-                                    String newResult = getString("New result: ");
-                                    Mod.recipes.get(i).result = newResult;
+                                    Item newResult = ModLoader.SelectFromAllItems();
+                                    Mod.recipes.get(i).result = newResult.itemId;
                                     Update();
                                     return;
                                 }
@@ -58,8 +59,8 @@ public class RecipeLoader extends ModLoader {
                                 }
                                 if (selected.startsWith("Add")) {
                                     //We're adding an ingredient
-                                    String newIngredient = getString("New ingredient: ");
-                                    Mod.recipes.get(i).ingredients.add(newIngredient);
+                                    Item newIngredient = ModLoader.SelectFromAllItems();
+                                    Mod.recipes.get(i).ingredients.add(newIngredient.itemId);
                                     Update();
                                     return;
                                 }

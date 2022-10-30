@@ -24,15 +24,6 @@ public class ModEditor {
     }
 
     public static  <T> T GetValueFromUser(Class<T> clazz, String message){
-        if(clazz == double.class){
-            return (T) getFloat(message);
-        }
-        if(clazz == boolean.class){
-            return (T) getBool(message);
-        }
-        if(clazz.isEnum()){
-            return (T) Enum.valueOf((Class<Enum>) clazz, clazz.getEnumConstants()[getOption(message,clazz.getEnumConstants())].toString());
-        }
-        return null;
+        return ModLoader.getValueFromUser(clazz, message);
     }
 }

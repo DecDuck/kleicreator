@@ -82,17 +82,21 @@ public class Template {
                     if(pair.a){
                         List<String> lines = pair.b.ExportLines();
                         for(String line : lines){
-                            filler += line + "\n";
+                            String nLine = "$INDENT$" + line + "\n";
+                            filler += nLine;
                         }
                     }
                 }
                 ReplaceAll("$FILLER$", filler);
+                ReplaceAll("$INDENT$", "    ");
                 break;
         }
     }
 
     private void ReplaceAll(String a, String b) {
-        template = template.replace(a, b);
+        for(int i = 0; i < template.length(); i++){
+            template = template.replace(a, b);
+        }
     }
 
     public String getTemplate() {

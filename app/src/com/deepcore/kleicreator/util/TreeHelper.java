@@ -1,7 +1,7 @@
 package com.deepcore.kleicreator.util;
 
 import com.deepcore.kleicreator.items.ItemLoader;
-import com.deepcore.kleicreator.sdk.item.FieldName;
+import com.deepcore.kleicreator.sdk.item.FieldData;
 import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.ModLoader;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -19,25 +19,27 @@ public class TreeHelper extends ModLoader {
 
     public static <T> void AddClassToTree(DefaultMutableTreeNode root, Class toAdd, T values) {
         Field[] fields = toAdd.getFields();
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(toAdd.getSimpleName());
+        TooltipTreeNode node = new TooltipTreeNode(toAdd.getSimpleName(), "");
 
         for (Field f : fields) {
             String name = f.getName();
-            if(f.isAnnotationPresent(FieldName.class)){
-                name = f.getAnnotation(FieldName.class).name();
-                ItemLoader.annotatedFieldMap.put(f.getAnnotation(FieldName.class).name(), f.getName());
+            String tooltip = "";
+            if(f.isAnnotationPresent(FieldData.class)){
+                name = f.getAnnotation(FieldData.class).name();
+                tooltip = f.getAnnotation(FieldData.class).tooltip();
+                ItemLoader.annotatedFieldMap.put(f.getAnnotation(FieldData.class).name(), f.getName());
             }
             if (values != null) {
                 try {
                     DefaultMutableTreeNode tempNode;
-                    tempNode = new DefaultMutableTreeNode(name + ": " + f.get(values));
+                    tempNode = new TooltipTreeNode(name + ": " + f.get(values), tooltip);
 
                     node.add(tempNode);
                 } catch (IllegalAccessException e) {
                     Logger.Error(ExceptionUtils.getStackTrace(e));
                 }
             } else {
-                DefaultMutableTreeNode tempNode = new DefaultMutableTreeNode(name);
+                TooltipTreeNode tempNode = new TooltipTreeNode(name, tooltip);
                 node.add(tempNode);
             }
         }

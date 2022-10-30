@@ -159,7 +159,11 @@ public class ModLoader {
     }
 
     public static Item SelectFromAllItems(){
-        JOptionPane.
+        Object[] options = Mod.GetAllItems().stream().toArray();
+        JComboBox comboBox = new JComboBox(options);
+
+        JOptionPane.showMessageDialog(modEditorFrame, comboBox, "Select item", JOptionPane.QUESTION_MESSAGE);
+        return (Item) options[comboBox.getSelectedIndex()];
     }
 
     public static void ReloadSpeech() {

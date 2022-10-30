@@ -43,6 +43,11 @@ public class Item {
         }
     }
 
+    @Override
+    public String toString() {
+        return itemName;
+    }
+
     public void AddComponent(ItemComponent c){
         itemComponents.add(new Entry<>(false, c));
     }

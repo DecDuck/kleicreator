@@ -4,6 +4,8 @@ import com.deepcore.kleicreator.sdk.logging.Logger;
 import com.deepcore.kleicreator.modloader.Mod;
 import com.deepcore.kleicreator.modloader.ModLoader;
 import com.deepcore.kleicreator.sdk.item.ItemComponent;
+import com.deepcore.kleicreator.util.TooltipTreeNode;
+import com.deepcore.kleicreator.util.TooltipTreeRenderer;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -20,6 +22,8 @@ import static com.deepcore.kleicreator.util.TreeHelper.*;
 public class ItemLoader extends ModLoader {
 
     public static HashMap<String, String> annotatedFieldMap = new HashMap<>();
+    public static TooltipTreeRenderer notAdded = new TooltipTreeRenderer();
+    public static TooltipTreeRenderer added = new TooltipTreeRenderer();
 
     public static void SetupAddedTree(JTree addedTree) {
         MouseListener ml = new MouseAdapter() {
@@ -120,6 +124,10 @@ public class ItemLoader extends ModLoader {
     public static void UpdateTrees(Item item) {
         DefaultTreeModel modelNotAdded = (DefaultTreeModel) modEditor.getModItemComponentNotAdded().getModel();
         DefaultTreeModel modelAdded = (DefaultTreeModel) modEditor.getModItemComponetsAdded().getModel();
+        ToolTipManager.sharedInstance().registerComponent(modEditor.getModItemComponentNotAdded());
+        ToolTipManager.sharedInstance().registerComponent(modEditor.getModItemComponetsAdded());
+        modEditor.getModItemComponentNotAdded().setCellRenderer(notAdded);
+        modEditor.getModItemComponetsAdded().setCellRenderer(added);
         DefaultMutableTreeNode rootNotAdded = (DefaultMutableTreeNode) modelNotAdded.getRoot();
         DefaultMutableTreeNode rootAdded = (DefaultMutableTreeNode) modelAdded.getRoot();
 

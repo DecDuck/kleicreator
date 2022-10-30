@@ -7,9 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 // MASSIVE CREDIT TO -t- from Klei Forums
 
-public class Waterproof implements ItemComponent {
-    @FieldData(name="Effectiveness", tooltip = "(0-1) How much it protects from water.")
-    public double effectiveness = 0.0;
+public class Tool implements ItemComponent {
+
+    public enum Action {
+        CHOP,
+        MINE,
+        DIG,
+        HAMMER
+    }
+    @FieldData(name="Action", tooltip = "What this tool does")
+    public Action action;
+    @FieldData(name="Efficiency", tooltip = "How quickly this tool does what it does")
+    public double effectiveness;
+
     @Override
     public List<String> ExportLines() {
         return new ArrayList<>();

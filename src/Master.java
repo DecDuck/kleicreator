@@ -16,9 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -53,8 +51,10 @@ public class Master {
             }
             URL fontUrl = new URL("http://www.webpagepublicity.com/" +
                     "free-fonts/a/Airacobra%20Condensed.ttf");
-
-            setUIFont (Font.createFont(Font.PLAIN, new File(ResourceLoader.class.getResource("font.ttf").getFile())).deriveFont(15f));
+            try (InputStream in = ResourceLoader.class.getResourceAsStream("font.ttf")){
+                setUIFont (Font.createFont(Font.PLAIN, in).deriveFont(15f));
+                Logger.Log("Able to load custom font!");
+            }
             Logger.Log("Changed look and feel");
         } catch (UnsupportedLookAndFeelException | IOException | FontFormatException e) {
             Logger.Error(e.getLocalizedMessage());
@@ -186,7 +186,9 @@ public class Master {
                 String author = newModConfig.getModAuthorTextField().getText();
                 projectSelectFrame.setVisible(false);
                 newModConfigFrame.setVisible(false);
-                ModLoader.CreateMod(FILE_LOCATION + GlobalConfig.modsLocation + name.replace(" ", "") + ".proj", author, name);
+                Mod _temp = new Mod();
+                _temp.modName = name;
+                ModLoader.CreateMod(FILE_LOCATION + GlobalConfig.modsLocation + _temp.escapedModName() + ".proj", author, name);
             }
         });
 

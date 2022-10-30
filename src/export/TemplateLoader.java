@@ -6,6 +6,8 @@ import logging.Logger;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Scanner;
 
 public class TemplateLoader {
@@ -14,30 +16,34 @@ public class TemplateLoader {
     public static String MODMAIN_TEMPLATE;
     public static String MODINFO_TEMPLATE;
 
-    public static final String ITEM_TEMPLATE_LOCATION = Template.class.getResource("item.template").getPath();
-    public static final String MODMAIN_TEMPLATE_LOCATION = Template.class.getResource("modmain.template").getPath();
-    public static final String MODINFO_TEMPLATE_LOCATION = Template.class.getResource("modinfo.template").getPath();
+    public static final URL ITEM_TEMPLATE_LOCATION = Template.class.getResource("item.template");
+    public static final URL MODMAIN_TEMPLATE_LOCATION = Template.class.getResource("modmain.template");
+    public static final URL MODINFO_TEMPLATE_LOCATION = Template.class.getResource("modinfo.template");
 
     public static void LoadTemplates(){
-        ITEM_TEMPLATE = LoadTemplate(ITEM_TEMPLATE_LOCATION);
-        MODMAIN_TEMPLATE = LoadTemplate(MODMAIN_TEMPLATE_LOCATION);
-        MODINFO_TEMPLATE = LoadTemplate(MODINFO_TEMPLATE_LOCATION);
-    }
-
-    private static String LoadTemplate(String location){
-        File f = new File(location);
-        String returnValue = "";
         try {
-            Scanner reader = new Scanner(f);
-            while(reader.hasNextLine()){
-                String data = reader.nextLine() + "\n";
-                returnValue = returnValue + data;
-            }
-        } catch (FileNotFoundException e) {
+            ITEM_TEMPLATE = LoadTemplate(ITEM_TEMPLATE_LOCATION);
+        } catch (IOException e) {
             Logger.Error(e.getLocalizedMessage());
         }
+        try {
+            MODMAIN_TEMPLATE = LoadTemplate(MODMAIN_TEMPLATE_LOCATION);
+        } catch (IOException e) {
+            Logger.Error(e.getLocalizedMessage());
+        }
+        try {
+            MODINFO_TEMPLATE = LoadTemplate(MODINFO_TEMPLATE_LOCATION);
+        } catch (IOException e) {
+            Logger.Error(e.getLocalizedMessage());
+        }
+    }
+
+    private static String LoadTemplate(URL location) throws IOException {
+        Scanner s = new Scanner(location.openStream()).useDelimiter("\\A");
+        String result = s.hasNext() ? s.next() : "";
+
         Logger.Log("Loaded template: " + location);
-        return returnValue;
+        return result;
     }
 
 }

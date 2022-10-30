@@ -7,6 +7,9 @@ import java.util.*;
 
 public class Mod {
     public static String modName;
+    public static String escapedModName () {
+        return modName.replaceAll("[$&+,:;=?@#|'<>.^*()%!-]", "").replaceAll("\\ ", "").toLowerCase();
+    }
     public static String modAuthor;
     public static String modDescription;
     public static String modVersion;

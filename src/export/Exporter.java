@@ -1,5 +1,6 @@
 package export;
 
+import constants.Constants;
 import export.templates.Template;
 import frames.ExportWindow;
 import logging.Logger;
@@ -24,7 +25,7 @@ public class Exporter {
     public static void Export(){
         try{
             InitLoading();
-            String modOutput = Mod.path + "_exported/";
+            String modOutput = Constants.FILE_LOCATION + "/exported/" + Mod.escapedModName() + "/";
             new File(modOutput).mkdir();
             ResourceManager.GenerateResourceLists(); //So we don't have to call it several times during exporting
 
@@ -63,6 +64,8 @@ public class Exporter {
 
     }
     private static void CreateFolders(String outputLocation){
+        new File(Constants.FILE_LOCATION + "/exported/").mkdir();
+        new File(outputLocation).mkdir();
         new File(outputLocation + "images").mkdir();
         new File(outputLocation + "images/inventoryimages").mkdir();
         new File(outputLocation + "images/bigportraits").mkdir();

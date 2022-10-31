@@ -2,6 +2,7 @@ package kleicreator.export;
 
 
 import kleicreator.master.Master;
+import kleicreator.plugin.PluginHandler;
 import kleicreator.sdk.constants.Constants;
 import kleicreator.export.templates.Template;
 import kleicreator.frames.ExportDialog;
@@ -59,6 +60,8 @@ public class Exporter {
                 Write(Templates.itemTemplates.get(i), modOutput + "scripts/prefabs/" + Mod.items.get(i).itemId + ".lua");
                 MoveLoading();
             }
+
+            PluginHandler.TriggerEvent("OnExport", modOutput);
 
             Done(modOutput);
         } catch (Exception e) {

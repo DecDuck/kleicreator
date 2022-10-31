@@ -38,4 +38,6 @@ public interface EventTrigger {
     default List<String> InjectModmainLines(){
         return new ArrayList<>();
     }
+
+    default void OnExport(String exportPath) {}
 }

@@ -24,6 +24,7 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -199,7 +200,7 @@ public class ModLoader {
             item.itemId = modEditor.getModItemIdTextField().getText();
             item.itemTexture = modEditor.getModItemTextureSelect().getSelectedIndex();
             item.stackSize = (int) modEditor.getModItemStackSize().getValue();
-        } catch (java.lang.IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             Logger.Error(e);
             ShowWarning("There was a problem with saving the item. Please fix any errors and try again.");
         }
@@ -212,7 +213,7 @@ public class ModLoader {
             Mod.modDescription = modEditor.getModDescriptTextArea().getText();
             Mod.modVersion = modEditor.getModVersionTextField().getText();
             Mod.modIcon = modEditor.getModIconTextureSelect().getSelectedIndex();
-        } catch (java.lang.IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             Logger.Error(e);
             ShowWarning("There was a problem with saving the mod config. Please fix any errors and try again.");
         }
@@ -330,11 +331,15 @@ public class ModLoader {
 
         ModLoaderActions.SetupListeners();
 
+        // Redirect log output
+        PrintStream out = System.out;
+        System.setOut(new ModLoaderLogStreamer(out));
+
         modEditor.getModConfig().setSelectedIndex(1);
 
         modEditorFrame.pack();
         modEditorFrame.setLocationRelativeTo(null);
-        Logger.Debug("Successfully completed ModEditor setup.");
+        Logger.Log("Successfully completed ModEditor setup.");
     }
 
     public static Integer getInt(String message, Integer defaultValue) {
@@ -354,7 +359,7 @@ public class ModLoader {
     }
 
     public static Integer getOption(String message, Object[] options) {
-        JComboBox comboBox = new JComboBox(options);
+        JComboBox<? extends Object> comboBox = new JComboBox<>(options);
         JOptionPane.showMessageDialog(modEditorFrame, comboBox, message, JOptionPane.QUESTION_MESSAGE);
         return comboBox.getSelectedIndex();
     }

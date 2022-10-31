@@ -19,11 +19,11 @@ import java.net.URISyntaxException;
 
 
 public class Updater {
-    public static boolean CheckForUpdate(String version) {
+    public static boolean CheckForUpdate(String vversion) {
 
         String url = "https://api.github.com/repos/DecDuck/kleicreator/releases";
 
-        version = version.substring(1); // Remove v
+        String version = vversion.substring(1); // Remove v
 
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();

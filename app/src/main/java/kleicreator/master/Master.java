@@ -11,7 +11,6 @@ import kleicreator.frames.CreateModDialog;
 import kleicreator.frames.ProjectSelectDialog;
 import kleicreator.frames.Startup;
 import kleicreator.plugin.PluginHandler;
-import kleicreator.sdk.gui.JHelper;
 import kleicreator.sdk.logging.Logger;
 import kleicreator.updater.Updater;
 import kleicreator.modloader.Mod;
@@ -177,7 +176,7 @@ public class Master {
 
                     panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-                    panel.add(JHelper.CreateTitleJLabel("KleiCreator"));
+                    panel.add(new JLabel("KleiCreator"));
 
                     JComboBox theme = new JComboBox();
                     panel.add(theme);

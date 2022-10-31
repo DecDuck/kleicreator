@@ -37,51 +37,62 @@ public class ItemLoader extends ModLoader {
 
                     } else if (e.getClickCount() == 2) {
                         Item item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
-                        for (int i = 0; i < item.itemComponents.size(); i++) {
-                            Item.Entry<Boolean, ItemComponent> c = item.itemComponents.get(i);
-                            if (c.b.getClass().getSimpleName().equals(selPath.getLastPathComponent().toString())) {
-                                c.a = !c.a;
-                                Update();
-                                return;
-                            }
+                        if(selPath.getLastPathComponent() == null || selPath.getLastPathComponent() == selPath.getPathComponent(0)){
+                            return;
                         }
-                        for (int i = 0; i < item.itemComponents.size(); i++) {
-                            Item.Entry<Boolean, ItemComponent> c = item.itemComponents.get(i);
-                            String value = selPath.getLastPathComponent().toString();
-                            if(selPath.getPathComponent(1).toString() != c.b.getClass().getSimpleName()){
-                                continue;
-                            }
-                            String valueName = value.split(":")[0];
-
-                            Field field = null;
-                            try {
-                                field = c.b.getClass().getField(valueName);
-                            } catch (NoSuchFieldException ex) {
-                                try {
-                                    field = c.b.getClass().getField(annotatedFieldMap.get(valueName));
-                                } catch (NoSuchFieldException exc) {
-                                    Logger.Debug("Unable to find value %s in class %s", valueName, c.b.getClass().getName());
+                        else if(selPath.getLastPathComponent() == selPath.getPathComponent(1)){
+                            // We're enabling/disabling a component
+                            for (int i = 0; i < item.itemComponents.size(); i++) {
+                                Item.Entry<Boolean, ItemComponent> c = item.itemComponents.get(i);
+                                if (c.b.getClass().getSimpleName().equals(selPath.getLastPathComponent().toString())) {
+                                    c.a = !c.a;
+                                    Update();
                                     return;
                                 }
                             }
+                            return;
+                        }
+                        else if(selPath.getLastPathComponent() == selPath.getPathComponent(2)){
+                            // We're modifying a value
+                            for (int i = 0; i < item.itemComponents.size(); i++) {
+                                Item.Entry<Boolean, ItemComponent> c = item.itemComponents.get(i);
+                                String value = selPath.getLastPathComponent().toString();
+                                if(selPath.getPathComponent(1).toString() != c.b.getClass().getSimpleName()){
+                                    continue;
+                                }
+                                String valueName = value.split(":")[0];
 
-                            try {
-                                Object toSetValue = getValueFromUser(field.getType(), "New value for \"" + valueName + "\"", field.get(c.b));
-
-                                if(toSetValue != null){
-                                    field.set(c.b, toSetValue);
-                                }else{
-                                    //JOptionPane.showMessageDialog(modEditorFrame, "Unable to find suitable setter for value.", "Error in setting value", JOptionPane.WARNING_MESSAGE);
+                                Field field = null;
+                                try {
+                                    field = c.b.getClass().getField(valueName);
+                                } catch (NoSuchFieldException ex) {
+                                    try {
+                                        field = c.b.getClass().getField(annotatedFieldMap.get(valueName));
+                                    } catch (NoSuchFieldException exc) {
+                                        Logger.Debug("Unable to find value %s in class %s", valueName, c.b.getClass().getName());
+                                        return;
+                                    }
                                 }
 
-                            }catch (IllegalAccessException ex) {
-                                Logger.Debug("Failed to find getter for value type");
-                                return;
+                                try {
+                                    Object toSetValue = getValueFromUser(field.getType(), "New value for \"" + valueName + "\"", field.get(c.b));
+
+                                    if(toSetValue != null){
+                                        field.set(c.b, toSetValue);
+                                    }else{
+                                        //JOptionPane.showMessageDialog(modEditorFrame, "Unable to find suitable setter for value.", "Error in setting value", JOptionPane.WARNING_MESSAGE);
+                                    }
+
+                                }catch (IllegalAccessException ex) {
+                                    Logger.Debug("Failed to find getter for value type");
+                                    return;
+                                }
+                                item.itemComponents.set(i, c);
                             }
-                            item.itemComponents.set(i, c);
+                            Update();
+                            return;
                         }
-                        Update();
-                        return;
+
                     }
                 }
             }

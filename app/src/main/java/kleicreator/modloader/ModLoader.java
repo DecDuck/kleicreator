@@ -1,7 +1,7 @@
 package kleicreator.modloader;
 
 import com.google.gson.Gson;
-import kleicreator.frames.MapCreatorDialog;
+import kleicreator.frames.ListEditor;
 import kleicreator.frames.ModEditor;
 import kleicreator.items.Item;
 import kleicreator.items.ItemLoader;
@@ -25,6 +25,7 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -169,14 +170,19 @@ public class ModLoader {
 
     public static void ReloadSpeech() {
         for (int i = 0; i < speechModel.getRowCount(); i++) {
-            speechModel.removeRow(0);
+            speechModel.removeRow(i);
         }
 
         for (Resource r : ResourceManager.resources) {
             if (r.Is(ResourceSpeech.class)) {
                 ResourceSpeech m = r.Get();
                 ResourceManager.LoadSpeech(m);
-                speechModel.addRow(new Object[]{m.speechFile.resourceName, m.speechFile.filePath, "Speech", m.speechFile.speech.size()});
+                speechModel.addRow(new String[]{
+                        m.speechFile.resourceName,
+                        m.speechFile.filePath,
+                        "Speech",
+                        String.valueOf(m.speechFile.speech.size())
+                });
             }
         }
     }
@@ -186,7 +192,8 @@ public class ModLoader {
             Item item = null;
             try {
                 item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
-            } catch (Exception e) {
+            } catch (IndexOutOfBoundsException e) {
+                // Item was deleted
                 return;
             }
 
@@ -221,7 +228,7 @@ public class ModLoader {
             SaveSystem.Save(Mod.path);
         } catch (Exception e) {
             Logger.Error(ExceptionUtils.getStackTrace(e));
-            ShowWarning("There was a problem with saving.");
+            ShowWarning("There was a problem with saving. Check the logs for more information");
         }
     }
 
@@ -370,11 +377,13 @@ public class ModLoader {
     }
 
     public static <T, X> Map<T, X> getMap(Map<T, X> starting) {
-        MapCreatorDialog dialog = new MapCreatorDialog(starting);
-        dialog.pack();
-        dialog.setVisible(true);
-        dialog.setLocationRelativeTo(null);
         return new HashMap<>();
+    }
+
+    public static <T> List<T> getList(List<String> starting){
+        ListEditor<String> listEditor = new ListEditor<>(String.class);
+        JOptionPane.showConfirmDialog(modEditorFrame, listEditor.getMapEditorPanel(), "List", JOptionPane.OK_OPTION);
+        return (List<T>) listEditor.getItems();
     }
 
     public static Object getObject(Object o) {
@@ -398,6 +407,8 @@ public class ModLoader {
             return (T) getInt(message, (Integer) starting);
         } else if (clazz == String.class) {
             return (T) getString(message);
+        } else if(clazz.isAssignableFrom(List.class)){
+            return (T) getList((List<String>) starting);
         }
         //else if (clazz.isAssignableFrom(Map.class)){
         //    return (T) getMap((Map) starting);

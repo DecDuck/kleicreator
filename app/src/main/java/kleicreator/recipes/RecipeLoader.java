@@ -1,6 +1,6 @@
 package kleicreator.recipes;
 
-import kleicreator.items.Item;
+import kleicreator.sdk.item.Item;
 import kleicreator.sdk.logging.Logger;
 import kleicreator.util.TreeHelper;
 import kleicreator.modloader.Mod;

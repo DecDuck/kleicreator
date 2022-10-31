@@ -1,5 +1,7 @@
 package kleicreator.items;
 
+import kleicreator.sdk.item.Item;
+
 import java.util.Arrays;
 import java.util.List;
 

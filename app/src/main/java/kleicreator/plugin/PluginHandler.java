@@ -2,12 +2,11 @@ package kleicreator.plugin;
 
 import kleicreator.modloader.ModLoader;
 import kleicreator.sdk.constants.Constants;
-import kleicreator.items.Item;
+import kleicreator.sdk.item.Item;
 import kleicreator.sdk.EventTrigger;
 import kleicreator.sdk.Plugin;
 import kleicreator.sdk.item.ItemComponent;
 import kleicreator.sdk.logging.Logger;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import kleicreator.savesystem.SaveSystem;
 
 import java.io.*;
@@ -43,7 +42,7 @@ public class PluginHandler {
                 LoadPlugin(blob);
             }
         } catch (Exception e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
         }
     }
 
@@ -69,7 +68,7 @@ public class PluginHandler {
             }
             return blob;
         } catch (Exception e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
             ModLoader.ShowWarning("Error loading plugin, skipping...");
             return null;
         }
@@ -106,13 +105,13 @@ public class PluginHandler {
                             }
                             blob.classes.add(myLoadedClass);
                         } catch (Exception e) {
-                            Logger.Error(ExceptionUtils.getStackTrace(e));
+                            Logger.Error(e);
                         }
                     }
                 }
             }
         } catch (Exception e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
             ModLoader.ShowWarning("Error loading plugin, skipping...");
         }
 
@@ -129,7 +128,7 @@ public class PluginHandler {
 
                     trigger.getClass().getMethod(name, argList).invoke(trigger, args);
                 } catch (Exception e) {
-                    Logger.Error(ExceptionUtils.getStackTrace(e));
+                    Logger.Error(e);
                 }
             }
         }

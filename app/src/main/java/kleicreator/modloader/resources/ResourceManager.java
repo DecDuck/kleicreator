@@ -8,7 +8,6 @@ import kleicreator.modloader.ModLoader;
 import kleicreator.modloader.classes.ResourceAnimation;
 import kleicreator.modloader.classes.ResourceSpeech;
 import kleicreator.modloader.classes.ResourceTexture;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.swing.*;
 import java.io.File;
@@ -97,7 +96,7 @@ public class ResourceManager {
                 resource.xmlPath = String.valueOf(copyTo(Path.of(xmlPath), Constants.constants.KLEICREATOR_LOCATION +"/data/"));
             }catch (IOException e){
                 ModLoader.ShowWarning("Failed to copy files, disabling \"Copy Resources\"");
-                Logger.Error(ExceptionUtils.getStackTrace(e));
+                Logger.Error(e);
                 Config.SaveData("kleicreator.copyresources", false);
                 CreateTexture(texPath, xmlPath, location);
             }
@@ -144,7 +143,7 @@ public class ResourceManager {
 
             resources.set(resources.indexOf(r), m);
         } catch (Exception e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
             ModLoader.ShowWarning("Error loading resource: " + e.getLocalizedMessage());
         }
     }
@@ -155,7 +154,7 @@ public class ResourceManager {
             new File(fileLocation).createNewFile();
             Files.writeString(Path.of(fileLocation), "CHARACTERS.GENERIC.DESCRIBE.EXAMPLE = \"Look! A cool new item\"");
         } catch (IOException e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
             JOptionPane.showMessageDialog(ModLoader.modEditorFrame, "Unable to create speech file!", "Error!", JOptionPane.ERROR_MESSAGE);
             return;
         }

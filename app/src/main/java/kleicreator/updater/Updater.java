@@ -1,7 +1,6 @@
 package kleicreator.updater;
 
 import kleicreator.sdk.logging.Logger;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.methods.HttpGet;
@@ -91,14 +90,14 @@ public class Updater {
                     try {
                         desktop.browse(new URI(downloadURL));
                     } catch (IOException | URISyntaxException m) {
-                        Logger.Error(ExceptionUtils.getStackTrace(m));
+                        Logger.Error(m);
                     }
                 } else {
                     Runtime runtime = Runtime.getRuntime();
                     try {
                         runtime.exec(new String[]{"xdg-open", downloadURL});
                     } catch (IOException m) {
-                        Logger.Error(ExceptionUtils.getStackTrace(m));
+                        Logger.Error(m);
                     }
                 }
             }

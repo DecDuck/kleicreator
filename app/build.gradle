@@ -1,7 +1,6 @@
 apply plugin: 'java'
 
 dependencies {
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.15'
     implementation group: 'org.clapper', name: 'classutil_2.13', version: '1.5.1'
     implementation group: 'org.reflections', name: 'reflections', version: '0.10.2'

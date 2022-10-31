@@ -16,7 +16,6 @@ import kleicreator.sdk.logging.Logger;
 import kleicreator.updater.Updater;
 import kleicreator.modloader.Mod;
 import kleicreator.modloader.ModLoader;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import kleicreator.savesystem.SaveObject;
 import kleicreator.savesystem.SaveSystem;
 import scala.collection.immutable.Stream;
@@ -106,7 +105,7 @@ public class Master {
 
             Logger.Debug("Successfully changed look and feel.");
         } catch (UnsupportedLookAndFeelException e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
         }
 
         PluginHandler.LoadPlugins();
@@ -331,7 +330,7 @@ public class Master {
 
             }
         } catch (Exception e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
         }
     }
 

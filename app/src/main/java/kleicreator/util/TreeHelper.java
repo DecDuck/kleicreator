@@ -4,7 +4,6 @@ import kleicreator.items.ItemLoader;
 import kleicreator.modloader.ModLoader;
 import kleicreator.sdk.item.FieldData;
 import kleicreator.sdk.logging.Logger;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -36,7 +35,7 @@ public class TreeHelper extends ModLoader {
 
                     node.add(tempNode);
                 } catch (IllegalAccessException e) {
-                    Logger.Error(ExceptionUtils.getStackTrace(e));
+                    Logger.Error(e);
                 }
             } else {
                 TooltipTreeNode tempNode = new TooltipTreeNode(name, tooltip);

@@ -2,7 +2,7 @@ package kleicreator.modloader;
 
 import kleicreator.export.Exporter;
 import kleicreator.frames.SpeechDialog;
-import kleicreator.items.Item;
+import kleicreator.sdk.item.Item;
 import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.recipes.RecipeLoader;
 import kleicreator.sdk.constants.Constants;

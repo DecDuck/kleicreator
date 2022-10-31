@@ -1,6 +1,6 @@
 package kleicreator.export;
 
-import kleicreator.items.Item;
+import kleicreator.sdk.item.Item;
 import kleicreator.modloader.Mod;
 
 public class PrefabExporter {

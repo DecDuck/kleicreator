@@ -12,7 +12,6 @@ import kleicreator.modloader.classes.ResourceTexture;
 import kleicreator.modloader.resources.Resource;
 import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.sdk.logging.Logger;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,7 +62,7 @@ public class Exporter {
 
             Done(modOutput);
         } catch (Exception e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
             ModLoader.ShowWarning("There was an error while exporting the mod");
         }
 
@@ -89,7 +88,7 @@ public class Exporter {
                     Files.copy(Paths.get(m.texPath), Paths.get(outputLocation + m.filePath + ModLoader.GetFileName(m.texPath)), StandardCopyOption.REPLACE_EXISTING);
                     Files.copy(Paths.get(m.xmlPath), Paths.get(outputLocation + m.filePath + ModLoader.GetFileName(m.xmlPath)), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
-                    Logger.Error(ExceptionUtils.getStackTrace(e));
+                    Logger.Error(e);
                 }
             }
             if (r.Is(ResourceAnimation.class)) {
@@ -97,7 +96,7 @@ public class Exporter {
                     ResourceAnimation m = r.Get();
                     Files.copy(Paths.get(m.animFilePath), Paths.get(outputLocation + "/anim/" + ModLoader.GetFileName(m.animFilePath)), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
-                    Logger.Error(ExceptionUtils.getStackTrace(e));
+                    Logger.Error(e);
                 }
             }
         }
@@ -127,7 +126,7 @@ public class Exporter {
             f.write(toWrite.getTemplate());
             f.close();
         } catch (IOException e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
         }
         Logger.Debug("Done");
     }
@@ -146,7 +145,7 @@ public class Exporter {
         try {
             Desktop.getDesktop().open(new File(finishedLocation));
         } catch (IOException e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
         }
         Logger.Log("Finished export");
     }

@@ -2,6 +2,7 @@ package kleicreator.items;
 
 import kleicreator.modloader.Mod;
 import kleicreator.modloader.ModLoader;
+import kleicreator.sdk.item.Item;
 import kleicreator.sdk.item.ItemComponent;
 import kleicreator.sdk.logging.Logger;
 import kleicreator.util.TooltipTreeRenderer;

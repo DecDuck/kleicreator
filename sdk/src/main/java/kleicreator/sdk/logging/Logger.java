@@ -2,6 +2,7 @@ package kleicreator.sdk.logging;
 
 import kleicreator.sdk.ArgumentParser;
 import kleicreator.sdk.constants.Constants;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -76,12 +77,16 @@ public class Logger {
     }
 
     public static void Warn(String warning) {
-        Print(Level.Warn, "[WARN] " + warning);
+        Print(Level.Warn, warning);
     }
 
     public static void Error(String error) {
-        Print(Level.Error, "[ERROR] " + error);
+        Print(Level.Error, error);
     }
+    public static void Error(Throwable error) {
+        Print(Level.Error, ExceptionUtils.getStackTrace(error));
+    }
+
 
     public static void WriteChanges() {
         try {

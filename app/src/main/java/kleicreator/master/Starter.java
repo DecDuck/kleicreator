@@ -4,7 +4,6 @@ import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.io.StreamException;
 import kleicreator.sdk.constants.Constants;
 import kleicreator.sdk.logging.Logger;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.swing.*;
 import java.io.File;
@@ -30,16 +29,18 @@ public class Starter {
                 /*
                 * This is here because I had an issue with config messing up loading
                 * */
-                new File(Constants.constants.KLEICREATOR_LOCATION + "/config")
+                boolean success = new File(Constants.constants.KLEICREATOR_LOCATION + "/config")
                         .renameTo(
                                 new File(Constants.constants.KLEICREATOR_LOCATION
                                         + "/config_bak_"
                                         + new Date().getTime()
                                 )
                         );
-                Master.Main(args);
-                main(args);
-                return;
+                if(success){
+                    Master.Main(args);
+                    main(args);
+                    return;
+                }
             }
             if (e instanceof StreamException) {
                 new File(Constants.constants.KLEICREATOR_LOCATION).mkdirs();
@@ -48,14 +49,15 @@ public class Starter {
                 return;
             }
             Logger.Log("More oh-nos, we got an error and couldn't handle it!");
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
+            String crashDumpFilePath = Constants.constants.KLEICREATOR_LOCATION + "_crash_" + new Date().getTime() + ".log";
             try {
-                Files.writeString(Path.of(Constants.constants.KLEICREATOR_LOCATION + "_crash_" + new Date().getTime() + ".log"), ExceptionUtils.getStackTrace(e));
+                Files.writeString(Path.of(crashDumpFilePath), Logger.currentLog);
             } catch (IOException ex) {
                 Logger.Error("We are seriously screwed guys, we can't write to a crash file. We're just gonna give up.");
                 return;
             }
-            JOptionPane.showMessageDialog(new JFrame(), "Hey! We hit an error that we couldn't handle. We wrote the error message to ~/.kleicreator/, check it out and possibly file a bug report.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "Hey! We hit an error that we couldn't handle. We wrote the error message to "+crashDumpFilePath+", check it out and possibly file a bug report.", "ERROR", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
     }

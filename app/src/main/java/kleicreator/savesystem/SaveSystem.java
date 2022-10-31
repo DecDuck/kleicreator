@@ -3,7 +3,6 @@ package kleicreator.savesystem;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 import kleicreator.sdk.logging.Logger;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.*;
 
@@ -19,7 +18,7 @@ public class SaveSystem {
             pwOb.close();
             fwOb.close();
         } catch (IOException e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
         }
     }
 
@@ -43,7 +42,7 @@ public class SaveSystem {
             printWriter.close();
 
         } catch (IOException e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
             return;
         }
         Logger.Log("Completed save");
@@ -65,7 +64,7 @@ public class SaveSystem {
 
             Logger.Log("Loaded project");
         } catch (IOException ioException) {
-            Logger.Error(ExceptionUtils.getStackTrace(ioException));
+            Logger.Error(ioException);
         }
     }
 
@@ -82,7 +81,7 @@ public class SaveSystem {
             SaveObject e = (SaveObject) xstream.fromXML(xml);
             return e;
         } catch (IOException ioException) {
-            Logger.Error(ExceptionUtils.getStackTrace(ioException));
+            Logger.Error(ioException);
             return null;
         }
     }

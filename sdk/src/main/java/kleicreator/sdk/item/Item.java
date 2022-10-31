@@ -1,8 +1,7 @@
-package kleicreator.items;
+package kleicreator.sdk.item;
 
 import kleicreator.sdk.item.ItemComponent;
 import kleicreator.sdk.logging.Logger;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.reflections.Reflections;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class Item {
             try {
                 AddComponent(component.getConstructor().newInstance());
             } catch (Exception e ) {
-                Logger.Error(ExceptionUtils.getStackTrace(e));
+                Logger.Error(e);
             }
         }
     }

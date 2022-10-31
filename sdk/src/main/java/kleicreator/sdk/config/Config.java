@@ -31,7 +31,7 @@ public class Config {
                         xstream.toXML(data));
                 return true;
             } catch (IOException e) {
-                Logger.Error("Failed to initalize database, check for read/write permissions");
+                Logger.Error("Failed to initialize database, check for read/write permissions");
                 return false;
             }
         }

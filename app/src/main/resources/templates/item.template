@@ -8,6 +8,9 @@ local prefabs = {
 }
 
 
+$INJECT$
+
+
 local function fn()
     local inst = CreateEntity()
 

@@ -3,7 +3,7 @@ package kleicreator.modloader;
 import com.google.gson.Gson;
 import kleicreator.frames.ListEditor;
 import kleicreator.frames.ModEditor;
-import kleicreator.items.Item;
+import kleicreator.sdk.item.Item;
 import kleicreator.items.ItemLoader;
 import kleicreator.master.Master;
 import kleicreator.modloader.classes.ResourceAnimation;
@@ -16,7 +16,6 @@ import kleicreator.recipes.RecipeLoader;
 import kleicreator.savesystem.SaveSystem;
 import kleicreator.sdk.config.Config;
 import kleicreator.sdk.logging.Logger;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -25,7 +24,6 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -202,7 +200,7 @@ public class ModLoader {
             item.itemTexture = modEditor.getModItemTextureSelect().getSelectedIndex();
             item.stackSize = (int) modEditor.getModItemStackSize().getValue();
         } catch (java.lang.IndexOutOfBoundsException e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
             ShowWarning("There was a problem with saving the item. Please fix any errors and try again.");
         }
     }
@@ -215,7 +213,7 @@ public class ModLoader {
             Mod.modVersion = modEditor.getModVersionTextField().getText();
             Mod.modIcon = modEditor.getModIconTextureSelect().getSelectedIndex();
         } catch (java.lang.IndexOutOfBoundsException e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
             ShowWarning("There was a problem with saving the mod config. Please fix any errors and try again.");
         }
 
@@ -227,7 +225,7 @@ public class ModLoader {
             SaveModConfig();
             SaveSystem.Save(Mod.path);
         } catch (Exception e) {
-            Logger.Error(ExceptionUtils.getStackTrace(e));
+            Logger.Error(e);
             ShowWarning("There was a problem with saving. Check the logs for more information");
         }
     }

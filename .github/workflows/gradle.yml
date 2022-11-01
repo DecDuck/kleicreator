@@ -36,6 +36,10 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: jar
+    - name: Upload archives
+      uses: actions/upload-artifact@v3
+      with:
+        name: KleiCreator-jars
         path: |
           app/build/libs/*.jar
           sdk/build/libs/*.jar

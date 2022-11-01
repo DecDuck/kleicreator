@@ -14,25 +14,41 @@ public class LoadingStartup {
     private JFrame frame;
 
     public LoadingStartup() {
-        frame = new JFrame("KleiCreator | Loading...");
-        frame.setContentPane(loadingBar);
-        frame.setUndecorated(true);
-        frame.setIconImage(Master.icon.getImage());
-        frame.setType(Window.Type.UTILITY);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                frame = new JFrame("KleiCreator | Loading...");
+                frame.setContentPane(loadingBar);
+                frame.setUndecorated(true);
+                frame.setIconImage(Master.icon.getImage());
+                frame.setType(Window.Type.UTILITY);
 
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+                frame.toFront();
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
     }
 
     public void SetProgress(int value, String text) {
-        progressBar.setValue(value);
-        progressBar.setString(text);
-        frame.pack();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setValue(value);
+                progressBar.setString(text);
+                progressBar.repaint();
+            }
+        });
     }
 
     public void Destroy() {
-        frame.dispose();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                frame.dispose();
+            }
+        });
     }
 
     {

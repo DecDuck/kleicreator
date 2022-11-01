@@ -1,6 +1,7 @@
 package kleicreator.export;
 
 
+import kleicreator.frames.LoadingStartup;
 import kleicreator.master.Master;
 import kleicreator.plugin.PluginHandler;
 import kleicreator.sdk.constants.Constants;
@@ -24,9 +25,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 public class Exporter {
-    private static ExportDialog exportDialog;
+    private static LoadingStartup exportDialog;
     private static JFrame exportWindowFrame;
-    private static int points;
+    private static int maxJobs;
+    private static int jobs;
 
     public static void Export() {
         try {
@@ -107,17 +109,11 @@ public class Exporter {
     }
 
     private static void InitLoading() {
-        exportDialog = new ExportDialog();
-        exportWindowFrame = new JFrame("Exporting...");
+        exportDialog = new LoadingStartup();
         Logger.Debug("Exporting...");
         Logger.Debug("Starting exporting init");
-        exportWindowFrame.setIconImage(Master.icon.getImage());
-        exportWindowFrame.setContentPane(exportDialog.getExportWindowFrame());
-        exportWindowFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        exportWindowFrame.pack();
-        exportWindowFrame.setLocationRelativeTo(null);
-        exportWindowFrame.setVisible(true);
-        points = 6 + Mod.items.size();
+        maxJobs = 6 + Mod.items.size();
+        jobs = 0;
         Logger.Debug("Finished Init");
     }
 
@@ -135,21 +131,19 @@ public class Exporter {
     }
 
     private static void MoveLoading() {
-        int currentValue = exportDialog.getExportProgressBar().getValue();
-        float eachPointValue = 100 / points;
-        exportDialog.getExportProgressBar().setValue(currentValue + (int) eachPointValue);
-        exportWindowFrame.pack();
+        jobs++;
+        exportDialog.SetProgress((int) (((float)jobs/maxJobs)*100), "Exporting...");
     }
 
     private static void Done(String finishedLocation) {
-        JOptionPane.showMessageDialog(ModLoader.modEditorFrame, "Done!");
-        exportDialog.getExportProgressBar().setValue(100);
-        exportWindowFrame.dispose();
+        Logger.Log("Finished export");
+        exportDialog.SetProgress(100, "Done!");
+        JOptionPane.showMessageDialog(ModLoader.modEditorFrame, "Successfully completed export!", "Export complete", JOptionPane.INFORMATION_MESSAGE);
+        exportDialog.Destroy();
         try {
             Desktop.getDesktop().open(new File(finishedLocation));
         } catch (IOException e) {
             Logger.Error(e);
         }
-        Logger.Log("Finished export");
     }
 }

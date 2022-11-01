@@ -78,7 +78,7 @@ public class Master {
         Config.SaveData("kleicreator.copyresources", false, false);
 
         try {
-            Object o = Config.GetData("kleicreator.theme");
+            Object o = Dark; //Config.GetData("kleicreator.theme");
             if (Light.equals(o)) {
                 UIManager.setLookAndFeel(new FlatLightLaf());
                 darkMode = false;
@@ -178,12 +178,12 @@ public class Master {
 
                     panel.add(new JLabel("KleiCreator"));
 
-                    JComboBox theme = new JComboBox();
-                    panel.add(theme);
-                    for (GlobalTheme t : GlobalTheme.values()) {
-                        theme.addItem(t.toString());
-                    }
-                    theme.setSelectedIndex(((GlobalTheme) Config.GetData("kleicreator.theme")).ordinal());
+                    //JComboBox theme = new JComboBox();
+                    //panel.add(theme);
+                    //for (GlobalTheme t : GlobalTheme.values()) {
+                    //    theme.addItem(t.toString());
+                    //}
+                    //theme.setSelectedIndex(((GlobalTheme) Config.GetData("kleicreator.theme")).ordinal());
 
                     JCheckBox askSaveOnLeave = new JCheckBox("Ask Save On Leave");
                     panel.add(askSaveOnLeave);
@@ -198,7 +198,7 @@ public class Master {
                     saveButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            Config.SaveData("kleicreator.theme", GlobalTheme.valueOf(theme.getSelectedItem().toString()));
+                            //Config.SaveData("kleicreator.theme", GlobalTheme.valueOf(theme.getSelectedItem().toString()));
                             Config.SaveData("kleicreator.asksaveonleave", askSaveOnLeave.isSelected());
                             Config.SaveData("kleicreator.copyresources", copyResources.isSelected());
                             PluginHandler.TriggerEvent("OnConfigSave", configDialogFrame);

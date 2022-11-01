@@ -109,8 +109,13 @@ public class ModLoaderActions extends ModLoader {
         modEditor.getModItemSelect().addActionListener(e -> Update());
 
         modEditor.getModExport().addActionListener(e -> {
-            Exporter.Export();
-            Logger.Debug("Exported");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Exporter.Export();
+                    Logger.Debug("Exported");
+                }
+            }).start();
         });
 
         modEditor.getModSpeechReloadSpeech().addActionListener(e -> {

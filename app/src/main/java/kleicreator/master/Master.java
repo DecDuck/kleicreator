@@ -2,14 +2,11 @@ package kleicreator.master;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import kleicreator.frames.LoadingStartup;
+import kleicreator.frames.*;
 import kleicreator.sdk.ArgumentParser;
 import kleicreator.sdk.config.Config;
 import kleicreator.sdk.constants.Constants;
 import kleicreator.export.Exporter;
-import kleicreator.frames.CreateModDialog;
-import kleicreator.frames.ProjectSelectDialog;
-import kleicreator.frames.Startup;
 import kleicreator.plugin.PluginHandler;
 import kleicreator.sdk.logging.Logger;
 import kleicreator.updater.Updater;
@@ -277,6 +274,29 @@ public class Master {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = createModDialog.getModNameTextField().getText();
+
+                if(name.isBlank()) {
+                    final JFrame errorFrame = new JFrame("Error!");
+                    final ErrorDialog errorDialog = new ErrorDialog();
+                    errorDialog.setLabelText("Mod name cannot be empty!");
+                    errorFrame.setContentPane(errorDialog.getPanel());
+                    errorFrame.setDefaultCloseOperation(errorFrame.DISPOSE_ON_CLOSE);
+                    errorFrame.setIconImage(new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator_square.png")).getImage());
+
+                    errorDialog.getButton().addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            errorFrame.dispose();
+                        }
+                    });
+
+                    errorFrame.pack();
+                    errorFrame.setLocationRelativeTo(null);
+                    errorFrame.setVisible(true);
+
+                    return;
+                }
+
                 String author = createModDialog.getModAuthorTextField().getText();
                 projectSelectFrame.setVisible(false);
                 newModConfigFrame.setVisible(false);

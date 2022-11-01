@@ -270,7 +270,7 @@ public class Master {
         final JFrame newModConfigFrame = new JFrame("Create New Project");
         final CreateModDialog createModDialog = new CreateModDialog();
         newModConfigFrame.setContentPane(createModDialog.getNewModConfigPanel());
-        newModConfigFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        newModConfigFrame.setDefaultCloseOperation(newModConfigFrame.DISPOSE_ON_CLOSE);
         newModConfigFrame.setIconImage(icon.getImage());
 
         createModDialog.getCreateMod().addActionListener(new ActionListener() {

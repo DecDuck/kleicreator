@@ -285,23 +285,7 @@ public class Master {
                 String name = createModDialog.getModNameTextField().getText();
 
                 if(name.isBlank()) {
-                    final JFrame errorFrame = new JFrame("Error!");
-                    final ErrorDialog errorDialog = new ErrorDialog();
-                    errorDialog.setLabelText("Mod name cannot be empty!");
-                    errorFrame.setContentPane(errorDialog.getPanel());
-                    errorFrame.setDefaultCloseOperation(errorFrame.DISPOSE_ON_CLOSE);
-                    errorFrame.setIconImage(new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator_square.png")).getImage());
-
-                    errorDialog.getButton().addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            errorFrame.dispose();
-                        }
-                    });
-
-                    errorFrame.pack();
-                    errorFrame.setLocationRelativeTo(null);
-                    errorFrame.setVisible(true);
+                    JOptionPane.showConfirmDialog(null, "Mod name cannot be empty!", "Error", JOptionPane.DEFAULT_OPTION);
 
                     return;
                 }

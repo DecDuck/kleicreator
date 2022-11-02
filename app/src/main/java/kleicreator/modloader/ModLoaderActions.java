@@ -1,8 +1,6 @@
 package kleicreator.modloader;
 
-import com.thoughtworks.xstream.mapper.Mapper;
 import kleicreator.export.Exporter;
-import kleicreator.frames.ErrorDialog;
 import kleicreator.frames.SpeechDialog;
 import kleicreator.sdk.item.Item;
 import kleicreator.modloader.resources.ResourceManager;
@@ -13,8 +11,6 @@ import kleicreator.sdk.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -118,28 +114,13 @@ public class ModLoaderActions extends ModLoader {
                 public void run() {
                     if(Mod.escapedModName().isBlank()) {
                         Logger.Log("Invalid mod name provided!");
+                        JOptionPane.showConfirmDialog(null, "Mod name cannot be empty!", "Error", JOptionPane.DEFAULT_OPTION);
 
-                        final JFrame exportErrorFrame = new JFrame("Error!");
-                        final ErrorDialog errorDialog = new ErrorDialog();
-                        errorDialog.setLabelText("Invalid mod name provided!");
-                        exportErrorFrame.setContentPane(errorDialog.getPanel());
-                        exportErrorFrame.setDefaultCloseOperation(exportErrorFrame.DISPOSE_ON_CLOSE);
-                        exportErrorFrame.setIconImage(new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator_square.png")).getImage());
+                        return;
+                    };
 
-                        errorDialog.getButton().addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                exportErrorFrame.dispose();
-                            }
-                        });
-
-                        exportErrorFrame.pack();
-                        exportErrorFrame.setLocationRelativeTo(null);
-                        exportErrorFrame.setVisible(true);
-                    } else {
-                        Exporter.Export();
-                        Logger.Debug("Exported");
-                    }
+                    Exporter.Export();
+                    Logger.Debug("Exported");
                 }
             }).start();
         });

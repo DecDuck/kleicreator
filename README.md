@@ -1,5 +1,7 @@
 ![logo](app/src/main/resources/kleicreator_wide.png)
 # KleiCreator
+[![Java CI with Gradle](https://github.com/DecDuck/kleicreator/actions/workflows/gradle.yml/badge.svg)](https://github.com/DecDuck/kleicreator/actions/workflows/gradle.yml)
+
 KleiCreator is a GUI tool for creating mods for the games made by Klei Entertainment. It uses a the Java Runtime Environment and cross-platform libraries to enable mods to be made on any platform.  
 
 ## About

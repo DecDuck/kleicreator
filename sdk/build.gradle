@@ -1,8 +1,24 @@
 apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        sdk(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'kleicreator'
+            url = layout.buildDirectory.dir("repo")
+        }
+    }
+}
 
 dependencies {
     implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.15'
     implementation group: 'org.reflections', name: 'reflections', version: '0.10.2'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
-
 }

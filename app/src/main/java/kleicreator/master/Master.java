@@ -52,11 +52,20 @@ public class Master {
     }
 
     public static void Main(String[] args) {
+        String p = Master.class.getPackage().getImplementationVersion();
+        if (p != null) {
+            version = "v" + p;
+        } else {
+            version = "[DEV]";
+        }
+        /*
         try {
+
             version = "v" + new Scanner(ClassLoader.getSystemClassLoader().getResource("version").openStream(), "UTF-8").next();
         } catch (IOException e) {
             version = "v0.0.0"; // Make sure we download a new version cause this one's broken as hell
         }
+        */
 
         ArgumentParser.ParseArguments(args);
         Constants.constants = new Constants();

@@ -13,16 +13,3 @@ dependencies {
 
     implementation project(":sdk")
 }
-
-
-jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-    manifest {
-        attributes "Main-Class": "kleicreator.master.Starter"
-    }
-
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}

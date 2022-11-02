@@ -21,6 +21,10 @@ import java.net.URISyntaxException;
 public class Updater {
     public static boolean CheckForUpdate(String vversion) {
 
+        if(vversion.equals("[DEV]")){
+            return false;
+        }
+
         String url = "https://api.github.com/repos/DecDuck/kleicreator/releases";
 
         String version = vversion.substring(1); // Remove v

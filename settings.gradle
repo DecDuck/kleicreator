@@ -1,3 +1,4 @@
 rootProject.name = 'kleicreator'
 
-include "app", "sdk"
+include "sdk"
+include "app"

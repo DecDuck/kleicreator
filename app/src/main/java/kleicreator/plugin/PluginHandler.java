@@ -76,7 +76,7 @@ public class PluginHandler {
 
     public static void LoadPlugin(PluginBlob blob) throws IOException {
         try {
-            ClassLoader authorizedLoader = URLClassLoader.newInstance(new URL[]{blob.pluginFile.toPath().toUri().toURL()});
+            URLClassLoader authorizedLoader = URLClassLoader.newInstance(new URL[]{blob.pluginFile.toPath().toUri().toURL()});
             SaveSystem.xstream.setClassLoader(authorizedLoader);
             ZipInputStream jarFile = new ZipInputStream(new FileInputStream(blob.pluginFile.getAbsoluteFile()));
             ZipEntry jarEntry;
@@ -84,6 +84,10 @@ public class PluginHandler {
                 jarEntry = jarFile.getNextEntry();
                 if (jarEntry == null)
                     break;
+                // Don't let any plugin insert any code into KleiCreator
+                if(jarEntry.getName().startsWith("kleicreator/")){
+                    break;
+                }
                 if (jarEntry.getName().endsWith(".class")) {
                     String classname = jarEntry.getName().replaceAll("/", "\\.");
                     classname = classname.substring(0, classname.length() - 6);

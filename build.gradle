@@ -39,17 +39,4 @@ subprojects {
     dependencies {
 
     }
-
-    jar {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-        manifest {
-            attributes "Main-Class": "kleicreator.master.Starter"
-            attributes 'Implementation-Version': version
-        }
-
-        from {
-            configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-        }
-    }
 }

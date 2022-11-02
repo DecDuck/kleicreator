@@ -61,4 +61,9 @@ public class SaveObject implements java.io.Serializable {
             ResourceManager.LoadResource(r);
         }
     }
+
+    @Override
+    public String toString() {
+        return SaveSystem.xstream.toXML(this);
+    }
 }

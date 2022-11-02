@@ -29,6 +29,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ModLoader {
     public static JFrame modEditorFrame;
@@ -252,7 +253,9 @@ public class ModLoader {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                if(!new SaveObject().equals(SaveSystem.TempLoad(Mod.path))){
+                // Logger.Log(SaveSystem.TempLoad(Mod.path).toString());
+                // Logger.Log(new SaveObject().toString());
+                if(!new SaveObject().toString().equals(SaveSystem.TempLoad(Mod.path).toString())){
                     if ((Boolean) Config.GetData("kleicreator.asksaveonleave")) {
                         int option = JOptionPane.showConfirmDialog(modEditorFrame, "Save project?", "Save?", JOptionPane.YES_NO_CANCEL_OPTION);
                         if(option == 0){

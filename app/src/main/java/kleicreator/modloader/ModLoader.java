@@ -3,6 +3,7 @@ package kleicreator.modloader;
 import com.google.gson.Gson;
 import kleicreator.frames.ListEditor;
 import kleicreator.frames.ModEditor;
+import kleicreator.savesystem.SaveObject;
 import kleicreator.sdk.item.Item;
 import kleicreator.items.ItemLoader;
 import kleicreator.master.Master;
@@ -28,6 +29,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ModLoader {
     public static JFrame modEditorFrame;
@@ -251,11 +253,20 @@ public class ModLoader {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                if ((Boolean) Config.GetData("kleicreator.asksaveonleave")) {
-                    if(JOptionPane.showConfirmDialog(modEditorFrame, "Save project?", "Save?", JOptionPane.YES_NO_OPTION) == 0){
-                        SaveAll();
+                // Logger.Log(SaveSystem.TempLoad(Mod.path).toString());
+                // Logger.Log(new SaveObject().toString());
+                if(!new SaveObject().toString().equals(SaveSystem.TempLoad(Mod.path).toString())){
+                    if ((Boolean) Config.GetData("kleicreator.asksaveonleave")) {
+                        int option = JOptionPane.showConfirmDialog(modEditorFrame, "Save project?", "Save?", JOptionPane.YES_NO_CANCEL_OPTION);
+                        if(option == 0){
+                            SaveAll();
+                        }
+                        if(option == 2){
+                            return;
+                        }
                     }
                 }
+
                 modEditorFrame.dispose();
                 System.exit(0);
             }

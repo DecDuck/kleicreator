@@ -14,12 +14,14 @@ dependencies {
     implementation project(":sdk")
 }
 
-
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
+    dependsOn ":sdk:jar"
+
     manifest {
         attributes "Main-Class": "kleicreator.master.Starter"
+        attributes 'Implementation-Version': version
     }
 
     from {

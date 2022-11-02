@@ -28,7 +28,7 @@ public class Starter {
                 Logger.Log("Attempting to handle the error...");
                 /*
                 * This is here because I had an issue with config messing up loading
-                * */
+                */
                 boolean success = new File(Constants.constants.KLEICREATOR_LOCATION + "/config")
                         .renameTo(
                                 new File(Constants.constants.KLEICREATOR_LOCATION
@@ -37,6 +37,13 @@ public class Starter {
                                 )
                         );
                 if(success){
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "KleiCreator has backed up and reset your config, and it has fixed an error it had while starting up. " +
+                            "Before restoring your config, please check the logs to see what went wrong and how to fix your config.",
+                            "Error Handled",
+                            JOptionPane.WARNING_MESSAGE
+                    );
                     Master.Main(args);
                     main(args);
                     return;

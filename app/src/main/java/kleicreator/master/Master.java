@@ -2,14 +2,11 @@ package kleicreator.master;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import kleicreator.frames.LoadingStartup;
+import kleicreator.frames.*;
 import kleicreator.sdk.ArgumentParser;
 import kleicreator.sdk.config.Config;
 import kleicreator.sdk.constants.Constants;
 import kleicreator.export.Exporter;
-import kleicreator.frames.CreateModDialog;
-import kleicreator.frames.ProjectSelectDialog;
-import kleicreator.frames.Startup;
 import kleicreator.plugin.PluginHandler;
 import kleicreator.sdk.logging.Logger;
 import kleicreator.updater.Updater;
@@ -279,13 +276,20 @@ public class Master {
         final JFrame newModConfigFrame = new JFrame("Create New Project");
         final CreateModDialog createModDialog = new CreateModDialog();
         newModConfigFrame.setContentPane(createModDialog.getNewModConfigPanel());
-        newModConfigFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        newModConfigFrame.setDefaultCloseOperation(newModConfigFrame.DISPOSE_ON_CLOSE);
         newModConfigFrame.setIconImage(icon.getImage());
 
         createModDialog.getCreateMod().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = createModDialog.getModNameTextField().getText();
+
+                if(name.isBlank()) {
+                    JOptionPane.showConfirmDialog(null, "Mod name cannot be empty!", "Error", JOptionPane.DEFAULT_OPTION);
+
+                    return;
+                }
+
                 String author = createModDialog.getModAuthorTextField().getText();
                 projectSelectFrame.setVisible(false);
                 newModConfigFrame.setVisible(false);

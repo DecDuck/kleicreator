@@ -112,6 +112,13 @@ public class ModLoaderActions extends ModLoader {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    if(Mod.escapedModName().isBlank()) {
+                        Logger.Log("Invalid mod name provided!");
+                        JOptionPane.showConfirmDialog(null, "Mod name cannot be empty!", "Error", JOptionPane.DEFAULT_OPTION);
+
+                        return;
+                    };
+
                     Exporter.Export();
                     Logger.Debug("Exported");
                 }

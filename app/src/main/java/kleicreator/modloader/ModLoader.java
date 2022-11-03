@@ -1,6 +1,7 @@
 package kleicreator.modloader;
 
 import com.google.gson.Gson;
+import kleicreator.editor.frames.EditorMain;
 import kleicreator.frames.ListEditor;
 import kleicreator.frames.ModEditor;
 import kleicreator.savesystem.SaveObject;
@@ -61,7 +62,7 @@ public class ModLoader {
         Mod.modName = name;
         Mod.modAuthor = author;
         Mod.modDescription = "Example Description";
-        Mod.modVersion = "1.0";
+        Mod.modVersion = new Mod.Version(1, 0, 0);
 
         SaveSystem.Save(path);
         Update();
@@ -69,6 +70,7 @@ public class ModLoader {
     }
 
     public static void Update() {
+        /*
         ResourceManager.GenerateResourceLists();
         int selectedModItem = modEditor.getModItemSelect().getSelectedIndex();
         int selectedModIcon = Mod.modIcon;
@@ -155,6 +157,7 @@ public class ModLoader {
 
         modEditorFrame.validate();
         modEditorFrame.setVisible(true);
+         */
     }
 
     public static Item SelectFromAllItems() {
@@ -213,7 +216,7 @@ public class ModLoader {
             Mod.modName = modEditor.getModNameTextField().getText();
             Mod.modAuthor = modEditor.getModAuthorTextField().getText();
             Mod.modDescription = modEditor.getModDescriptTextArea().getText();
-            Mod.modVersion = modEditor.getModVersionTextField().getText();
+            Mod.modVersion = new Mod.Version(0, 0, 0);
             Mod.modIcon = modEditor.getModIconTextureSelect().getSelectedIndex();
         } catch (IndexOutOfBoundsException e) {
             Logger.Error(e);
@@ -234,6 +237,7 @@ public class ModLoader {
     }
 
     public static void CreateModEditorFrame() {
+        /*
         String truncatedModName = Mod.modName;
         if (truncatedModName.length() > 20) {
             truncatedModName = truncatedModName.substring(0, 20);
@@ -351,6 +355,9 @@ public class ModLoader {
         modEditorFrame.pack();
         modEditorFrame.setLocationRelativeTo(null);
         Logger.Log("Successfully completed ModEditor setup.");
+         */
+        modEditorFrame = new JFrame();
+        EditorMain editorMain = new EditorMain(modEditorFrame);
     }
 
     public static Integer getInt(String message, Integer defaultValue) {

@@ -16,7 +16,27 @@ public class Mod {
     public static String modName;
     public static String modAuthor;
     public static String modDescription;
-    public static String modVersion;
+    public static Version modVersion;
+    public static class Version {
+        public int major;
+        public int minor;
+        public int patch;
+
+        @Override
+        public String toString() {
+            return String.format("%s.%s.%s", major, minor, patch);
+        }
+
+        public Version(){
+
+        }
+
+        public Version(int major, int minor, int patch) {
+            this.major = major;
+            this.minor = minor;
+            this.patch = patch;
+        }
+    }
     public static int modIcon;
     public static Game game;
     public static String path;

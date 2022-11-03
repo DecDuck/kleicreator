@@ -12,6 +12,11 @@ public class Recipe {
     public TECH tech;
     public RECIPETAB tab;
 
+    @Override
+    public String toString() {
+        return String.format("%s (%s)", result, id);
+    }
+
     public Recipe() {
         this.id = UUID.randomUUID().toString().substring(0, 5);
     }

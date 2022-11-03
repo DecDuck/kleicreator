@@ -28,48 +28,54 @@ public class ProjectExplorerMouseListener extends MouseAdapter {
         }
         TreePath clickPath = tree.getPathForLocation(e.getX(), e.getY());
         Object node = clickPath.getLastPathComponent();
+        Tab toFocus = null;
         if(node == null){
             return;
         }
         if(node instanceof NodeProject){
-            UniqueAddTab(new TabProject());
+            toFocus = UniqueAddTab(new TabProject());
         }
         if(node instanceof NodeItemControl){
-            UniqueAddTab(new TabItemControl());
+            toFocus = UniqueAddTab(new TabItemControl());
         }
         if(node instanceof NodeRecipeControl){
-            UniqueAddTab(new TabRecipeControl());
+            toFocus = UniqueAddTab(new TabRecipeControl());
         }
         if(node instanceof NodeResourceControl){
-            UniqueAddTab(new TabResourceControl());
+            toFocus = UniqueAddTab(new TabResourceControl());
         }
         if(node instanceof NodeItem){
-            UniqueContentAddTab(new TabItem(((NodeItem) node).item));
+            toFocus = UniqueContentAddTab(new TabItem(((NodeItem) node).item));
         }
         if(node instanceof NodeRecipe){
-            UniqueContentAddTab(new TabRecipe(((NodeRecipe) node).recipe));
+            toFocus = UniqueContentAddTab(new TabRecipe(((NodeRecipe) node).recipe));
         }
         if(node instanceof NodeResource){
-            UniqueContentAddTab(new TabResource(((NodeResource) node).resource));
+            toFocus = UniqueContentAddTab(new TabResource(((NodeResource) node).resource));
         }
         editorMain.UpdateTabs();
+        if(toFocus != null){
+            editorMain.SetTabFocus(toFocus);
+        }
     }
 
-    private void UniqueAddTab(Tab tab){
+    private Tab UniqueAddTab(Tab tab){
         for(Tab t : Tab.tabs){
             if(t.getClass().equals(tab.getClass())){
-                return;
+                return t;
             }
         }
         Tab.tabs.add(tab);
+        return tab;
     }
 
-    private void UniqueContentAddTab(Tab tab){
+    private Tab UniqueContentAddTab(Tab tab){
         for(Tab t : Tab.tabs){
             if(t.equals(tab)){
-                return;
+                return t;
             }
         }
         Tab.tabs.add(tab);
+        return tab;
     }
 }

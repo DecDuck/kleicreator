@@ -1,14 +1,10 @@
 package kleicreator.util;
 
-import kleicreator.items.ItemLoader;
 import kleicreator.modloader.ModLoader;
-import kleicreator.sdk.item.FieldData;
-import kleicreator.sdk.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-import java.lang.reflect.Field;
 
 public class TreeHelper extends ModLoader {
 

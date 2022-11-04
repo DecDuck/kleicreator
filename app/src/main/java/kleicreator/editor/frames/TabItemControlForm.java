@@ -48,7 +48,6 @@ public class TabItemControlForm {
             public void actionPerformed(ActionEvent actionEvent) {
                 Item item = new Item();
                 Mod.items.add(item);
-                Tab.tabs.add(new TabItem(item));
                 UpdateTable();
                 editorMain.UpdateProjectExplorer();
                 editorMain.UpdateTabs();

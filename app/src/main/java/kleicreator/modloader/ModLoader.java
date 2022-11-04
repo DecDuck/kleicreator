@@ -4,33 +4,20 @@ import com.google.gson.Gson;
 import kleicreator.editor.frames.EditorMain;
 import kleicreator.frames.ListEditor;
 import kleicreator.frames.ModEditor;
-import kleicreator.savesystem.SaveObject;
 import kleicreator.sdk.item.Item;
-import kleicreator.items.ItemLoader;
-import kleicreator.master.Master;
-import kleicreator.modloader.classes.ResourceAnimation;
 import kleicreator.modloader.classes.ResourceSpeech;
-import kleicreator.modloader.classes.ResourceTexture;
 import kleicreator.modloader.resources.Resource;
 import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.plugin.PluginHandler;
-import kleicreator.recipes.RecipeLoader;
 import kleicreator.savesystem.SaveSystem;
-import kleicreator.sdk.config.Config;
 import kleicreator.sdk.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class ModLoader {
     public static JFrame modEditorFrame;
@@ -217,69 +204,6 @@ public class ModLoader {
 
     public static void CreateModEditorFrame() {
         /*
-        String truncatedModName = Mod.modName;
-        if (truncatedModName.length() > 20) {
-            truncatedModName = truncatedModName.substring(0, 20);
-            truncatedModName += "...";
-        }
-        modEditorFrame = new JFrame(String.format("KleiCreator %s | %s", Master.version, truncatedModName));
-        modEditorFrame.setIconImage(Master.icon.getImage());
-        modEditor = new ModEditor();
-
-        modEditorFrame.setContentPane(modEditor.getModEditorPanel());
-        modEditorFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        modEditorFrame.addWindowListener(new WindowListener() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                // Logger.Log(SaveSystem.TempLoad(Mod.path).toString());
-                // Logger.Log(new SaveObject().toString());
-                if(!new SaveObject().toString().equals(SaveSystem.TempLoad(Mod.path).toString())){
-                    if ((Boolean) Config.GetData("kleicreator.asksaveonleave")) {
-                        int option = JOptionPane.showConfirmDialog(modEditorFrame, "Save project?", "Save?", JOptionPane.YES_NO_CANCEL_OPTION);
-                        if(option == 0){
-                            SaveAll();
-                        }
-                        if(option == 2){
-                            return;
-                        }
-                    }
-                }
-
-                modEditorFrame.dispose();
-                System.exit(0);
-            }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-
-            }
-        });
-
         speechModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -307,9 +231,6 @@ public class ModLoader {
         JTree notAddedTree = modEditor.getModItemComponentNotAdded();
 
         JTree recipeTree = modEditor.getModRecipesEditor();
-
-        ItemLoader.SetupAddedTree(addedTree);
-        ItemLoader.SetupNotAddedTree(notAddedTree);
 
         RecipeLoader.SetupRecipeEditor(recipeTree);
 

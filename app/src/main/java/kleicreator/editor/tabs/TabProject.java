@@ -6,6 +6,6 @@ public class TabProject extends Tab {
     private TabProjectForm tabProjectForm;
     public TabProject(){
         tabProjectForm = new TabProjectForm(this);
-        this.title = "Project";
+        this.title = "Project Details";
     }
 }

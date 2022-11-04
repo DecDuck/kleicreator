@@ -10,7 +10,7 @@ public class TabRecipe extends Tab {
     private TabRecipeForm tabRecipeForm;
     public TabRecipe(Recipe recipe) {
         this.recipe = recipe;
-        this.title = recipe.toString();
+        this.title = "Recipe: " + recipe.toString();
         tabRecipeForm = new TabRecipeForm(this);
     }
 }

@@ -8,7 +8,7 @@ public class TabItem extends Tab {
     private TabItemForm tabItemForm;
     public TabItem(Item item) {
         this.item = item;
-        this.title = item.itemName;
+        this.title = "Item: " + item.itemName;
         tabItemForm = new TabItemForm(this);
     }
 }

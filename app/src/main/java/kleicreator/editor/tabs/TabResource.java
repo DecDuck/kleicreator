@@ -9,7 +9,7 @@ public class TabResource extends Tab {
 
     public TabResource(Resource resource) {
         this.resource = resource;
-        this.title = resource.toString();
+        this.title = "Resource: " + resource.toString();
         tabResourceForm = new TabResourceForm(this);
     }
 }

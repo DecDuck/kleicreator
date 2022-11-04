@@ -11,12 +11,15 @@ import kleicreator.editor.state.ProjectExplorerState;
 import kleicreator.editor.tabs.Tab;
 import kleicreator.master.Master;
 import kleicreator.modloader.Mod;
+import kleicreator.modloader.ModLoader;
 import kleicreator.modloader.resources.Resource;
 import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.recipes.Recipe;
 import kleicreator.sdk.item.Item;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
@@ -29,6 +32,7 @@ public class EditorMain {
     private JTree projectExplorer;
     private JTabbedPane projectTabs;
     private JPanel editorPane;
+    private JScrollPane projectExplorerScrollPane;
 
     private final JFrame frame;
     private ProjectExplorerState projectExplorerState;
@@ -52,6 +56,9 @@ public class EditorMain {
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new EditorWindowListener(frame));
 
+        // Remove nasty border around JScrollPane
+        projectExplorerScrollPane.setBorder(BorderFactory.createEmptyBorder());
+
         // Menu bar
         JMenuBar menuBar = new JMenuBar();
 
@@ -61,17 +68,21 @@ public class EditorMain {
 
         // ===== FILE =====
         JMenuItem fileNew = new JMenuItem("New");
+        fileNew.setIcon(new ImageIcon(ClassLoader.getSystemResource("icons/new.png")));
         fileNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                frame.dispose();
+                Master.CreateNewMod();
             }
         });
         JMenuItem fileOpen = new JMenuItem("Open");
+        fileOpen.setIcon(new ImageIcon(ClassLoader.getSystemResource("icons/open.png")));
+
         fileOpen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Master.OpenProjectFromFiles(frame);
             }
         });
         file.add(fileNew);
@@ -99,6 +110,7 @@ public class EditorMain {
 
         frame.setContentPane(editorPane);
         frame.pack();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
     }
 
@@ -165,6 +177,7 @@ public class EditorMain {
         for (Tab tab : Tab.tabs) {
             if (!tabList.contains(tab)) {
                 projectTabs.addTab(tab.title, tab);
+                projectTabs.setTabComponentAt(projectTabs.getTabCount() - 1, tab.BuildTabComponent(this));
             }
         }
 
@@ -202,12 +215,12 @@ public class EditorMain {
         editorPane.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         projectTabs = new JTabbedPane();
         editorPane.add(projectTabs, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(200, 200), null, 0, false));
-        final JScrollPane scrollPane1 = new JScrollPane();
-        scrollPane1.setHorizontalScrollBarPolicy(32);
-        editorPane.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        projectExplorerScrollPane = new JScrollPane();
+        projectExplorerScrollPane.setHorizontalScrollBarPolicy(32);
+        editorPane.add(projectExplorerScrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         projectExplorer = new JTree();
         projectExplorer.setShowsRootHandles(false);
-        scrollPane1.setViewportView(projectExplorer);
+        projectExplorerScrollPane.setViewportView(projectExplorer);
     }
 
     /**

@@ -16,36 +16,6 @@ public class TreeHelper extends ModLoader {
         return new DefaultMutableTreeNode(name);
     }
 
-    public static <T> void AddClassToTree(DefaultMutableTreeNode root, Class toAdd, T values) {
-        Field[] fields = toAdd.getFields();
-        TooltipTreeNode node = new TooltipTreeNode(toAdd.getSimpleName(), "");
-
-        for (Field f : fields) {
-            String name = f.getName();
-            String tooltip = "";
-            if(f.isAnnotationPresent(FieldData.class)){
-                name = f.getAnnotation(FieldData.class).name();
-                tooltip = f.getAnnotation(FieldData.class).tooltip();
-                ItemLoader.annotatedFieldMap.put(f.getAnnotation(FieldData.class).name(), f.getName());
-            }
-            if (values != null) {
-                try {
-                    DefaultMutableTreeNode tempNode;
-                    tempNode = new TooltipTreeNode(name + ": " + f.get(values), tooltip);
-
-                    node.add(tempNode);
-                } catch (IllegalAccessException e) {
-                    Logger.Error(e);
-                }
-            } else {
-                TooltipTreeNode tempNode = new TooltipTreeNode(name, tooltip);
-                node.add(tempNode);
-            }
-        }
-
-        root.add(node);
-    }
-
     public static String getExpansionState(JTree tree) {
 
         StringBuilder sb = new StringBuilder();

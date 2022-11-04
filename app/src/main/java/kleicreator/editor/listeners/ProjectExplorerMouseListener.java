@@ -27,6 +27,9 @@ public class ProjectExplorerMouseListener extends MouseAdapter {
             return;
         }
         TreePath clickPath = tree.getPathForLocation(e.getX(), e.getY());
+        if(clickPath == null){
+            return;
+        }
         Object node = clickPath.getLastPathComponent();
         Tab toFocus = null;
         if(node == null){

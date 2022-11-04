@@ -11,18 +11,14 @@ import kleicreator.editor.state.ProjectExplorerState;
 import kleicreator.editor.tabs.Tab;
 import kleicreator.master.Master;
 import kleicreator.modloader.Mod;
-import kleicreator.modloader.ModLoader;
 import kleicreator.modloader.resources.Resource;
 import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.recipes.Recipe;
 import kleicreator.savesystem.SaveSystem;
 import kleicreator.sdk.item.Item;
+import kleicreator.sdk.logging.Logger;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,12 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditorMain {
+    private final JFrame frame;
     private JTree projectExplorer;
     private JTabbedPane projectTabs;
     private JPanel editorPane;
     private JScrollPane projectExplorerScrollPane;
-
-    private final JFrame frame;
     private ProjectExplorerState projectExplorerState;
 
     public EditorMain(JFrame frame) {
@@ -52,6 +47,9 @@ public class EditorMain {
 
         // Icon
         frame.setIconImage(Master.icon.getImage());
+
+        // Preferred size
+        frame.setPreferredSize(new Dimension(1024, 720));
 
         // Close operation
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -91,6 +89,7 @@ public class EditorMain {
 
         // ===== PROJECT =====
         JMenuItem projectSave = new JMenuItem("Save");
+        projectSave.setIcon(new ImageIcon(ClassLoader.getSystemResource("icons/save.png")));
         projectSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -130,21 +129,15 @@ public class EditorMain {
         projectExplorerState.resources.removeAllChildren();
 
         for (Item item : Mod.items) {
-            projectExplorerState.items.add(
-                    new NodeItem(item, item.itemId)
-            );
+            projectExplorerState.items.add(new NodeItem(item, item.itemId));
         }
 
         for (Recipe recipe : Mod.recipes) {
-            projectExplorerState.recipes.add(
-                    new NodeRecipe(recipe, String.format("%s (%s)", recipe.result, recipe.id))
-            );
+            projectExplorerState.recipes.add(new NodeRecipe(recipe, String.format("%s (%s)", recipe.result, recipe.id)));
         }
 
         for (Resource resource : ResourceManager.resources) {
-            projectExplorerState.resources.add(
-                    new NodeResource(resource, resource)
-            );
+            projectExplorerState.resources.add(new NodeResource(resource, resource));
         }
 
         frame.revalidate();
@@ -158,7 +151,13 @@ public class EditorMain {
         List<Tab> tabList = new ArrayList<>();
         int totalTabs = projectTabs.getTabCount();
         for (int i = 0; i < totalTabs; i++) {
-            Component component = projectTabs.getComponentAt(i);
+            Component component;
+            try {
+                component = projectTabs.getComponentAt(i);
+            } catch (IndexOutOfBoundsException e) {
+                Logger.Error(e);
+                break;
+            }
 
             if (component instanceof Tab) {
                 Tab tab = (Tab) component;
@@ -215,10 +214,11 @@ public class EditorMain {
         editorPane = new JPanel();
         editorPane.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         projectTabs = new JTabbedPane();
+        projectTabs.setTabLayoutPolicy(1);
         editorPane.add(projectTabs, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(200, 200), null, 0, false));
         projectExplorerScrollPane = new JScrollPane();
         projectExplorerScrollPane.setHorizontalScrollBarPolicy(32);
-        editorPane.add(projectExplorerScrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        editorPane.add(projectExplorerScrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(200, -1), null, null, 0, false));
         projectExplorer = new JTree();
         projectExplorer.setShowsRootHandles(false);
         projectExplorerScrollPane.setViewportView(projectExplorer);

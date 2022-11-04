@@ -39,3 +39,5 @@ KleiCreator is open-source, and as with every OSS project, every contribution co
 If you're making any assets for KleiCreator, the colours used in the logo are:
  - Gray: 5b5b5b
  - Orange: ffb400
+
+Icon pack (I've modified the colours): https://www.svgrepo.com/collection/iconpark-duotone-icons/ 

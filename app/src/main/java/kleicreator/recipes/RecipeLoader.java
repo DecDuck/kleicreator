@@ -21,7 +21,6 @@ public class RecipeLoader extends ModLoader {
     public static void SetupRecipeEditor(final JTree tree) {
         MouseListener ml = new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                ModLoader.SaveItem();
                 int selRow = tree.getRowForLocation(e.getX(), e.getY());
                 TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
                 if (selRow != -1) {

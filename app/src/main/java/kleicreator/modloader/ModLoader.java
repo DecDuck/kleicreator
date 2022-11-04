@@ -191,26 +191,6 @@ public class ModLoader {
         }
     }
 
-    public static void SaveItem() {
-        try {
-            Item item = null;
-            try {
-                item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
-            } catch (IndexOutOfBoundsException e) {
-                // Item was deleted
-                return;
-            }
-
-            item.itemName = modEditor.getModItemNameTextField().getText();
-            item.itemId = modEditor.getModItemIdTextField().getText();
-            item.itemTexture = modEditor.getModItemTextureSelect().getSelectedIndex();
-            item.stackSize = (int) modEditor.getModItemStackSize().getValue();
-        } catch (IndexOutOfBoundsException e) {
-            Logger.Error(e);
-            ShowWarning("There was a problem with saving the item. Please fix any errors and try again.");
-        }
-    }
-
     public static void SaveModConfig() {
         try {
             Mod.modName = modEditor.getModNameTextField().getText();
@@ -227,7 +207,6 @@ public class ModLoader {
 
     public static void SaveAll() {
         try {
-            SaveItem();
             SaveModConfig();
             SaveSystem.Save(Mod.path);
         } catch (Exception e) {

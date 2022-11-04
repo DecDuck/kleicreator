@@ -25,7 +25,7 @@ public class Tab extends JPanel {
         panel.setOpaque(false);
         panel.add(new JLabel(title));
 
-        JButton closeButton = new JButton("x");
+        JButton closeButton = new JButton();
         Tab tab = this;
         closeButton.addActionListener(new ActionListener() {
             @Override
@@ -34,6 +34,7 @@ public class Tab extends JPanel {
                 editorMain.UpdateTabs();
             }
         });
+        closeButton.setIcon(new ImageIcon(ClassLoader.getSystemResource("icons/close.png")));
         closeButton.setOpaque(false);
         panel.add(closeButton);
         return panel;

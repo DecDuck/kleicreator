@@ -46,7 +46,12 @@ public class TabItemControlForm {
         add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Mod.items.add(new Item());
+                Item item = new Item();
+                Mod.items.add(item);
+                Tab.tabs.add(new TabItem(item));
+                UpdateTable();
+                editorMain.UpdateProjectExplorer();
+                editorMain.UpdateTabs();
             }
         });
 

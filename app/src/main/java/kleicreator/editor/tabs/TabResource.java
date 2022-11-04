@@ -12,4 +12,13 @@ public class TabResource extends Tab {
         this.title = "Resource: " + resource.toString();
         tabResourceForm = new TabResourceForm(this);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof TabResource){
+            return ((TabResource) obj).resource.equals(resource);
+        } else {
+            return false;
+        }
+    }
 }

@@ -3,8 +3,13 @@ package kleicreator.editor.frames;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import kleicreator.editor.listeners.TextFieldBinding;
+import kleicreator.modloader.Mod;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
 import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
@@ -16,11 +21,40 @@ public class TabProjectForm {
     private JTextPane projectDescription;
     private JSpinner versionMajor;
     private JSpinner versionMinor;
-    private JSpinner spinner1;
+    private JSpinner versionPatch;
     private JComboBox projectIcon;
 
     public TabProjectForm(JPanel panel) {
         panel.add(tabProjectPanel);
+
+        projectName.setText(Mod.modName);
+        projectAuthor.setText(Mod.modAuthor);
+        projectDescription.setText(Mod.modDescription);
+        versionMajor.setValue(Mod.modVersion.major);
+        versionMinor.setValue(Mod.modVersion.minor);
+        versionPatch.setValue(Mod.modVersion.patch);
+
+        new TextFieldBinding(projectName, Mod::setModName);
+        new TextFieldBinding(projectAuthor, Mod::setModAuthor);
+        new TextFieldBinding(projectDescription, Mod::setModDescription);
+        versionMajor.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                Mod.modVersion.major = (int) versionMajor.getValue();
+            }
+        });
+        versionMinor.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                Mod.modVersion.minor = (int) versionMinor.getValue();
+            }
+        });
+        versionPatch.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                Mod.modVersion.patch = (int) versionPatch.getValue();
+            }
+        });
     }
 
     {
@@ -93,8 +127,8 @@ public class TabProjectForm {
         final JLabel label6 = new JLabel();
         this.$$$loadLabelText$$$(label6, this.$$$getMessageFromBundle$$$("IDEUI", "versionSeparator"));
         panel5.add(label6);
-        spinner1 = new JSpinner();
-        panel5.add(spinner1);
+        versionPatch = new JSpinner();
+        panel5.add(versionPatch);
         final JPanel panel6 = new JPanel();
         panel6.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         tabProjectPanel.add(panel6, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

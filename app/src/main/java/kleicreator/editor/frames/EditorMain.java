@@ -15,6 +15,7 @@ import kleicreator.modloader.ModLoader;
 import kleicreator.modloader.resources.Resource;
 import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.recipes.Recipe;
+import kleicreator.savesystem.SaveSystem;
 import kleicreator.sdk.item.Item;
 
 import javax.imageio.ImageIO;
@@ -93,7 +94,7 @@ public class EditorMain {
         projectSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                SaveSystem.Save(Mod.path);
             }
         });
         project.add(projectSave);

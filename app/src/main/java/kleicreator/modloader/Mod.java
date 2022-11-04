@@ -38,6 +38,31 @@ public class Mod {
         }
     }
     public static int modIcon;
+
+    public static String getModName() {
+        return modName;
+    }
+
+    public static String getModAuthor() {
+        return modAuthor;
+    }
+
+    public static String getModDescription() {
+        return modDescription;
+    }
+
+    public static void setModName(String modName) {
+        Mod.modName = modName;
+    }
+
+    public static void setModAuthor(String modAuthor) {
+        Mod.modAuthor = modAuthor;
+    }
+
+    public static void setModDescription(String modDescription) {
+        Mod.modDescription = modDescription;
+    }
+
     public static Game game;
     public static String path;
     public static List<Item> items = new ArrayList<Item>();

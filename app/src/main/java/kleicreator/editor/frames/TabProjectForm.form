@@ -156,7 +156,7 @@
                   <text resource-bundle="IDEUI" key="versionSeparator"/>
                 </properties>
               </component>
-              <component id="ab48e" class="javax.swing.JSpinner" binding="spinner1" default-binding="true">
+              <component id="ab48e" class="javax.swing.JSpinner" binding="versionPatch">
                 <constraints/>
                 <properties/>
               </component>

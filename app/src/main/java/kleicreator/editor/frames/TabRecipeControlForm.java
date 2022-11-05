@@ -1,15 +1,54 @@
 package kleicreator.editor.frames;
 
+import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
+import kleicreator.modloader.Mod;
+import kleicreator.recipes.Recipe;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class TabRecipeControlForm {
     private JPanel tabRecipeControlPanel;
+    private JTable recipeTable;
+    private JButton add;
+    private JButton remove;
+
+    private DefaultTableModel tableModel;
 
     public TabRecipeControlForm(JPanel tab) {
         tab.add(tabRecipeControlPanel);
+
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Result");
+        tableModel.addColumn("# of ingredients");
+        recipeTable.setModel(tableModel);
+
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+
+        remove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+    }
+
+    public void UpdateTable() {
+        tableModel.setRowCount(0);
+        for (Recipe recipe : Mod.recipes) {
+            tableModel.addRow(new String[]{recipe.id, recipe.result, String.valueOf(recipe.ingredients.size())});
+        }
     }
 
     {
@@ -28,7 +67,20 @@ public class TabRecipeControlForm {
      */
     private void $$$setupUI$$$() {
         tabRecipeControlPanel = new JPanel();
-        tabRecipeControlPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        tabRecipeControlPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        recipeTable = new JTable();
+        tabRecipeControlPanel.add(recipeTable, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        tabRecipeControlPanel.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel1.add(spacer1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        add = new JButton();
+        add.setText("Add");
+        panel1.add(add, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        remove = new JButton();
+        remove.setText("Button");
+        panel1.add(remove, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -37,4 +89,5 @@ public class TabRecipeControlForm {
     public JComponent $$$getRootComponent$$$() {
         return tabRecipeControlPanel;
     }
+
 }

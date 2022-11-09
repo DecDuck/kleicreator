@@ -1,6 +1,6 @@
 package kleicreator.updater;
 
-import kleicreator.sdk.logging.Logger;
+import kleicreator.logging.Logger;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.methods.HttpGet;

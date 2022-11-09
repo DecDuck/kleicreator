@@ -1,11 +1,24 @@
 package kleicreator.items;
 
-import kleicreator.sdk.item.Item;
+import kleicreator.modloader.Mod;
 
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
 public class AllItems {
+
+    public static Item SelectFromAllItems(JPanel panel) {
+        List<Item> items = Mod.GetAllItems();
+        Object[] objArray = items.toArray();
+        Object selection = JOptionPane.showInputDialog(panel, "Select New Item", "Select New Item", JOptionPane.QUESTION_MESSAGE, null, objArray, 0);
+        for(Item i : items){
+            if(i.itemName.equals(selection.toString())){
+                return i;
+            }
+        }
+        return items.get(0);
+    }
 
     // Maybe load this in from a file or similar?
     public static List<Item> allItems = Arrays.asList(

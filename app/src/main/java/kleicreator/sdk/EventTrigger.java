@@ -1,6 +1,6 @@
 package kleicreator.sdk;
 
-import kleicreator.sdk.item.Item;
+import kleicreator.items.Item;
 
 import javax.swing.*;
 import java.util.ArrayList;

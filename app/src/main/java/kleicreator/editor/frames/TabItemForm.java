@@ -6,10 +6,10 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import kleicreator.editor.listeners.TextFieldBinding;
 import kleicreator.frames.ListEditor;
-import kleicreator.sdk.item.FieldData;
-import kleicreator.sdk.item.Item;
-import kleicreator.sdk.item.ItemComponent;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.items.FieldData;
+import kleicreator.items.Item;
+import kleicreator.items.ItemComponent;
+import kleicreator.logging.Logger;
 import kleicreator.util.TooltipTreeNode;
 import kleicreator.util.TooltipTreeRenderer;
 

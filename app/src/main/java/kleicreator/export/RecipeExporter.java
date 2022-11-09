@@ -2,7 +2,7 @@ package kleicreator.export;
 
 import kleicreator.modloader.Mod;
 import kleicreator.recipes.Recipe;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.logging.Logger;
 
 import java.util.HashMap;
 import java.util.Map;

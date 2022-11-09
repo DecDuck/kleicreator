@@ -1,9 +1,9 @@
-package kleicreator.sdk.config;
+package kleicreator.config;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import kleicreator.sdk.constants.Constants;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.constants.Constants;
+import kleicreator.logging.Logger;
 
 import java.io.*;
 import java.nio.file.Files;

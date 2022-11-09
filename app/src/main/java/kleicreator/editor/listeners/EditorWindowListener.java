@@ -3,7 +3,7 @@ package kleicreator.editor.listeners;
 import kleicreator.modloader.Mod;
 import kleicreator.savesystem.SaveObject;
 import kleicreator.savesystem.SaveSystem;
-import kleicreator.sdk.config.Config;
+import kleicreator.config.Config;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;

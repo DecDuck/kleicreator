@@ -1,7 +1,7 @@
 package kleicreator.items.components;
 
-import kleicreator.sdk.item.FieldData;
-import kleicreator.sdk.item.ItemComponent;
+import kleicreator.items.FieldData;
+import kleicreator.items.ItemComponent;
 
 import java.util.ArrayList;
 import java.util.List;

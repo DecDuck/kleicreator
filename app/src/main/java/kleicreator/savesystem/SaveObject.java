@@ -1,7 +1,7 @@
 package kleicreator.savesystem;
 
 
-import kleicreator.sdk.item.Item;
+import kleicreator.items.Item;
 import kleicreator.modloader.Mod;
 import kleicreator.modloader.resources.Resource;
 import kleicreator.modloader.resources.ResourceManager;

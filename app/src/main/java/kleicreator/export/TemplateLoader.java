@@ -1,10 +1,8 @@
 package kleicreator.export;
 
-import kleicreator.export.templates.Template;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.logging.Logger;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Scanner;
 
 public class TemplateLoader {

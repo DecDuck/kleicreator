@@ -2,18 +2,16 @@ package kleicreator.export;
 
 
 import kleicreator.frames.LoadingStartup;
-import kleicreator.master.Master;
 import kleicreator.plugin.PluginHandler;
-import kleicreator.sdk.constants.Constants;
+import kleicreator.constants.Constants;
 import kleicreator.export.templates.Template;
-import kleicreator.frames.ExportDialog;
 import kleicreator.modloader.Mod;
 import kleicreator.modloader.ModLoader;
 import kleicreator.modloader.classes.ResourceAnimation;
 import kleicreator.modloader.classes.ResourceTexture;
 import kleicreator.modloader.resources.Resource;
 import kleicreator.modloader.resources.ResourceManager;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.logging.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,8 +88,8 @@ public class Exporter {
             if (r.Is(ResourceTexture.class)) {
                 try {
                     ResourceTexture m = r.Get();
-                    Files.copy(Paths.get(m.texPath), Paths.get(outputLocation + m.filePath + ModLoader.GetFileName(m.texPath)), StandardCopyOption.REPLACE_EXISTING);
-                    Files.copy(Paths.get(m.xmlPath), Paths.get(outputLocation + m.filePath + ModLoader.GetFileName(m.xmlPath)), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(Paths.get(m.texPath), Paths.get(outputLocation + m.filePath + GetFileName(m.texPath)), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(Paths.get(m.xmlPath), Paths.get(outputLocation + m.filePath + GetFileName(m.xmlPath)), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
                     Logger.Error(e);
                 }
@@ -99,7 +97,7 @@ public class Exporter {
             if (r.Is(ResourceAnimation.class)) {
                 try {
                     ResourceAnimation m = r.Get();
-                    Files.copy(Paths.get(m.animFilePath), Paths.get(outputLocation + "/anim/" + ModLoader.GetFileName(m.animFilePath)), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(Paths.get(m.animFilePath), Paths.get(outputLocation + "/anim/" + GetFileName(m.animFilePath)), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
                     Logger.Error(e);
                 }
@@ -145,5 +143,13 @@ public class Exporter {
         } catch (IOException e) {
             Logger.Error(e);
         }
+    }
+
+    public static String GetFileName(String fname) {
+        int pos = fname.lastIndexOf(File.separator);
+        if (pos > -1)
+            return fname.substring(pos + 1);
+        else
+            return fname;
     }
 }

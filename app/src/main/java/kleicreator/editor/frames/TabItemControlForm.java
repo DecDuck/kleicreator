@@ -6,7 +6,7 @@ import com.intellij.uiDesigner.core.Spacer;
 import kleicreator.editor.tabs.Tab;
 import kleicreator.editor.tabs.TabItem;
 import kleicreator.modloader.Mod;
-import kleicreator.sdk.item.Item;
+import kleicreator.items.Item;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

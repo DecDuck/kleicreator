@@ -2,12 +2,11 @@ package kleicreator.master;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import kleicreator.frames.*;
-import kleicreator.sdk.ArgumentParser;
-import kleicreator.sdk.config.Config;
-import kleicreator.sdk.constants.Constants;
+import kleicreator.config.Config;
+import kleicreator.constants.Constants;
 import kleicreator.export.Exporter;
 import kleicreator.plugin.PluginHandler;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.logging.Logger;
 import kleicreator.updater.Updater;
 import kleicreator.modloader.Mod;
 import kleicreator.modloader.ModLoader;

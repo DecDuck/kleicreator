@@ -1,4 +1,4 @@
-![logo](app/src/main/resources/kleicreator_wide.png)
+![logo](app/src/main/resources/kleicreator/kleicreator_wide.png)
 # KleiCreator
 [![Java CI with Gradle](https://github.com/DecDuck/kleicreator/actions/workflows/gradle.yml/badge.svg)](https://github.com/DecDuck/kleicreator/actions/workflows/gradle.yml)
 

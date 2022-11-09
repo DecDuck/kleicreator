@@ -69,6 +69,8 @@ public class TabRecipeControlForm {
         tabRecipeControlPanel = new JPanel();
         tabRecipeControlPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         recipeTable = new JTable();
+        recipeTable.setAutoCreateRowSorter(false);
+        recipeTable.setFillsViewportHeight(false);
         tabRecipeControlPanel.add(recipeTable, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));

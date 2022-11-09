@@ -42,7 +42,7 @@ public class ProjectExplorerMouseListener extends MouseAdapter {
             toFocus = UniqueAddTab(new TabItemControl(editorMain));
         }
         if(node instanceof NodeRecipeControl){
-            toFocus = UniqueAddTab(new TabRecipeControl());
+            toFocus = UniqueAddTab(new TabRecipeControl(editorMain));
         }
         if(node instanceof NodeResourceControl){
             toFocus = UniqueAddTab(new TabResourceControl());

@@ -140,7 +140,8 @@ public class EditorMain {
             projectExplorerState.resources.add(new NodeResource(resource, resource));
         }
 
-        frame.revalidate();
+        projectExplorer.invalidate();
+        frame.pack();
     }
 
     public void SetupTabs() {

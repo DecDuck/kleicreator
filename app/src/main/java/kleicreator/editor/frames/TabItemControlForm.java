@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class TabItemControlForm {
@@ -49,8 +50,8 @@ public class TabItemControlForm {
                 Item item = new Item();
                 Mod.items.add(item);
                 UpdateTable();
-                editorMain.UpdateProjectExplorer();
                 editorMain.UpdateTabs();
+                editorMain.UpdateProjectExplorer();
             }
         });
 
@@ -62,17 +63,18 @@ public class TabItemControlForm {
                     Item item = Mod.items.get(selectedIndex);
                     int option = JOptionPane.showConfirmDialog(tab, String.format("Delete '%s'?", item.itemName), "Delete item?", JOptionPane.OK_CANCEL_OPTION);
                     if (option == 0) {
-                        for (Tab tab : Tab.tabs) {
+                        for (Iterator<Tab> iterator = Tab.tabs.iterator(); iterator.hasNext(); ) {
+                            Tab tab = iterator.next();
                             if (tab instanceof TabItem) {
                                 if (((TabItem) tab).item == item) {
-                                    Tab.tabs.remove(tab);
+                                    iterator.remove();
                                 }
                             }
                         }
                         Mod.items.remove(selectedIndex);
                         UpdateTable();
-                        editorMain.UpdateProjectExplorer();
                         editorMain.UpdateTabs();
+                        editorMain.UpdateProjectExplorer();
                     }
                 } else {
                     JOptionPane.showMessageDialog(tab, "No item selected", "No item select", JOptionPane.WARNING_MESSAGE);

@@ -3,14 +3,21 @@ package kleicreator.editor.frames;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import kleicreator.editor.tabs.Tab;
+import kleicreator.editor.tabs.TabItem;
+import kleicreator.editor.tabs.TabRecipe;
 import kleicreator.modloader.Mod;
 import kleicreator.recipes.Recipe;
+import kleicreator.sdk.item.Item;
+import kleicreator.sdk.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TabRecipeControlForm {
     private JPanel tabRecipeControlPanel;
@@ -19,9 +26,12 @@ public class TabRecipeControlForm {
     private JButton remove;
 
     private DefaultTableModel tableModel;
+    private EditorMain editorMain;
 
-    public TabRecipeControlForm(JPanel tab) {
+    public TabRecipeControlForm(JPanel tab, EditorMain editorMain) {
         tab.add(tabRecipeControlPanel);
+
+        this.editorMain = editorMain;
 
         tableModel = new DefaultTableModel();
         tableModel.addColumn("ID");
@@ -32,14 +42,42 @@ public class TabRecipeControlForm {
         add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                Recipe r = new Recipe();
+                r.result = "id";
+                r.ingredients = new ArrayList<String>();
+                r.tab = Recipe.RECIPETAB.TOOLS;
+                r.tech = Recipe.TECH.NONE;
+                Mod.recipes.add(r);
+                UpdateTable();
+                editorMain.UpdateTabs();
+                editorMain.UpdateProjectExplorer();
             }
         });
 
         remove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                int selectedIndex = recipeTable.getSelectedRow();
+                if (selectedIndex != -1) {
+                    Recipe recipe = Mod.recipes.get(selectedIndex);
+                    int option = JOptionPane.showConfirmDialog(tab, String.format("Delete '%s'?", recipe.id), "Delete recipe?", JOptionPane.OK_CANCEL_OPTION);
+                    if (option == 0) {
+                        for (Iterator<Tab> iterator = Tab.tabs.iterator(); iterator.hasNext(); ) {
+                            Tab tab = iterator.next();
+                            if (tab instanceof TabItem) {
+                                if (((TabRecipe) tab).recipe == recipe) {
+                                    iterator.remove();
+                                }
+                            }
+                        }
+                        Mod.recipes.remove(selectedIndex);
+                        UpdateTable();
+                        editorMain.UpdateTabs();
+                        editorMain.UpdateProjectExplorer();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(tab, "No recipe selected", "No recipe select", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
     }

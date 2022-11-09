@@ -69,7 +69,7 @@ public class LoadingStartup {
         loadingBar = new JPanel();
         loadingBar.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
-        label1.setIcon(new ImageIcon(getClass().getResource("/kleicreator_startup_splash.png")));
+        label1.setIcon(new ImageIcon(getClass().getResource("/kleicreator/kleicreator_startup_splash.png")));
         label1.setText("");
         loadingBar.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         progressBar = new JProgressBar();

@@ -7,10 +7,12 @@ import org.reflections.Reflections;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class Item {
 
     public List<Entry<Boolean, ItemComponent>> itemComponents = new ArrayList<>();
+    public String id;
     public String itemName = "New Item";
     public String itemId = "new_item";
     public int itemTexture = -1;
@@ -28,6 +30,7 @@ public class Item {
         Logger.Debug("Number of registered components: " + registeredComponents.size());
     }
     public Item() {
+        this.id = UUID.randomUUID().toString().substring(0, 5);
         for(Class<? extends ItemComponent> component : registeredComponents){
             try {
                 AddComponent(component.getConstructor().newInstance());
@@ -60,5 +63,37 @@ public class Item {
             this.a = a;
             this.b = b;
         }
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public int getItemTexture() {
+        return itemTexture;
+    }
+
+    public void setItemTexture(int itemTexture) {
+        this.itemTexture = itemTexture;
+    }
+
+    public int getStackSize() {
+        return stackSize;
+    }
+
+    public void setStackSize(int stackSize) {
+        this.stackSize = stackSize;
     }
 }

@@ -68,7 +68,7 @@ public class ProjectSelectDialog {
         titleLabel = new JLabel();
         Font titleLabelFont = this.$$$getFont$$$("Arial", -1, 22, titleLabel.getFont());
         if (titleLabelFont != null) titleLabel.setFont(titleLabelFont);
-        titleLabel.setIcon(new ImageIcon(getClass().getResource("/kleicreator_wide_small.png")));
+        titleLabel.setIcon(new ImageIcon(getClass().getResource("/kleicreator/kleicreator_wide_small.png")));
         titleLabel.setText("");
         ProjectSelectPanel.add(titleLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tableScrollPlane = new JScrollPane();
@@ -88,7 +88,7 @@ public class ProjectSelectDialog {
         if (configButtonFont != null) configButton.setFont(configButtonFont);
         configButton.setForeground(new Color(-1025));
         configButton.setHorizontalAlignment(0);
-        configButton.setIcon(new ImageIcon(getClass().getResource("/config.png")));
+        configButton.setIcon(new ImageIcon(getClass().getResource("/icons/config.png")));
         configButton.setText("");
         configButton.setVerticalAlignment(0);
         configButton.setVerticalTextPosition(1);

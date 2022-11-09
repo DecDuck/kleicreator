@@ -75,7 +75,7 @@ public class Template {
         ReplaceAll("$MODNAME$", Mod.modName);
         ReplaceAll("$MODDESCRIPTION$", Mod.modDescription);
         ReplaceAll("$MODAUTHOR$", Mod.modAuthor);
-        ReplaceAll("$MODVERSION$", Mod.modVersion);
+        ReplaceAll("$MODVERSION$", Mod.modVersion.toString());
         if (Mod.modIcon != -1) {
             // Resource modIcon = ResourceManager.resources.get(Mod.modIcon);
             ReplaceAll("$MODICON$", ""); // To-do

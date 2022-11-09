@@ -16,8 +16,53 @@ public class Mod {
     public static String modName;
     public static String modAuthor;
     public static String modDescription;
-    public static String modVersion;
+    public static Version modVersion;
+    public static class Version {
+        public int major;
+        public int minor;
+        public int patch;
+
+        @Override
+        public String toString() {
+            return String.format("%s.%s.%s", major, minor, patch);
+        }
+
+        public Version(){
+
+        }
+
+        public Version(int major, int minor, int patch) {
+            this.major = major;
+            this.minor = minor;
+            this.patch = patch;
+        }
+    }
     public static int modIcon;
+
+    public static String getModName() {
+        return modName;
+    }
+
+    public static String getModAuthor() {
+        return modAuthor;
+    }
+
+    public static String getModDescription() {
+        return modDescription;
+    }
+
+    public static void setModName(String modName) {
+        Mod.modName = modName;
+    }
+
+    public static void setModAuthor(String modAuthor) {
+        Mod.modAuthor = modAuthor;
+    }
+
+    public static void setModDescription(String modDescription) {
+        Mod.modDescription = modDescription;
+    }
+
     public static Game game;
     public static String path;
     public static List<Item> items = new ArrayList<Item>();

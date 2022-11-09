@@ -14,6 +14,7 @@ public class SaveObject implements java.io.Serializable {
     public String modAuthor;
     public String modDescription;
     public String modVersion;
+    public Mod.Version version;
     public int modIcon;
     public Mod.Game game;
 
@@ -25,7 +26,7 @@ public class SaveObject implements java.io.Serializable {
         modName = Mod.modName;
         modAuthor = Mod.modAuthor;
         modDescription = Mod.modDescription;
-        modVersion = Mod.modVersion;
+        version = Mod.modVersion;
         modIcon = Mod.modIcon;
 
         items = Mod.items;
@@ -39,7 +40,7 @@ public class SaveObject implements java.io.Serializable {
         Mod.modName = modName;
         Mod.modAuthor = modAuthor;
         Mod.modDescription = modDescription;
-        Mod.modVersion = modVersion;
+        Mod.modVersion = version;
         Mod.modIcon = modIcon;
         Mod.game = game;
 

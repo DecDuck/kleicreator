@@ -14,7 +14,7 @@
         </constraints>
         <properties>
           <font name="Arial" size="22"/>
-          <icon value="kleicreator_wide_small.png"/>
+          <icon value="kleicreator/kleicreator_wide_small.png"/>
           <text value=""/>
         </properties>
       </component>
@@ -58,7 +58,7 @@
           <font size="24"/>
           <foreground color="-1025"/>
           <horizontalAlignment value="0"/>
-          <icon value="config.png"/>
+          <icon value="icons/config.png"/>
           <text value=""/>
           <verticalAlignment value="0"/>
           <verticalTextPosition value="1"/>

@@ -1,7 +1,6 @@
 package kleicreator.master;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import kleicreator.frames.*;
 import kleicreator.sdk.ArgumentParser;
 import kleicreator.sdk.config.Config;
@@ -14,21 +13,17 @@ import kleicreator.modloader.Mod;
 import kleicreator.modloader.ModLoader;
 import kleicreator.savesystem.SaveObject;
 import kleicreator.savesystem.SaveSystem;
-import scala.collection.immutable.Stream;
 
 import javax.swing.*;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 import java.util.List;
-import java.util.Scanner;
 
 import static kleicreator.master.Master.GlobalTheme.*;
 
@@ -39,7 +34,7 @@ public class Master {
     public static String version;
     public static int currentlySelectedRow = -1;
     public static boolean exit = false;
-    public static ImageIcon icon = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator_square.png"));
+    public static ImageIcon icon = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator/kleicreator_square.png"));
     public static boolean darkMode = true;
 
     public enum GlobalTheme {
@@ -83,35 +78,23 @@ public class Master {
         Config.SaveData("kleicreator.asksaveonleave", true, false);
         Config.SaveData("kleicreator.copyresources", false, false);
 
-        try {
-            Object o = Dark; //Config.GetData("kleicreator.theme");
-            if (Light.equals(o)) {
-                UIManager.setLookAndFeel(new FlatLightLaf());
-                darkMode = false;
-            } else if (Dark.equals(o)) {
-                UIManager.setLookAndFeel(new FlatDarkLaf());
-            } else if (Default.equals(o)) {
-                UIManager.setLookAndFeel(new NimbusLookAndFeel());
-                darkMode = false;
-            }
+        FlatDarkLaf.setGlobalExtraDefaults( Collections.singletonMap( "@accentColor", "#ffb400" ) );
+        FlatDarkLaf.setup();
 
-            // Custom theming
-            UIManager.put("Button.arc", 0);
-            UIManager.put("Component.arc", 0);
-            UIManager.put("CheckBox.arc", 0);
-            UIManager.put("ProgressBar.arc", 0);
+        // Custom theming
+        UIManager.put("Button.arc", 0);
+        UIManager.put("Component.arc", 0);
+        UIManager.put("CheckBox.arc", 0);
+        UIManager.put("ProgressBar.arc", 0);
 
-            UIManager.put("Component.arrowType", "triangle");
-            //UIManager.put( "TabbedPane.showTabSeparators", true );
+        UIManager.put("Component.arrowType", "triangle");
+        //UIManager.put( "TabbedPane.showTabSeparators", true );
 
-            UIManager.put("ScrollBar.showButtons", false);
-            UIManager.put("ScrollBar.thumbArc", 999);
-            UIManager.put("ScrollBar.thumbInsets", new Insets(2, 2, 2, 2));
+        UIManager.put("ScrollBar.showButtons", false);
+        UIManager.put("ScrollBar.thumbArc", 999);
+        UIManager.put("ScrollBar.thumbInsets", new Insets(2, 2, 2, 2));
 
-            Logger.Debug("Successfully changed look and feel.");
-        } catch (UnsupportedLookAndFeelException e) {
-            Logger.Error(e);
-        }
+        Logger.Debug("Successfully changed look and feel.");
 
         PluginHandler.LoadPlugins();
         Logger.Debug("Loaded plugins");
@@ -270,6 +253,18 @@ public class Master {
         projectSelectFrame.dispose();
         Logger.Debug("Stopping...");
         return;
+    }
+
+    public static void OpenProjectFromFiles(JFrame frame){
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "KleiCreator project files", "proj");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(frame);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            frame.dispose();
+            ModLoader.LoadMod(chooser.getSelectedFile().getAbsolutePath());
+        }
     }
 
     public static void CreateNewMod() {

@@ -1,35 +1,23 @@
 package kleicreator.modloader;
 
 import com.google.gson.Gson;
+import kleicreator.editor.frames.EditorMain;
 import kleicreator.frames.ListEditor;
 import kleicreator.frames.ModEditor;
-import kleicreator.savesystem.SaveObject;
 import kleicreator.sdk.item.Item;
-import kleicreator.items.ItemLoader;
-import kleicreator.master.Master;
-import kleicreator.modloader.classes.ResourceAnimation;
 import kleicreator.modloader.classes.ResourceSpeech;
-import kleicreator.modloader.classes.ResourceTexture;
 import kleicreator.modloader.resources.Resource;
 import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.plugin.PluginHandler;
-import kleicreator.recipes.RecipeLoader;
 import kleicreator.savesystem.SaveSystem;
-import kleicreator.sdk.config.Config;
 import kleicreator.sdk.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class ModLoader {
     public static JFrame modEditorFrame;
@@ -61,7 +49,7 @@ public class ModLoader {
         Mod.modName = name;
         Mod.modAuthor = author;
         Mod.modDescription = "Example Description";
-        Mod.modVersion = "1.0";
+        Mod.modVersion = new Mod.Version(1, 0, 0);
 
         SaveSystem.Save(path);
         Update();
@@ -69,6 +57,7 @@ public class ModLoader {
     }
 
     public static void Update() {
+        /*
         ResourceManager.GenerateResourceLists();
         int selectedModItem = modEditor.getModItemSelect().getSelectedIndex();
         int selectedModIcon = Mod.modIcon;
@@ -155,6 +144,7 @@ public class ModLoader {
 
         modEditorFrame.validate();
         modEditorFrame.setVisible(true);
+         */
     }
 
     public static Item SelectFromAllItems() {
@@ -188,32 +178,12 @@ public class ModLoader {
         }
     }
 
-    public static void SaveItem() {
-        try {
-            Item item = null;
-            try {
-                item = Mod.items.get(modEditor.getModItemSelect().getSelectedIndex());
-            } catch (IndexOutOfBoundsException e) {
-                // Item was deleted
-                return;
-            }
-
-            item.itemName = modEditor.getModItemNameTextField().getText();
-            item.itemId = modEditor.getModItemIdTextField().getText();
-            item.itemTexture = modEditor.getModItemTextureSelect().getSelectedIndex();
-            item.stackSize = (int) modEditor.getModItemStackSize().getValue();
-        } catch (IndexOutOfBoundsException e) {
-            Logger.Error(e);
-            ShowWarning("There was a problem with saving the item. Please fix any errors and try again.");
-        }
-    }
-
     public static void SaveModConfig() {
         try {
             Mod.modName = modEditor.getModNameTextField().getText();
             Mod.modAuthor = modEditor.getModAuthorTextField().getText();
             Mod.modDescription = modEditor.getModDescriptTextArea().getText();
-            Mod.modVersion = modEditor.getModVersionTextField().getText();
+            Mod.modVersion = new Mod.Version(0, 0, 0);
             Mod.modIcon = modEditor.getModIconTextureSelect().getSelectedIndex();
         } catch (IndexOutOfBoundsException e) {
             Logger.Error(e);
@@ -224,7 +194,6 @@ public class ModLoader {
 
     public static void SaveAll() {
         try {
-            SaveItem();
             SaveModConfig();
             SaveSystem.Save(Mod.path);
         } catch (Exception e) {
@@ -234,69 +203,7 @@ public class ModLoader {
     }
 
     public static void CreateModEditorFrame() {
-        String truncatedModName = Mod.modName;
-        if (truncatedModName.length() > 20) {
-            truncatedModName = truncatedModName.substring(0, 20);
-            truncatedModName += "...";
-        }
-        modEditorFrame = new JFrame(String.format("KleiCreator %s | %s", Master.version, truncatedModName));
-        modEditorFrame.setIconImage(Master.icon.getImage());
-        modEditor = new ModEditor();
-
-        modEditorFrame.setContentPane(modEditor.getModEditorPanel());
-        modEditorFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        modEditorFrame.addWindowListener(new WindowListener() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                // Logger.Log(SaveSystem.TempLoad(Mod.path).toString());
-                // Logger.Log(new SaveObject().toString());
-                if(!new SaveObject().toString().equals(SaveSystem.TempLoad(Mod.path).toString())){
-                    if ((Boolean) Config.GetData("kleicreator.asksaveonleave")) {
-                        int option = JOptionPane.showConfirmDialog(modEditorFrame, "Save project?", "Save?", JOptionPane.YES_NO_CANCEL_OPTION);
-                        if(option == 0){
-                            SaveAll();
-                        }
-                        if(option == 2){
-                            return;
-                        }
-                    }
-                }
-
-                modEditorFrame.dispose();
-                System.exit(0);
-            }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-
-            }
-        });
-
+        /*
         speechModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -325,9 +232,6 @@ public class ModLoader {
 
         JTree recipeTree = modEditor.getModRecipesEditor();
 
-        ItemLoader.SetupAddedTree(addedTree);
-        ItemLoader.SetupNotAddedTree(notAddedTree);
-
         RecipeLoader.SetupRecipeEditor(recipeTree);
 
         resourceModel.addColumn("Name");
@@ -351,6 +255,9 @@ public class ModLoader {
         modEditorFrame.pack();
         modEditorFrame.setLocationRelativeTo(null);
         Logger.Log("Successfully completed ModEditor setup.");
+         */
+        modEditorFrame = new JFrame();
+        EditorMain editorMain = new EditorMain(modEditorFrame);
     }
 
     public static Integer getInt(String message, Integer defaultValue) {

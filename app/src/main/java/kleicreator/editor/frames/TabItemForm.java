@@ -1,9 +1,11 @@
 package kleicreator.editor.frames;
 
+import com.google.gson.Gson;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import kleicreator.editor.listeners.TextFieldBinding;
+import kleicreator.frames.ListEditor;
 import kleicreator.sdk.item.FieldData;
 import kleicreator.sdk.item.Item;
 import kleicreator.sdk.item.ItemComponent;
@@ -24,6 +26,8 @@ import java.awt.event.MouseListener;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import static kleicreator.util.TreeHelper.*;
@@ -141,7 +145,7 @@ public class TabItemForm {
                                 }
 
                                 try {
-                                    Object toSetValue = getValueFromUser(field.getType(), "New value for \"" + valueName + "\"", field.get(c.b));
+                                    Object toSetValue = ValueSelector(field.getType(), "New value for \"" + valueName + "\"", field.get(c.b));
 
                                     if (toSetValue != null) {
                                         field.set(c.b, toSetValue);
@@ -217,6 +221,86 @@ public class TabItemForm {
         }
 
         root.add(node);
+    }
+
+    private Integer getInt(String message, Integer defaultValue) {
+        SpinnerNumberModel model = new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+        JSpinner spinner = new JSpinner(model);
+        spinner.setValue(defaultValue);
+        JOptionPane.showMessageDialog(tabItemPanel, spinner, message, JOptionPane.QUESTION_MESSAGE);
+        return (int) spinner.getValue();
+    }
+
+    private Double getDouble(String message, double defaultValue) {
+        SpinnerNumberModel model = new SpinnerNumberModel(defaultValue, null, null, 0.1);
+        JSpinner spinner = new JSpinner(model);
+        JOptionPane.showMessageDialog(tabItemPanel, spinner, message, JOptionPane.QUESTION_MESSAGE);
+        int roundFactor = 1000; // Have to have this because floating
+        return (double) Math.round(((Double) spinner.getValue()) * roundFactor) / roundFactor;
+    }
+
+    private Integer getOption(String message, Object[] options) {
+        JComboBox<? extends Object> comboBox = new JComboBox<>(options);
+        JOptionPane.showMessageDialog(tabItemPanel, comboBox, message, JOptionPane.QUESTION_MESSAGE);
+        return comboBox.getSelectedIndex();
+    }
+
+    private Boolean getBool(String message) {
+        Object[] options = {
+                "True",
+                "False"
+        };
+        int n = JOptionPane.showOptionDialog(tabItemPanel, message, message, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        return n == 0;
+    }
+
+    private String getString(String message) {
+        JTextField field = new JTextField();
+        JOptionPane.showMessageDialog(tabItemPanel, field, message, JOptionPane.QUESTION_MESSAGE);
+        return field.getText();
+    }
+
+    private <T, X> Map<T, X> getMap(Map<T, X> starting) {
+        return new HashMap<>();
+    }
+
+    private <T> List<T> getList(List<String> starting) {
+        ListEditor<String> listEditor = new ListEditor<>(String.class, this::ValueSelector);
+        JOptionPane.showConfirmDialog(tabItemPanel, listEditor.getMapEditorPanel(), "List", JOptionPane.OK_OPTION);
+        return (List<T>) listEditor.getItems();
+    }
+
+    private Object getObject(Object o) {
+        Gson g = new Gson();
+        String data = g.toJson(o);
+        JTextArea field = new JTextArea();
+        field.setRows(10);
+        field.setText(data);
+        JOptionPane.showMessageDialog(tabItemPanel, field, "Editing JSON for object", JOptionPane.QUESTION_MESSAGE);
+        return g.fromJson(field.getText(), o.getClass());
+    }
+
+    private <T> T ValueSelector(Class<T> clazz, String message, Object starting) {
+        if (clazz == double.class) {
+            return (T) getDouble(message, (double) starting);
+        } else if (clazz == boolean.class) {
+            return (T) getBool(message);
+        } else if (clazz.isEnum()) {
+            return (T) Enum.valueOf((Class<Enum>) clazz, clazz.getEnumConstants()[getOption(message, clazz.getEnumConstants())].toString());
+        } else if (clazz == int.class) {
+            return (T) getInt(message, (Integer) starting);
+        } else if (clazz == String.class) {
+            return (T) getString(message);
+        } else if (clazz.isAssignableFrom(List.class)) {
+            return (T) getList((List<String>) starting);
+        }
+        //else if (clazz.isAssignableFrom(Map.class)){
+        //    return (T) getMap((Map) starting);
+        //}
+        else {
+            Logger.Log("Cannot find setter for value, so defaulting to JSON editing");
+            return (T) getObject(starting);
+        }
     }
 
     {

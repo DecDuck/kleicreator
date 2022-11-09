@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
-public class TreeHelper extends ModLoader {
+public class TreeHelper {
 
     public static DefaultMutableTreeNode CreateNode(String name) {
         return new DefaultMutableTreeNode(name);

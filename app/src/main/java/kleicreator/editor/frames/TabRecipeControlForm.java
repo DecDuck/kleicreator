@@ -62,7 +62,7 @@ public class TabRecipeControlForm {
                     Recipe recipe = Mod.recipes.get(selectedIndex);
                     int option = JOptionPane.showConfirmDialog(tab, String.format("Delete '%s'?", recipe.id), "Delete recipe?", JOptionPane.OK_CANCEL_OPTION);
                     if (option == 0) {
-                        for (Iterator<Tab> iterator = Tab.tabs.iterator(); iterator.hasNext(); ) {
+                        for (Iterator<Tab> iterator = editorMain.tabs.iterator(); iterator.hasNext(); ) {
                             Tab tab = iterator.next();
                             if (tab instanceof TabItem) {
                                 if (((TabRecipe) tab).recipe == recipe) {

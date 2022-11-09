@@ -29,14 +29,18 @@ public class ListEditor<T> {
         mapEditorPanel.validate();
     }
 
-    public ListEditor(Class<T> type) {
+    public interface Action {
+        public <T> T select(Class<T> clazz, String message, Object starting);
+    }
+
+    public ListEditor(Class<T> type, Action action) {
         this.type = type;
         list.setModel(listModel);
 
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                T item = ModLoader.getValueFromUser(type, "Add value", null);
+                T item = action.select(type, "Add value", null);
                 items.add(item);
                 Update();
             }
@@ -97,4 +101,5 @@ public class ListEditor<T> {
     public JComponent $$$getRootComponent$$$() {
         return mapEditorPanel;
     }
+
 }

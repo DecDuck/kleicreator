@@ -63,22 +63,22 @@ public class ProjectExplorerMouseListener extends MouseAdapter {
     }
 
     private Tab UniqueAddTab(Tab tab){
-        for(Tab t : Tab.tabs){
+        for(Tab t : editorMain.tabs){
             if(t.getClass().equals(tab.getClass())){
                 return t;
             }
         }
-        Tab.tabs.add(tab);
+        editorMain.tabs.add(tab);
         return tab;
     }
 
     private Tab UniqueContentAddTab(Tab tab){
-        for(Tab t : Tab.tabs){
+        for(Tab t : editorMain.tabs){
             if(t.equals(tab)){
                 return t;
             }
         }
-        Tab.tabs.add(tab);
+        editorMain.tabs.add(tab);
         return tab;
     }
 }

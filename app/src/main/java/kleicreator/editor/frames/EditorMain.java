@@ -32,9 +32,11 @@ public class EditorMain {
     private JPanel editorPane;
     private JScrollPane projectExplorerScrollPane;
     private ProjectExplorerState projectExplorerState;
+    public List<Tab> tabs;
 
     public EditorMain(JFrame frame) {
         this.frame = frame;
+        tabs = new ArrayList<>();
 
         // Title
         final int MAX_LENGTH = 20;
@@ -162,7 +164,7 @@ public class EditorMain {
 
             if (component instanceof Tab) {
                 Tab tab = (Tab) component;
-                if (!Tab.tabs.contains(tab)) {
+                if (!tabs.contains(tab)) {
                     projectTabs.remove(i);
                     i--;
                     continue;
@@ -175,7 +177,7 @@ public class EditorMain {
             }
         }
 
-        for (Tab tab : Tab.tabs) {
+        for (Tab tab : tabs) {
             if (!tabList.contains(tab)) {
                 projectTabs.addTab(tab.title, tab);
                 projectTabs.setTabComponentAt(projectTabs.getTabCount() - 1, tab.BuildTabComponent(this));

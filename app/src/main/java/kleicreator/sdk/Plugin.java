@@ -10,8 +10,4 @@ public interface Plugin {
     default String Author(){
         return "";
     }
-
-    default void OnLoad(){
-
-    }
 }

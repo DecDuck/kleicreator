@@ -139,6 +139,6 @@ public class Template {
         Modmain,
         Modinfo,
         Item,
-        Custom // Potenial SDK
+        Custom // Potential SDK
     }
 }

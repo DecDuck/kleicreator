@@ -16,8 +16,6 @@ dependencies {
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
-    dependsOn ":sdk:jar"
-
     manifest {
         attributes "Main-Class": "kleicreator.master.Starter"
         attributes 'Implementation-Version': version

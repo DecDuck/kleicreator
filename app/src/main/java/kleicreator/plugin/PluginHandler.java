@@ -97,7 +97,6 @@ public class PluginHandler {
                             if (Plugin.class.isAssignableFrom(myLoadedClass)) {
                                 Plugin p = (Plugin) myLoadedClass.getConstructor().newInstance();
                                 blob.core = p;
-                                p.OnLoad();
                                 Logger.Debug("Loaded %s (%s)", p.Name(), p.Id());
                             }
                             if (EventTrigger.class.isAssignableFrom(myLoadedClass)) {

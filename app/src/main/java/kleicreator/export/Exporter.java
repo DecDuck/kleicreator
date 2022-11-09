@@ -72,13 +72,10 @@ public class Exporter {
     }
 
     private static void CreateFolders(String outputLocation) {
-        new File(Constants.constants.KLEICREATOR_LOCATION + "/exported/").mkdir();
-        new File(outputLocation).mkdir();
-        new File(outputLocation + "images").mkdir();
-        new File(outputLocation + "images/inventoryimages").mkdir();
+        new File(outputLocation).mkdirs();
+        new File(outputLocation + "images/inventoryimages").mkdirs();
         new File(outputLocation + "images/bigportraits").mkdir();
-        new File(outputLocation + "scripts").mkdir();
-        new File(outputLocation + "scripts/prefabs").mkdir();
+        new File(outputLocation + "scripts/prefabs").mkdirs();
         new File(outputLocation + "anim").mkdir();
     }
 

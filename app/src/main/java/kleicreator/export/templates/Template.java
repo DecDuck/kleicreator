@@ -7,14 +7,12 @@ import kleicreator.export.RecipeExporter;
 import kleicreator.export.SpeechExporter;
 import kleicreator.plugin.PluginBlob;
 import kleicreator.plugin.PluginHandler;
-import kleicreator.plugin.PluginMetadata;
 import kleicreator.sdk.EventTrigger;
-import kleicreator.sdk.item.Item;
+import kleicreator.items.Item;
 import kleicreator.modloader.Mod;
-import kleicreator.modloader.resources.Resource;
 import kleicreator.modloader.resources.ResourceManager;
-import kleicreator.sdk.item.ItemComponent;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.items.ItemComponent;
+import kleicreator.logging.Logger;
 
 import java.util.List;
 

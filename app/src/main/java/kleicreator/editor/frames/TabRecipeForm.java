@@ -2,10 +2,10 @@ package kleicreator.editor.frames;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import kleicreator.items.AllItems;
 import kleicreator.modloader.Mod;
-import kleicreator.modloader.ModLoader;
 import kleicreator.recipes.Recipe;
-import kleicreator.sdk.item.Item;
+import kleicreator.items.Item;
 import kleicreator.util.TreeHelper;
 
 import javax.swing.*;
@@ -43,7 +43,7 @@ public class TabRecipeForm {
                         String recipeId = selPath.getPathComponent(0).toString();
                         if (selected == recipeId) {
                             //We're changing this recipe
-                            Item newResult = ModLoader.SelectFromAllItems();
+                            Item newResult = AllItems.SelectFromAllItems(tab);
                             recipe.result = newResult.itemId;
                         } else if (selected.startsWith("Tech: ")) {
                             //We're changing the tech
@@ -59,7 +59,7 @@ public class TabRecipeForm {
                             recipe.tab = Recipe.RECIPETAB.valueOf(selectionString);
                         } else if (selected.startsWith("Add")) {
                             //We're adding an ingredient
-                            Item newIngredient = ModLoader.SelectFromAllItems();
+                            Item newIngredient = AllItems.SelectFromAllItems(tab);
                             recipe.ingredients.add(newIngredient.itemId);
                         } else if (selPath.getPathComponent(1).toString() == "Ingredients" && selected != "Add") {
                             //We're deleting an ingredient

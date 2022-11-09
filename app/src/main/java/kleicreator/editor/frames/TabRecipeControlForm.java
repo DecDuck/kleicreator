@@ -8,8 +8,6 @@ import kleicreator.editor.tabs.TabItem;
 import kleicreator.editor.tabs.TabRecipe;
 import kleicreator.modloader.Mod;
 import kleicreator.recipes.Recipe;
-import kleicreator.sdk.item.Item;
-import kleicreator.sdk.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

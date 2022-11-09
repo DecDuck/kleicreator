@@ -1,8 +1,8 @@
 package kleicreator.modloader.resources;
 
-import kleicreator.sdk.config.Config;
-import kleicreator.sdk.constants.Constants;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.config.Config;
+import kleicreator.constants.Constants;
+import kleicreator.logging.Logger;
 import kleicreator.speech.SpeechFile;
 import kleicreator.modloader.ModLoader;
 import kleicreator.modloader.classes.ResourceAnimation;

@@ -15,8 +15,8 @@ import kleicreator.modloader.resources.Resource;
 import kleicreator.modloader.resources.ResourceManager;
 import kleicreator.recipes.Recipe;
 import kleicreator.savesystem.SaveSystem;
-import kleicreator.sdk.item.Item;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.items.Item;
+import kleicreator.logging.Logger;
 
 import javax.swing.*;
 import java.awt.*;

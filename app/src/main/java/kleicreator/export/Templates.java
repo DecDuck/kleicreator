@@ -3,7 +3,7 @@ package kleicreator.export;
 
 import kleicreator.export.templates.Template;
 import kleicreator.modloader.Mod;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,8 +2,8 @@ package kleicreator.master;
 
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.io.StreamException;
-import kleicreator.sdk.constants.Constants;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.constants.Constants;
+import kleicreator.logging.Logger;
 
 import javax.swing.*;
 import java.io.File;

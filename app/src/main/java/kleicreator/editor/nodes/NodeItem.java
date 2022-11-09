@@ -1,6 +1,6 @@
 package kleicreator.editor.nodes;
 
-import kleicreator.sdk.item.Item;
+import kleicreator.items.Item;
 
 public class NodeItem extends Node {
     public Item item;

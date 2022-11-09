@@ -1,4 +1,4 @@
-package kleicreator.sdk.config;
+package kleicreator.config;
 
 import java.util.HashMap;
 import java.util.Map;

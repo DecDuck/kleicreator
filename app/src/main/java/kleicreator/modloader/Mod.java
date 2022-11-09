@@ -2,7 +2,7 @@ package kleicreator.modloader;
 
 
 import kleicreator.items.AllItems;
-import kleicreator.sdk.item.Item;
+import kleicreator.items.Item;
 import kleicreator.recipes.Recipe;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package kleicreator.sdk.constants;
+package kleicreator.constants;
 
-import kleicreator.sdk.ArgumentParser;
+import kleicreator.master.ArgumentParser;
 
 import java.io.File;
 

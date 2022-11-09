@@ -1,4 +1,4 @@
-package kleicreator.sdk.item;
+package kleicreator.items;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package kleicreator.sdk.item;
+package kleicreator.items;
 
 import java.util.List;
 

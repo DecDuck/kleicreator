@@ -1,7 +1,7 @@
 package kleicreator.editor.tabs;
 
 import kleicreator.editor.frames.TabItemForm;
-import kleicreator.sdk.item.Item;
+import kleicreator.items.Item;
 
 public class TabItem extends Tab {
     public Item item;

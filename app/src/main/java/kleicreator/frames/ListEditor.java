@@ -37,21 +37,15 @@ public class ListEditor<T> {
         this.type = type;
         list.setModel(listModel);
 
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                T item = action.select(type, "Add value", null);
-                items.add(item);
-                Update();
-            }
+        addButton.addActionListener(actionEvent -> {
+            T item = action.select(type, "Add value", null);
+            items.add(item);
+            Update();
         });
 
-        removeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                items.remove(list.getSelectedIndex());
-                Update();
-            }
+        removeButton.addActionListener(actionEvent -> {
+            items.remove(list.getSelectedIndex());
+            Update();
         });
 
         Update();

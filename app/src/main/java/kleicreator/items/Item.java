@@ -1,7 +1,6 @@
-package kleicreator.sdk.item;
+package kleicreator.items;
 
-import kleicreator.sdk.item.ItemComponent;
-import kleicreator.sdk.logging.Logger;
+import kleicreator.logging.Logger;
 import org.reflections.Reflections;
 
 import java.util.ArrayList;

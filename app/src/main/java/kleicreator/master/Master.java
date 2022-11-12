@@ -1,10 +1,10 @@
 package kleicreator.master;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import kleicreator.export.Exporter;
 import kleicreator.frames.*;
 import kleicreator.config.Config;
 import kleicreator.constants.Constants;
-import kleicreator.export.Exporter;
 import kleicreator.plugin.PluginHandler;
 import kleicreator.logging.Logger;
 import kleicreator.updater.Updater;
@@ -102,7 +102,7 @@ public class Master {
         if (ArgumentParser.doubleArguments.containsKey("--project")) {
             ModLoader.LoadMod(ArgumentParser.doubleArguments.get("--project"));
             if (ArgumentParser.singleArguments.contains("--export")) {
-                Exporter.Export();
+                new Exporter();
             }
         } else {
             LoadingStartup startup = new LoadingStartup();

@@ -1,5 +1,6 @@
 package kleicreator.sdk;
 
+import kleicreator.export.interfaces.Job;
 import kleicreator.items.Item;
 
 import javax.swing.*;
@@ -31,13 +32,5 @@ public interface EventTrigger {
 
     }
 
-    default List<String> InjectItemLines(Item item){
-        return new ArrayList<>();
-    }
-
-    default List<String> InjectModmainLines(){
-        return new ArrayList<>();
-    }
-
-    default void OnExport(String exportPath) {}
+    default List<Job> ExportJobs() {return new ArrayList<>();}
 }

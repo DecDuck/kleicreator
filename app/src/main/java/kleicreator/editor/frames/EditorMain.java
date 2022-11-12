@@ -9,6 +9,7 @@ import kleicreator.editor.nodes.NodeRecipe;
 import kleicreator.editor.nodes.NodeResource;
 import kleicreator.editor.state.ProjectExplorerState;
 import kleicreator.editor.tabs.Tab;
+import kleicreator.export.Exporter;
 import kleicreator.master.Master;
 import kleicreator.modloader.Mod;
 import kleicreator.modloader.resources.Resource;
@@ -99,6 +100,20 @@ public class EditorMain {
             }
         });
         project.add(projectSave);
+        JMenuItem projectExport = new JMenuItem("Export");
+        projectExport.setIcon(new ImageIcon(ClassLoader.getSystemResource("icons/export.png")));
+        projectExport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new Exporter();
+                    }
+                }).start();
+            }
+        });
+        project.add(projectExport);
 
         // ===== HELP =====
 

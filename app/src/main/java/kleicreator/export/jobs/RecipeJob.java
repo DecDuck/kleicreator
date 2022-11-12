@@ -1,22 +1,30 @@
-package kleicreator.export;
+package kleicreator.export.jobs;
 
+import kleicreator.export.Exporter;
+import kleicreator.export.interfaces.Job;
+import kleicreator.logging.Logger;
 import kleicreator.modloader.Mod;
 import kleicreator.recipes.Recipe;
-import kleicreator.logging.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class RecipeExporter {
-
-    public static String GenerateRecipeExport() {
-        String output = "";
+public class RecipeJob implements Job {
+    @Override
+    public Map<String, String> run(Exporter exporter) throws Exception {
+        StringBuilder output = new StringBuilder();
 
         for (Recipe r : Mod.recipes) {
-            output += GenerateRecipe(r) + "\n";
+            output.append(GenerateRecipe(r)).append("\n");
         }
+        HashMap<String, String> export = new HashMap<>();
+        export.put("recipe", output.toString());
+        return export;
+    }
 
-        return output;
+    @Override
+    public String prettyName() {
+        return "Recipe Job";
     }
 
     private static String GenerateRecipe(Recipe r) {
@@ -46,5 +54,4 @@ public class RecipeExporter {
         String recipe = String.format(recipeTemplate, r.result, ingredients, r.tab.toString(), r.tech.toString());
         return recipe;
     }
-
 }

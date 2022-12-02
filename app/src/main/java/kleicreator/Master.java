@@ -328,7 +328,7 @@ public class Master {
             for (int i = 0; i < mods.length; i++) {
                 SaveObject saveObject = SaveSystem.TempLoad(Constants.constants.FetchModLocation() + mods[i]);
                 if (saveObject == null) {
-                    model.addRow(new Object[]{mods[i], "Modded - Cannot load", "Modded - Cannot load"});
+                    model.addRow(new Object[]{mods[i], "Invalid - Cannot load", "Invalid - Cannot load"});
                 } else {
                     model.addRow(new Object[]{saveObject.modName, saveObject.modAuthor, mods[i]});
                 }

@@ -80,8 +80,8 @@ public class SaveSystem {
 
             SaveObject e = (SaveObject) xstream.fromXML(xml);
             return e;
-        } catch (IOException ioException) {
-            Logger.Error(ioException);
+        } catch (Exception e) {
+            Logger.Error(e);
             return null;
         }
     }

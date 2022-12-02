@@ -48,7 +48,7 @@ public class Exporter {
     public Exporter(){
         /* SETUP */
         loadingStartup = new LoadingStartup();
-        output = Constants.constants.FetchExportLocation(Mod.escapedModName());
+        output = Constants.GetExportDirectory() + Mod.escapedModName();
 
         /* JOB INIT */
         jobs = QueueJobs();

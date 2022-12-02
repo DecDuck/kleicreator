@@ -29,13 +29,8 @@ public class Starter {
                 /*
                 * This is here because I had an issue with config messing up loading
                 */
-                boolean success = new File(Constants.constants.KLEICREATOR_LOCATION + "/config")
-                        .renameTo(
-                                new File(Constants.constants.KLEICREATOR_LOCATION
-                                        + "/config_bak_"
-                                        + new Date().getTime()
-                                )
-                        );
+                boolean success = new File(Constants.GetConfigDirectory())
+                        .renameTo(new File(Constants.KLEICREATOR_LOCATION + "/config_bak_" + new Date().getTime()));
                 if(success){
                     JOptionPane.showMessageDialog(
                             null,
@@ -49,15 +44,9 @@ public class Starter {
                     return;
                 }
             }
-            if (e instanceof StreamException) {
-                new File(Constants.constants.KLEICREATOR_LOCATION).mkdirs();
-                Master.Main(args);
-                main(args);
-                return;
-            }
             Logger.Log("More oh-nos, we got an error and couldn't handle it!");
             Logger.Error(e);
-            String crashDumpFilePath = Constants.constants.KLEICREATOR_LOCATION + "_crash_" + new Date().getTime() + ".log";
+            String crashDumpFilePath = Constants.KLEICREATOR_LOCATION + "_crash_" + new Date().getTime() + ".log";
             try {
                 Files.writeString(Path.of(crashDumpFilePath), Logger.currentLog);
             } catch (IOException ex) {

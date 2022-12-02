@@ -9,11 +9,10 @@ import java.nio.file.Files;
 
 public class Config {
 
-    public static String CONFIG_LOCATION = Constants.constants.KLEICREATOR_LOCATION + "/config/";
     public static XStream xstream = new XStream(new DomDriver());
 
     public static String GetFilePath(String datasetName){
-        return CONFIG_LOCATION + datasetName + ".xml";
+        return Constants.GetConfigDirectory() + datasetName + ".xml";
     }
 
     public static boolean AssertDataset(String datasetName){

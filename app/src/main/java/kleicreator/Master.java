@@ -33,7 +33,7 @@ public class Master {
     public static String version;
     public static int currentlySelectedRow = -1;
     public static boolean exit = false;
-    public static ImageIcon icon = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("kleicreator/kleicreator_square.png"));
+    public static ImageIcon icon = new ImageIcon(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResource("kleicreator/kleicreator_square.png")));
     public static boolean darkMode = true;
 
     public enum GlobalTheme {
@@ -49,29 +49,19 @@ public class Master {
         } else {
             version = "[DEV]";
         }
-        /*
-        try {
-
-            version = "v" + new Scanner(ClassLoader.getSystemClassLoader().getResource("version").openStream(), "UTF-8").next();
-        } catch (IOException e) {
-            version = "v0.0.0"; // Make sure we download a new version cause this one's broken as hell
-        }
-        */
 
         ArgumentParser.ParseArguments(args);
-        Constants.constants = new Constants();
-        Constants.constants.CreateConstants();
+        Constants.CreateConstants();
         Logger.Start();
         Logger.Log("KleiCreator %s. Developed by DecDuck", version);
         Logger.Log("Started with arguments: " + String.join(" ", args));
 
-        //Create working directories
-        new File(Constants.constants.KLEICREATOR_LOCATION + "/").mkdir();
-        new File(Constants.constants.KLEICREATOR_LOCATION + "/mods").mkdir();
-        new File(Constants.constants.KLEICREATOR_LOCATION + "/speech").mkdir();
-        new File(Constants.constants.KLEICREATOR_LOCATION + "/plugins").mkdir();
-        new File(Constants.constants.KLEICREATOR_LOCATION + "/config").mkdir();
-        new File(Constants.constants.KLEICREATOR_LOCATION + "/data").mkdir();
+        // Create working directories
+        for(String path : Constants.GetAllWorkingFolders()){
+            new File(path).mkdirs(); // Result can be ignored
+        }
+
+        // Configuration setup
         Config.AssertDataset("kleicreator");
         Config.SaveData("kleicreator.theme", Dark, false);
         Config.SaveData("kleicreator.asksaveonleave", true, false);
@@ -85,14 +75,11 @@ public class Master {
         UIManager.put("Component.arc", 0);
         UIManager.put("CheckBox.arc", 0);
         UIManager.put("ProgressBar.arc", 0);
-
         UIManager.put("Component.arrowType", "triangle");
         //UIManager.put( "TabbedPane.showTabSeparators", true );
-
         UIManager.put("ScrollBar.showButtons", false);
         UIManager.put("ScrollBar.thumbArc", 999);
         UIManager.put("ScrollBar.thumbInsets", new Insets(2, 2, 2, 2));
-
         Logger.Debug("Successfully changed look and feel.");
 
         PluginHandler.LoadPlugins();
@@ -237,7 +224,6 @@ public class Master {
             startup.Destroy();
             projectSelectFrame.setLocationRelativeTo(null);
             projectSelectFrame.setVisible(true);
-
         }
 
 
@@ -288,7 +274,7 @@ public class Master {
                 newModConfigFrame.setVisible(false);
                 Mod _temp = new Mod();
                 Mod.modName = name;
-                ModLoader.CreateMod(Constants.constants.FetchModLocation() + Mod.escapedModName() + ".proj", author, name);
+                ModLoader.CreateMod(Constants.GetProjectDirectory() + Mod.escapedModName() + ".proj", author, name);
             }
         });
 
@@ -305,7 +291,6 @@ public class Master {
     }
 
     public static void LoadCurrentMod() {
-        //startupForm.setVisible(true);
         LoadingStartup startup = new LoadingStartup();
         startup.SetProgress(10, "Loading mod...");
         if (currentlySelectedRow == -1) {
@@ -315,31 +300,29 @@ public class Master {
                     JOptionPane.WARNING_MESSAGE);
         } else {
             projectSelectFrame.setVisible(false);
-            ModLoader.LoadMod(Constants.constants.FetchModLocation() + projectSelectDialog.getProjectsListTable().getModel().getValueAt(currentlySelectedRow, 2));
+            ModLoader.LoadMod(Constants.GetProjectDirectory() + projectSelectDialog.getProjectsListTable().getModel().getValueAt(currentlySelectedRow, 2));
         }
         startup.Destroy();
-        //startupForm.setVisible(false);
     }
 
     public static void readMods() {
         try {
             DefaultTableModel model = (DefaultTableModel) projectSelectDialog.getProjectsListTable().getModel();
-            String[] mods = getAllDirectories(Constants.constants.FetchModLocation());
-            for (int i = 0; i < mods.length; i++) {
-                SaveObject saveObject = SaveSystem.TempLoad(Constants.constants.FetchModLocation() + mods[i]);
+            String[] mods = FindAllProjectFiles(Constants.GetProjectDirectory());
+            for (String mod : mods) {
+                SaveObject saveObject = SaveSystem.TempLoad(Constants.GetProjectDirectory() + mod);
                 if (saveObject == null) {
-                    model.addRow(new Object[]{mods[i], "Invalid - Cannot load", "Invalid - Cannot load"});
+                    model.addRow(new Object[]{mod, "Invalid - Cannot load", "Invalid - Cannot load"});
                 } else {
-                    model.addRow(new Object[]{saveObject.modName, saveObject.modAuthor, mods[i]});
+                    model.addRow(new Object[]{saveObject.modName, saveObject.modAuthor, mod});
                 }
-
             }
         } catch (Exception e) {
             Logger.Error(e);
         }
     }
 
-    public static String[] getAllDirectories(String path) {
+    public static String[] FindAllProjectFiles(String path) {
         File dir = new File(path);
         File[] files = dir.listFiles(new FilenameFilter() {
             @Override
@@ -349,20 +332,10 @@ public class Master {
         });
         List<String> _directories = new ArrayList<String>();
 
-        for (int i = 0; i < files.length; i++) {
-            _directories.add(files[i].getName());
+        for (File file : files) {
+            _directories.add(file.getName());
         }
 
         return _directories.toArray(new String[0]);
-    }
-
-    public static void setUIFont(Font f) {
-        java.util.Enumeration keys = UIManager.getDefaults().keys();
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
-            Object value = UIManager.get(key);
-            if (value instanceof javax.swing.plaf.FontUIResource)
-                UIManager.put(key, f);
-        }
     }
 }

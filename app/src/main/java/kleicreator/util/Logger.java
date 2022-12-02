@@ -17,7 +17,7 @@ public class Logger {
         Error
     }
 
-    public static String logLocation = Constants.constants.FetchLogLocation();
+    public static String logLocation = Constants.KLEICREATOR_LOCATION + "/log.txt";
 
     public static String currentLog = "";
 

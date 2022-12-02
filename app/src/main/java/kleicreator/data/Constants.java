@@ -6,11 +6,15 @@ import java.io.File;
 
 public class Constants {
 
-    public static Constants constants;
+    public static final String DATA_PATH = "/data/";
+    public static final String PROJECT_PATH = "/projects/";
+    public static final String EXPORT_PATH = "/exports/";
+    public static final String CONFIG_PATH = "/config/";
+    public static final String PLUGINS_PATH = "/plugins/";
 
-    public String KLEICREATOR_LOCATION;
+    public static String KLEICREATOR_LOCATION;
 
-    public void CreateConstants() {
+    public static void CreateConstants() {
         if(ArgumentParser.doubleArguments.containsKey("--path")){
             KLEICREATOR_LOCATION = new File(ArgumentParser.doubleArguments.get("--path")).getAbsolutePath();
         }else{
@@ -18,15 +22,30 @@ public class Constants {
         }
     }
 
-    public String FetchLogLocation(){
-        return KLEICREATOR_LOCATION + "/log.txt";
+    public static String GetDataDirectory(){
+        return KLEICREATOR_LOCATION + DATA_PATH;
+    }
+    public static String GetProjectDirectory(){
+        return KLEICREATOR_LOCATION + PROJECT_PATH;
+    }
+    public static String GetExportDirectory(){
+        return KLEICREATOR_LOCATION + EXPORT_PATH;
+    }
+    public static String GetConfigDirectory(){
+        return KLEICREATOR_LOCATION + CONFIG_PATH;
+    }
+    public static String GetPluginsDirectory(){
+        return KLEICREATOR_LOCATION + PLUGINS_PATH;
     }
 
-    public String FetchExportLocation(String escapedModName){
-        return KLEICREATOR_LOCATION + "/exported/" + escapedModName + "/";
-    }
 
-    public String FetchModLocation(){
-        return KLEICREATOR_LOCATION + "/mods/";
+    public static String[] GetAllWorkingFolders(){
+        return new String[]{
+                KLEICREATOR_LOCATION + DATA_PATH,
+                KLEICREATOR_LOCATION + PROJECT_PATH,
+                KLEICREATOR_LOCATION + EXPORT_PATH,
+                KLEICREATOR_LOCATION + CONFIG_PATH,
+                KLEICREATOR_LOCATION + PLUGINS_PATH,
+        };
     }
 }

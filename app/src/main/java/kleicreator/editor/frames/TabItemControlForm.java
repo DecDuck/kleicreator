@@ -24,7 +24,7 @@ public class TabItemControlForm {
     private JButton add;
     private JButton remove;
 
-    private DefaultTableModel tableModel;
+    private final DefaultTableModel tableModel;
 
     public TabItemControlForm(JPanel tab, EditorMain editorMain) {
         tab.add(tabItemControlPanel);

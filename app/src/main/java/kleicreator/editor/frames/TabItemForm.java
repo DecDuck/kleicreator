@@ -41,12 +41,12 @@ public class TabItemForm {
     private JTextField itemID;
     private JComboBox itemTexture;
     private JSpinner itemStackSize;
-    private Item item;
+    private final Item item;
 
-    private TooltipTreeRenderer notAddedTooltipRenderer = new TooltipTreeRenderer();
-    private TooltipTreeRenderer addedTooltipRenderer = new TooltipTreeRenderer();
+    private final TooltipTreeRenderer notAddedTooltipRenderer = new TooltipTreeRenderer();
+    private final TooltipTreeRenderer addedTooltipRenderer = new TooltipTreeRenderer();
 
-    private HashMap<String, String> annotatedFieldMap = new HashMap<>();
+    private final HashMap<String, String> annotatedFieldMap = new HashMap<>();
 
     public TabItemForm(JPanel tab, Item item) {
         tab.add(tabItemPanel);
@@ -111,7 +111,6 @@ public class TabItemForm {
 
                     } else if (e.getClickCount() == 2) {
                         if (selPath.getLastPathComponent() == null || selPath.getLastPathComponent() == selPath.getPathComponent(0)) {
-                            return;
                         } else if (selPath.getLastPathComponent() == selPath.getPathComponent(1)) {
                             // We're enabling/disabling a component
                             for (int i = 0; i < item.itemComponents.size(); i++) {

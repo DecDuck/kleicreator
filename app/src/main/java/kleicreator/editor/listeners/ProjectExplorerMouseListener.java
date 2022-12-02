@@ -11,9 +11,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ProjectExplorerMouseListener extends MouseAdapter {
-    private JTree tree;
-    private ProjectExplorerState state;
-    private EditorMain editorMain;
+    private final JTree tree;
+    private final ProjectExplorerState state;
+    private final EditorMain editorMain;
 
     public ProjectExplorerMouseListener(JTree tree, ProjectExplorerState state, EditorMain editorMain) {
         this.tree = tree;

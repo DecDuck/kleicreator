@@ -4,6 +4,7 @@ import kleicreator.export.Exporter;
 import kleicreator.util.Logger;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -14,7 +15,7 @@ public interface Job {
         try {
             return new Scanner(
                     ClassLoader.getSystemClassLoader().getResource("templates/"+path).openStream(),
-                    "UTF-8")
+                    StandardCharsets.UTF_8)
                     .useDelimiter("\\A")
                     .next();
         } catch (IOException e) {

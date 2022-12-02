@@ -5,7 +5,7 @@ import kleicreator.resources.Resource;
 
 public class TabResource extends Tab {
     public Resource resource;
-    private TabResourceForm tabResourceForm;
+    private final TabResourceForm tabResourceForm;
 
     public TabResource(Resource resource) {
         this.resource = resource;

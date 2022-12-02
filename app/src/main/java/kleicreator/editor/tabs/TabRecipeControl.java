@@ -4,7 +4,7 @@ import kleicreator.editor.frames.EditorMain;
 import kleicreator.editor.frames.TabRecipeControlForm;
 
 public class TabRecipeControl extends Tab {
-    private TabRecipeControlForm tabRecipeControlForm;
+    private final TabRecipeControlForm tabRecipeControlForm;
     public TabRecipeControl(EditorMain editorMain){
         this.title = "Recipes";
         tabRecipeControlForm = new TabRecipeControlForm(this, editorMain);

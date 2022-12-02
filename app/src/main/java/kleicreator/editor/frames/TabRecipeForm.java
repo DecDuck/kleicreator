@@ -21,11 +21,11 @@ import java.util.Arrays;
 public class TabRecipeForm {
     private JPanel tabRecipePanel;
     private JTree recipeTree;
-    private Recipe recipe;
+    private final Recipe recipe;
 
-    private DefaultMutableTreeNode ingredientsNode;
-    private DefaultMutableTreeNode techNode;
-    private DefaultMutableTreeNode tabNode;
+    private final DefaultMutableTreeNode ingredientsNode;
+    private final DefaultMutableTreeNode techNode;
+    private final DefaultMutableTreeNode tabNode;
 
     public TabRecipeForm(JPanel tab, Recipe recipe) {
         this.recipe = recipe;

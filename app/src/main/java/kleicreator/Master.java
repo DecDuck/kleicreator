@@ -251,7 +251,6 @@ public class Master {
         exit = false;
         projectSelectFrame.dispose();
         Logger.Debug("Stopping...");
-        return;
     }
 
     public static void OpenProjectFromFiles(JFrame frame){

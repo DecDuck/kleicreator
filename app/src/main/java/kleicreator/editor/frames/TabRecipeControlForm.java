@@ -23,8 +23,8 @@ public class TabRecipeControlForm {
     private JButton add;
     private JButton remove;
 
-    private DefaultTableModel tableModel;
-    private EditorMain editorMain;
+    private final DefaultTableModel tableModel;
+    private final EditorMain editorMain;
 
     public TabRecipeControlForm(JPanel tab, EditorMain editorMain) {
         tab.add(tabRecipeControlPanel);

@@ -10,7 +10,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public class EditorWindowListener implements WindowListener {
-    private JFrame frame;
+    private final JFrame frame;
     public EditorWindowListener(JFrame frame){
         this.frame = frame;
     }

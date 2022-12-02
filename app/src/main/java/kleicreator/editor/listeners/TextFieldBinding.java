@@ -7,8 +7,8 @@ import javax.swing.text.JTextComponent;
 import java.awt.*;
 
 public class TextFieldBinding {
-    private JTextComponent field;
-    private Function target;
+    private final JTextComponent field;
+    private final Function target;
 
     public TextFieldBinding(JTextComponent field, Function target) {
         this.field = field;

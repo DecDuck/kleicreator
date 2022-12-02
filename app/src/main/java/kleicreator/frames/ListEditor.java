@@ -14,9 +14,9 @@ public class ListEditor<T> {
     private JButton addButton;
     private JButton removeButton;
 
-    private DefaultListModel listModel = new DefaultListModel();
-    private List<T> items = new ArrayList<>();
-    private Class<T> type;
+    private final DefaultListModel listModel = new DefaultListModel();
+    private final List<T> items = new ArrayList<>();
+    private final Class<T> type;
 
     private void Update() {
         listModel.clear();
@@ -27,7 +27,7 @@ public class ListEditor<T> {
     }
 
     public interface Action {
-        public <T> T select(Class<T> clazz, String message, Object starting);
+        <T> T select(Class<T> clazz, String message, Object starting);
     }
 
     public ListEditor(Class<T> type, Action action) {

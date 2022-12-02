@@ -3,7 +3,7 @@ package kleicreator.resources;
 import kleicreator.data.Config;
 import kleicreator.data.Constants;
 import kleicreator.util.Logger;
-import kleicreator.speech.SpeechFile;
+import kleicreator.data.SpeechFile;
 import kleicreator.ModLoader;
 import kleicreator.resources.types.ResourceAnimation;
 import kleicreator.resources.types.ResourceSpeech;

@@ -1,6 +1,6 @@
 package kleicreator.resources.types;
 
-import kleicreator.speech.SpeechFile;
+import kleicreator.data.SpeechFile;
 import kleicreator.resources.Resource;
 
 public class ResourceSpeech extends Resource {

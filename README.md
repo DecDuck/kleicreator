@@ -12,7 +12,10 @@ KleiCreator runs in the JVM (Java virtual machine), and maintains cross-platform
 As with a lot of Java applications, plugins are compiled and packaged as `.jar` files. Currently, there is no official documentation for the process of creating plugins, but it can be reverse-engineered by looking through the source code of the SDK. Documentation, however, is on the way.
 
 ## Using
-KleiCreator can be downloaded from any release, usually called `app-X.X.X.jar`, with an accompanying SDK. These releases are generally quite stable, and automatically check for updates that are newer than themselves. Additionally, you can download versions compiled per commit by GitHub Actions by clicking on the tick next to the commit and then downloading the artifacts. 
+### Downloading binary
+KleiCreator can be downloaded from any release, usually called `app-X.X.X.jar`. These releases are generally quite stable, and automatically check for updates that are newer than themselves.
+
+Additionally, you can download versions compiled per commit by GitHub Actions by clicking on the tick next to the commit and then downloading the artifacts.
 
 ### Building from Source
 Some users may prefer to compile the project themselves rather download a binary. To do so:
@@ -31,7 +34,7 @@ gradlew jar
 ```
 (If you're on a Unix-based system, you may need a preceding './')
 #### Step 4
-The relevant jars should be in `app/build/libs/app-X.X.X.jar` and `sdk/build/libs/sdk-X.X.X.jar`.
+The relevant jar should be in `app/build/libs/app-X.X.X.jar`.
 
 ## Contributing
 KleiCreator is open-source, and as with every OSS project, every contribution counts. If you're contributing by writing code and implementing features, fork this repository, commit your changes, then create a Pull Request to get it merged into the root codebase. If you're contributing through testing, create issues with the problem you've found and hopefully a developer will take a look at them and fix the issue.

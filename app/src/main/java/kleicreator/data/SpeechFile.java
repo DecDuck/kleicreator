@@ -1,4 +1,4 @@
-package kleicreator.speech;
+package kleicreator.data;
 
 import java.util.HashMap;
 import java.util.Map;

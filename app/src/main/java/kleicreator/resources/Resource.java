@@ -1,4 +1,4 @@
-package kleicreator.modloader.resources;
+package kleicreator.resources;
 
 public class Resource {
     public <T> boolean Is(Class<T> t) {

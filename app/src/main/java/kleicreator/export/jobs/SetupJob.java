@@ -2,8 +2,7 @@ package kleicreator.export.jobs;
 
 import kleicreator.export.Exporter;
 import kleicreator.export.interfaces.Job;
-import kleicreator.logging.Logger;
-import kleicreator.modloader.resources.ResourceManager;
+import kleicreator.resources.ResourceManager;
 
 import java.io.File;
 import java.util.Map;

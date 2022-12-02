@@ -3,7 +3,7 @@ package kleicreator.editor.frames;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import kleicreator.items.AllItems;
-import kleicreator.modloader.Mod;
+import kleicreator.data.Mod;
 import kleicreator.recipes.Recipe;
 import kleicreator.items.Item;
 import kleicreator.util.TreeHelper;

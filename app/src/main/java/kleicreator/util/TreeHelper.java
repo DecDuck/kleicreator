@@ -1,7 +1,5 @@
 package kleicreator.util;
 
-import kleicreator.modloader.ModLoader;
-
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;

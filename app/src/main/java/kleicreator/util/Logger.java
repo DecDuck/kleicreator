@@ -1,7 +1,6 @@
-package kleicreator.logging;
+package kleicreator.util;
 
-import kleicreator.constants.Constants;
-import kleicreator.master.ArgumentParser;
+import kleicreator.data.Constants;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.File;

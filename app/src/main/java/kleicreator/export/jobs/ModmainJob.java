@@ -3,7 +3,6 @@ package kleicreator.export.jobs;
 import kleicreator.export.interfaces.RequireJob;
 import kleicreator.export.interfaces.Job;
 import kleicreator.export.Exporter;
-import kleicreator.logging.Logger;
 
 import java.util.Map;
 

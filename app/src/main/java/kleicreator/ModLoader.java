@@ -1,9 +1,10 @@
-package kleicreator.modloader;
+package kleicreator;
 
+import kleicreator.data.Mod;
 import kleicreator.editor.frames.EditorMain;
-import kleicreator.plugin.PluginHandler;
+import kleicreator.sdk.internal.PluginHandler;
 import kleicreator.savesystem.SaveSystem;
-import kleicreator.logging.Logger;
+import kleicreator.util.Logger;
 
 import javax.swing.*;
 

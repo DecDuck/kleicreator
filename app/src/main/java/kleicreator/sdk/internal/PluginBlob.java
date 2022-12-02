@@ -1,4 +1,4 @@
-package kleicreator.plugin;
+package kleicreator.sdk.internal;
 
 import kleicreator.sdk.EventTrigger;
 import kleicreator.sdk.Plugin;

@@ -1,13 +1,13 @@
-package kleicreator.modloader.resources;
+package kleicreator.resources;
 
-import kleicreator.config.Config;
-import kleicreator.constants.Constants;
-import kleicreator.logging.Logger;
+import kleicreator.data.Config;
+import kleicreator.data.Constants;
+import kleicreator.util.Logger;
 import kleicreator.speech.SpeechFile;
-import kleicreator.modloader.ModLoader;
-import kleicreator.modloader.classes.ResourceAnimation;
-import kleicreator.modloader.classes.ResourceSpeech;
-import kleicreator.modloader.classes.ResourceTexture;
+import kleicreator.ModLoader;
+import kleicreator.resources.types.ResourceAnimation;
+import kleicreator.resources.types.ResourceSpeech;
+import kleicreator.resources.types.ResourceTexture;
 
 import javax.swing.*;
 import java.io.File;

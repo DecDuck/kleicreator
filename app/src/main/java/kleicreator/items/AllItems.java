@@ -1,6 +1,6 @@
 package kleicreator.items;
 
-import kleicreator.modloader.Mod;
+import kleicreator.data.Mod;
 
 import javax.swing.*;
 import java.util.Arrays;

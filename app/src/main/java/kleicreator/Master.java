@@ -1,15 +1,15 @@
-package kleicreator.master;
+package kleicreator;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import kleicreator.export.Exporter;
 import kleicreator.frames.*;
-import kleicreator.config.Config;
-import kleicreator.constants.Constants;
-import kleicreator.plugin.PluginHandler;
-import kleicreator.logging.Logger;
-import kleicreator.updater.Updater;
-import kleicreator.modloader.Mod;
-import kleicreator.modloader.ModLoader;
+import kleicreator.data.Config;
+import kleicreator.data.Constants;
+import kleicreator.util.ArgumentParser;
+import kleicreator.sdk.internal.PluginHandler;
+import kleicreator.util.Logger;
+import kleicreator.util.Updater;
+import kleicreator.data.Mod;
 import kleicreator.savesystem.SaveObject;
 import kleicreator.savesystem.SaveSystem;
 
@@ -24,7 +24,7 @@ import java.io.FilenameFilter;
 import java.util.*;
 import java.util.List;
 
-import static kleicreator.master.Master.GlobalTheme.*;
+import static kleicreator.Master.GlobalTheme.*;
 
 public class Master {
     public static ProjectSelectDialog projectSelectDialog;

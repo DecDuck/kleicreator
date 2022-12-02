@@ -2,9 +2,9 @@ package kleicreator.savesystem;
 
 
 import kleicreator.items.Item;
-import kleicreator.modloader.Mod;
-import kleicreator.modloader.resources.Resource;
-import kleicreator.modloader.resources.ResourceManager;
+import kleicreator.data.Mod;
+import kleicreator.resources.Resource;
+import kleicreator.resources.ResourceManager;
 import kleicreator.recipes.Recipe;
 
 import java.util.List;

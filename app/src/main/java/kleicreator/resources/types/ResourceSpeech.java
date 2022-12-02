@@ -1,7 +1,7 @@
-package kleicreator.modloader.classes;
+package kleicreator.resources.types;
 
 import kleicreator.speech.SpeechFile;
-import kleicreator.modloader.resources.Resource;
+import kleicreator.resources.Resource;
 
 public class ResourceSpeech extends Resource {
     public SpeechFile speechFile;

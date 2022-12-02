@@ -4,9 +4,9 @@ import kleicreator.export.Exporter;
 import kleicreator.export.interfaces.Job;
 import kleicreator.items.Item;
 import kleicreator.items.ItemComponent;
-import kleicreator.logging.Logger;
-import kleicreator.modloader.classes.ResourceTexture;
-import kleicreator.modloader.resources.ResourceManager;
+import kleicreator.util.Logger;
+import kleicreator.resources.types.ResourceTexture;
+import kleicreator.resources.ResourceManager;
 
 import java.util.List;
 import java.util.Map;

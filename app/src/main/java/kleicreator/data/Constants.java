@@ -1,6 +1,6 @@
-package kleicreator.constants;
+package kleicreator.data;
 
-import kleicreator.master.ArgumentParser;
+import kleicreator.util.ArgumentParser;
 
 import java.io.File;
 

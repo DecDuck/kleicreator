@@ -2,9 +2,9 @@ package kleicreator.export.jobs;
 
 import kleicreator.export.interfaces.Job;
 import kleicreator.export.Exporter;
-import kleicreator.modloader.classes.ResourceSpeech;
-import kleicreator.modloader.resources.Resource;
-import kleicreator.modloader.resources.ResourceManager;
+import kleicreator.resources.types.ResourceSpeech;
+import kleicreator.resources.Resource;
+import kleicreator.resources.ResourceManager;
 
 import java.util.HashMap;
 import java.util.List;

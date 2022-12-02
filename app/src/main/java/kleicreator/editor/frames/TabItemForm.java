@@ -9,7 +9,7 @@ import kleicreator.frames.ListEditor;
 import kleicreator.items.FieldData;
 import kleicreator.items.Item;
 import kleicreator.items.ItemComponent;
-import kleicreator.logging.Logger;
+import kleicreator.util.Logger;
 import kleicreator.util.TooltipTreeNode;
 import kleicreator.util.TooltipTreeRenderer;
 

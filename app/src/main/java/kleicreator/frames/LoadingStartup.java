@@ -2,7 +2,7 @@ package kleicreator.frames;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import kleicreator.master.Master;
+import kleicreator.Master;
 
 import javax.swing.*;
 import java.awt.*;

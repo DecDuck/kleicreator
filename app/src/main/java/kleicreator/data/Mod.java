@@ -1,4 +1,4 @@
-package kleicreator.modloader;
+package kleicreator.data;
 
 
 import kleicreator.items.AllItems;

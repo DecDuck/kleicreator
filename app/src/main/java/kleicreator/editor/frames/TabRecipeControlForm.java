@@ -6,7 +6,7 @@ import com.intellij.uiDesigner.core.Spacer;
 import kleicreator.editor.tabs.Tab;
 import kleicreator.editor.tabs.TabItem;
 import kleicreator.editor.tabs.TabRecipe;
-import kleicreator.modloader.Mod;
+import kleicreator.data.Mod;
 import kleicreator.recipes.Recipe;
 
 import javax.swing.*;

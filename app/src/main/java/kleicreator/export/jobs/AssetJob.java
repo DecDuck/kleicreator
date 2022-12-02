@@ -2,7 +2,7 @@ package kleicreator.export.jobs;
 
 import kleicreator.export.Exporter;
 import kleicreator.export.interfaces.Job;
-import kleicreator.modloader.classes.ResourceTexture;
+import kleicreator.resources.types.ResourceTexture;
 
 import java.io.File;
 import java.util.HashMap;

@@ -2,8 +2,8 @@ package kleicreator.export.jobs;
 
 import kleicreator.export.Exporter;
 import kleicreator.export.interfaces.Job;
-import kleicreator.logging.Logger;
-import kleicreator.modloader.Mod;
+import kleicreator.util.Logger;
+import kleicreator.data.Mod;
 import kleicreator.recipes.Recipe;
 
 import java.util.HashMap;

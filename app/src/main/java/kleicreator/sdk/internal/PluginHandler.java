@@ -1,12 +1,12 @@
-package kleicreator.plugin;
+package kleicreator.sdk.internal;
 
-import kleicreator.modloader.ModLoader;
-import kleicreator.constants.Constants;
+import kleicreator.ModLoader;
+import kleicreator.data.Constants;
 import kleicreator.items.Item;
 import kleicreator.sdk.EventTrigger;
 import kleicreator.sdk.Plugin;
 import kleicreator.items.ItemComponent;
-import kleicreator.logging.Logger;
+import kleicreator.util.Logger;
 import kleicreator.savesystem.SaveSystem;
 
 import java.io.*;

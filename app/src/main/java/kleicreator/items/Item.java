@@ -1,6 +1,6 @@
 package kleicreator.items;
 
-import kleicreator.logging.Logger;
+import kleicreator.util.Logger;
 import org.reflections.Reflections;
 
 import java.util.ArrayList;

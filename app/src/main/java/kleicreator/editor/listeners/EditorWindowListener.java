@@ -1,9 +1,9 @@
 package kleicreator.editor.listeners;
 
-import kleicreator.modloader.Mod;
+import kleicreator.data.Mod;
 import kleicreator.savesystem.SaveObject;
 import kleicreator.savesystem.SaveSystem;
-import kleicreator.config.Config;
+import kleicreator.data.Config;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;

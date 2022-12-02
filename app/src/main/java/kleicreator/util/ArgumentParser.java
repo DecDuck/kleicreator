@@ -1,4 +1,4 @@
-package kleicreator.master;
+package kleicreator.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;

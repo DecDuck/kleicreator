@@ -5,7 +5,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import kleicreator.editor.tabs.Tab;
 import kleicreator.editor.tabs.TabItem;
-import kleicreator.modloader.Mod;
+import kleicreator.data.Mod;
 import kleicreator.items.Item;
 
 import javax.swing.*;

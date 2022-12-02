@@ -1,7 +1,7 @@
 package kleicreator.editor.tabs;
 
 import kleicreator.editor.frames.TabResourceForm;
-import kleicreator.modloader.resources.Resource;
+import kleicreator.resources.Resource;
 
 public class TabResource extends Tab {
     public Resource resource;

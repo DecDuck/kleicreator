@@ -1,8 +1,7 @@
 package kleicreator.export.interfaces;
 
 import kleicreator.export.Exporter;
-import kleicreator.logging.Logger;
-import org.apache.commons.lang3.StringEscapeUtils;
+import kleicreator.util.Logger;
 
 import java.io.IOException;
 import java.util.Map;

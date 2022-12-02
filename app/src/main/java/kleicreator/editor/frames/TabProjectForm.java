@@ -4,12 +4,11 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import kleicreator.editor.listeners.TextFieldBinding;
-import kleicreator.modloader.Mod;
+import kleicreator.data.Mod;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
 import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;

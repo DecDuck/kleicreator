@@ -1,8 +1,8 @@
-package kleicreator.modloader.classes;
+package kleicreator.resources.types;
 
 
-import kleicreator.modloader.resources.Resource;
-import kleicreator.modloader.resources.ResourceManager;
+import kleicreator.resources.Resource;
+import kleicreator.resources.ResourceManager;
 
 public class ResourceTexture extends Resource {
     public String texPath;

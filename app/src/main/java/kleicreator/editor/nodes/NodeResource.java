@@ -1,6 +1,6 @@
 package kleicreator.editor.nodes;
 
-import kleicreator.modloader.resources.Resource;
+import kleicreator.resources.Resource;
 
 public class NodeResource extends Node{
     public Resource resource;

@@ -1,6 +1,6 @@
 package kleicreator.export;
 
-import kleicreator.constants.Constants;
+import kleicreator.data.Constants;
 import kleicreator.export.interfaces.Job;
 import kleicreator.export.interfaces.RequireJob;
 import kleicreator.export.jobs.ItemJob;
@@ -9,25 +9,17 @@ import kleicreator.export.jobs.ModmainJob;
 import kleicreator.export.jobs.SetupJob;
 import kleicreator.frames.LoadingStartup;
 import kleicreator.items.Item;
-import kleicreator.logging.Logger;
-import kleicreator.modloader.Mod;
-import kleicreator.modloader.classes.ResourceAnimation;
-import kleicreator.modloader.classes.ResourceTexture;
-import kleicreator.modloader.resources.Resource;
-import kleicreator.modloader.resources.ResourceManager;
-import kleicreator.plugin.PluginBlob;
-import kleicreator.plugin.PluginHandler;
+import kleicreator.util.Logger;
+import kleicreator.data.Mod;
+import kleicreator.sdk.internal.PluginBlob;
+import kleicreator.sdk.internal.PluginHandler;
 import kleicreator.sdk.EventTrigger;
 
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -138,6 +138,9 @@ public class Master {
                     if (row >= 0) {
                         currentlySelectedRow = row;
                     }
+                    if(evt.getClickCount() == 2){
+                        LoadCurrentMod();
+                    }
                 }
             });
 
@@ -207,15 +210,6 @@ public class Master {
             }
 
             startup.SetProgress(100, "Starting...");
-            // This is here so we look important
-            long time = Calendar.getInstance().getTime().getTime() - Logger.startTime.getTime();
-            if (time < 2000) {
-                try {
-                    Thread.sleep(2000 - time);
-                } catch (InterruptedException e) {
-
-                }
-            }
 
             PluginHandler.TriggerEvent("OnStartup");
 
@@ -272,7 +266,6 @@ public class Master {
                 String author = createModDialog.getModAuthorTextField().getText();
                 projectSelectFrame.setVisible(false);
                 newModConfigFrame.setVisible(false);
-                Mod _temp = new Mod();
                 Mod.modName = name;
                 ModLoader.CreateMod(Constants.GetProjectDirectory() + Mod.escapedModName() + ".proj", author, name);
             }

@@ -2,6 +2,7 @@ package kleicreator.data;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import kleicreator.util.Logger;
 
 import java.io.*;
@@ -10,6 +11,10 @@ import java.nio.file.Files;
 public class Config {
 
     public static XStream xstream = new XStream(new DomDriver());
+
+    static {
+        xstream.addPermission(AnyTypePermission.ANY);
+    }
 
     public static String GetFilePath(String datasetName){
         return Constants.GetConfigDirectory() + datasetName + ".xml";

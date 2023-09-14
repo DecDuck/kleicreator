@@ -1,6 +1,13 @@
 package kleicreator;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatGradiantoDarkFuchsiaIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubDarkIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubIJTheme;
+import com.formdev.flatlaf.util.SystemInfo;
 import kleicreator.export.Exporter;
 import kleicreator.frames.*;
 import kleicreator.data.Config;
@@ -67,8 +74,15 @@ public class Master {
         Config.SaveData("kleicreator.asksaveonleave", true, false);
         Config.SaveData("kleicreator.copyresources", false, false);
 
-        FlatDarkLaf.setGlobalExtraDefaults( Collections.singletonMap( "@accentColor", "#ffb400" ) );
-        FlatDarkLaf.setup();
+
+        FlatGitHubDarkIJTheme.setGlobalExtraDefaults( Collections.singletonMap( "@accentColor", "#ffb400" ) );
+        FlatGitHubDarkIJTheme.setup();
+
+        if( SystemInfo.isLinux ) {
+            // enable custom window decorations
+            JFrame.setDefaultLookAndFeelDecorated( true );
+            JDialog.setDefaultLookAndFeelDecorated( true );
+        }
 
         // Custom theming
         UIManager.put("Button.arc", 0);

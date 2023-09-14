@@ -2,6 +2,7 @@ package kleicreator.savesystem;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import kleicreator.util.Logger;
 
 import java.io.*;
@@ -9,6 +10,10 @@ import java.io.*;
 public class SaveSystem {
 
     public static XStream xstream = new XStream(new StaxDriver());
+
+    static {
+        xstream.addPermission(AnyTypePermission.ANY);
+    }
 
     public static void ClearFile(String fileName) {
         try {

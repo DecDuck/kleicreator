@@ -75,6 +75,7 @@ public class ProjectSelectDialog {
         ProjectSelectPanel.add(tableScrollPlane, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         projectsListTable = new JTable();
         projectsListTable.setEnabled(true);
+        projectsListTable.setForeground(new Color(-2039584));
         tableScrollPlane.setViewportView(projectsListTable);
         newMod = new JButton();
         newMod.setHideActionText(false);

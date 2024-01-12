@@ -29,6 +29,7 @@
             <constraints/>
             <properties>
               <enabled value="true"/>
+              <foreground color="-2039584"/>
             </properties>
           </component>
         </children>

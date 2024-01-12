@@ -64,7 +64,7 @@ public class Master {
         Logger.Log("Started with arguments: " + String.join(" ", args));
 
         // Create working directories
-        for(String path : Constants.GetAllWorkingFolders()){
+        for (String path : Constants.GetAllWorkingFolders()) {
             new File(path).mkdirs(); // Result can be ignored
         }
 
@@ -74,14 +74,14 @@ public class Master {
         Config.SaveData("kleicreator.asksaveonleave", true, false);
         Config.SaveData("kleicreator.copyresources", false, false);
 
-
-        FlatGitHubDarkIJTheme.setGlobalExtraDefaults( Collections.singletonMap( "@accentColor", "#ffb400" ) );
+        FlatGitHubDarkIJTheme.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#ffb400"));
         FlatGitHubDarkIJTheme.setup();
 
-        if( SystemInfo.isLinux ) {
+        if (SystemInfo.isLinux) {
             // enable custom window decorations
-            JFrame.setDefaultLookAndFeelDecorated( true );
-            JDialog.setDefaultLookAndFeelDecorated( true );
+            JFrame.setDefaultLookAndFeelDecorated(true);
+            JDialog.setDefaultLookAndFeelDecorated(true);
+
         }
 
         // Custom theming
@@ -152,7 +152,7 @@ public class Master {
                     if (row >= 0) {
                         currentlySelectedRow = row;
                     }
-                    if(evt.getClickCount() == 2){
+                    if (evt.getClickCount() == 2) {
                         LoadCurrentMod();
                     }
                 }
@@ -247,13 +247,13 @@ public class Master {
         Logger.Debug("Stopping...");
     }
 
-    public static void OpenProjectFromFiles(JFrame frame){
+    public static void OpenProjectFromFiles(JFrame frame) {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "KleiCreator project files", "proj");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(frame);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             frame.dispose();
             ModLoader.LoadMod(chooser.getSelectedFile().getAbsolutePath());
         }
@@ -271,7 +271,7 @@ public class Master {
             public void actionPerformed(ActionEvent e) {
                 String name = createModDialog.getModNameTextField().getText();
 
-                if(name.isBlank()) {
+                if (name.isBlank()) {
                     JOptionPane.showConfirmDialog(null, "Mod name cannot be empty!", "Error", JOptionPane.DEFAULT_OPTION);
 
                     return;
